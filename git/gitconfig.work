@@ -1,0 +1,38 @@
+[user]
+	name = James Orson
+	email = jorson@purestorage.com
+	signingkey = 8983B7C5964AAD8DF2C874651650B9F10929B9A1
+[alias]
+	co = checkout
+	cp = cherry-pick
+	cob = checkout -b
+	com = commit --allow-empty -m
+	st = status
+	pish = push
+	pushup = !git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
+	br = branch
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	rebi = rebase -i
+	del = branch -D
+	clean-house = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+[branch]
+	autosetuprebase = always
+[init]
+	defaultBranch = main
+	templateDir = ~/.local/git/template
+[submodule]
+	recurse = true
+[core]
+	autocrlf = input
+	editor = /usr/bin/vim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[pull]
+	rebase = false
+[commit]
+	gpgsign = true

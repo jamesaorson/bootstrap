@@ -1,0 +1,11 @@
+#! /bin/bash
+
+if command -v aptdcon; then
+    echo 'y' | sudo aptdcon \
+    	--hide-terminal \
+    	--install \
+    	"$@"	
+else
+    sudo apt-get install --yes $@
+fi
+

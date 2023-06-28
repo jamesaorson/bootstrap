@@ -1,0 +1,34 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM=$(uname -s)
+case ${PLATFORM} in
+    Linux*)
+        bootstrap_install git
+        ;;
+    *)
+        ;;
+esac
+
+git --version
+
+DIR=${HOME}/.local/git
+TEMPLATE_DIR=${DIR}/template
+
+mkdir -p ${DIR}
+
+rm -f ~/.gitconfig
+
+GITCONFIG=gitconfig.default
+if [[ $(hostname) == *jorson* ]]; then
+    GITCONFIG=gitconfig.work
+fi
+ln -s -f $(pwd)/${GITCONFIG} ~/.gitconfig
+rm -f ${TEMPLATE_DIR}
+ln -s -f $(pwd)/template ${TEMPLATE_DIR}
+

@@ -1,0 +1,29 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        if sudo -v; then
+            bootstrap_install \
+                buildah \
+                containerd \
+                fuse-overlayfs \
+                slirp4netns \
+                uidmap
+        fi
+        ;;
+    Darwin*)
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+bootstrap_install podman
+
+podman --version
+

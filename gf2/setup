@@ -1,0 +1,27 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        ;;
+    Darwin*)
+	echo "Unsupported platform ${PLATFORM}"
+	exit 1
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+bootstrap_install gdb
+
+SRC_DIR=${HOME}/.local/src
+mkdir -p ${SRC_DIR}
+BRANCH=master bootstrap_clone https://github.com/nakst/gf ${SRC_DIR}/gf2 
+cd ${SRC_DIR}/gf2
+./build.sh
+

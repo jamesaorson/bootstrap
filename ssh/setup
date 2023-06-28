@@ -1,0 +1,18 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+ssh -V
+
+DIR=${HOME}/.ssh
+mkdir -p ${DIR}
+SSH_CONFIG=config.default
+if [[ $(hostname) == *jorson* ]]; then
+    SSH_CONFIG=config.work
+fi
+ln -s -f $(pwd)/${SSH_CONFIG} ${DIR}/config
+

@@ -1,0 +1,42 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+INFO() {
+	info_common 'TMUX' $@
+}
+
+WARN() {
+	log_common 'WARN' 'TMUX' $@
+}
+
+INFO "Setting up config"
+DIR=${HOME}/.config/tmux
+CONFIG=${DIR}/tmux.conf
+mkdir -p ${DIR}
+rm -f ${CONFIG}
+ln -s -f $(pwd)/tmux.conf ${CONFIG}
+INFO "Finished setting up config"
+
+INFO "Installing tmux"
+bootstrap_install tmux
+tmux -V
+INFO "Finished installing tmux"
+
+INFO "Installing tmux plugin manager"
+PLUGIN_DIR=${HOME}/.tmux/plugins
+INSTALL_DIR=${PLUGIN_DIR}/tpm
+mkdir -p ${PLUGIN_DIR}
+
+bootstrap_clone 'https://github.com/tmux-plugins/tpm' ${INSTALL_DIR}
+INFO "Finished installing tmux plugin manager"
+
+INFO "REMEMBER TO RUN THE TMUX SOURCE COMMAND"
+echo "tmux source ${CONFIG}"
+INFO "REMEMBER TO RUN THE TPM INSTALL COMMAND"
+echo 'Press prefix + I (capital i, as in Install) to fetch plugins.'
+

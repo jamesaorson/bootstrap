@@ -1,0 +1,79 @@
+# Hosts
+Host git.sr.ht
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User git
+	IdentityFile ~/.ssh/id_sourcehut
+Host saucetree
+Hostname 209.38.173.226
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User root
+	IdentityFile ~/.ssh/saucetree
+Host github.com
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User git
+	IdentityFile ~/.ssh/id_github_jamesaorson
+Host gitlab.com
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User git
+	IdentityFile ~/.ssh/id_gitlab
+# Aliases
+Host github-work
+	Hostname github.com
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User org-107236519
+	IdentityFile ~/.ssh/id_github-work
+Host school
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName login-ice.pace.gatech.edu
+	User jorson6
+	IdentityFile ~/.ssh/id_school
+Host pi
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 10.0.0.217
+	User james
+	IdentityFile ~/.ssh/id_pi
+Host pi-ota
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName ursinia.net
+	User james
+	IdentityFile ~/.ssh/id_pi
+Host ursinia
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 10.0.0.139
+	User ursinia
+	IdentityFile ~/.ssh/id_ursinia
+Host work-dev-jorson
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 10.7.69.7
+	User jorson
+	IdentityFile ~/.ssh/id_work-dev-jorson

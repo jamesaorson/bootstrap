@@ -1,0 +1,38 @@
+[user]  
+	name = James Orson
+	email = jamesaorson@gmail.com
+[alias]
+	co = checkout
+	cp = cherry-pick
+	cob = checkout -b
+	com = commit --allow-empty -m
+	st = status
+	pish = push
+	pushup = !git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
+	br = branch
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	rebi = rebase -i
+	del = branch -D
+	clean-house = !git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+[branch]
+	autosetuprebase = always
+[init]
+	defaultBranch = main
+	templateDir = ~/.local/git/template
+[submodule]
+	recurse = true
+[core]
+	autocrlf = input
+	compression = 0
+	editor = /usr/bin/vim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[http]
+	postBuffer = 52428800
+[lfs "https://git.sr.ht/~jamesaorson/all.git/info/lfs"]
+	locksverify = false

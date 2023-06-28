@@ -1,0 +1,16 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+bootstrap_install rlwrap
+bootstrap_install sbcl
+
+rlwrap --version
+sbcl --version
+
+rm -f ${HOME}/.sbclrc
+ln -s -f $(pwd)/sbclrc ${HOME}/.sbclrc

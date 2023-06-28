@@ -1,0 +1,75 @@
+#! /bin/bash
+
+# Java classpath
+export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
+
+# Golang env vars
+export GOVERSION="${GOVERSION:-1.21.5}"
+export GOPATH="${HOME}/.local/go/path"
+export GOROOT="${HOME}/.local/go/root/${GOVERSION}/go"
+
+# PATH
+export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.local/brew/bin:${PATH}"
+export PATH="${HOME}/.local/opt/go/bin:${PATH}"
+export PATH="${HOME}/.cargo/bin:${PATH}"
+export PATH="${GOROOT}/go/bin:${GOPATH}/bin:${PATH}"
+export PATH="${PATH}:/Applications/Emacs.app/Contents/MacOS/bin"
+
+# Guile
+export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"
+export GUILE_LOAD_COMPILED_PATH="${HOME}/.local/brew/lib/guile/3.0/site-ccache"
+export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extensions"
+
+# Emacs
+export LSP_USE_PLISTS=true
+
+# Aliases
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        if command -v batcat; then
+            alias bat="batcat"
+        fi
+        if command -v nvim; then
+            _EDITOR=$(which nvim)
+        elif command -v emacs; then
+            _EDITOR=$(which emacs)
+        else command -v vim; then
+            _EDITOR=$(which vim)
+        else
+            _EDITOR=$(which nano)
+        fi
+        export ALTERNATE_EDITOR=""
+        export EDITOR="${_EDITOR}"
+        export VISUAL="${_EDITOR}"
+        export GIT_EDITOR="${_EDITOR}"
+        ;;
+    Darwin*)
+        alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+        alias EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs"
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+alias woman="man"
+alias dwr="dotnet watch run"
+alias dwt="dotnet watch test"
+alias sbcl="rlwrap -c sbcl --disable-debugger"
+
+# Kubectl autocompletion
+if command -v kubectl; then
+    . <(kubectl completion zsh)
+fi
+
+# NVM
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"
+fi
+
+# Starship
+eval "$(starship init bash)"
+
+eval "$(ssh-agent -s)" >> /dev/null
+
+# Show shell command's first token as red if the command does not exist in PATH, while I type

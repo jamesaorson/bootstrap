@@ -1,0 +1,33 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -a)"
+case ${PLATFORM} in
+    Linux*)
+ 	if [ $(echo ${PLATFORM} | grep -ic "Linux pi") -gt 0 ]; then
+	    sudo apt-get install \
+                python3-launchpadlib
+	fi
+        if sudo -v; then
+            sudo add-apt-repository -y ppa:neovim-ppa/unstable 
+        fi
+        ;;
+    Darwin*)
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+bootstrap_install neovim
+
+nvim -V1 -v
+
+CONFIG_DIR=${HOME}/.config
+mkdir -p ${CONFIG_DIR}
+rm -f ${HOME}/.config/nvim
+ln -s -f $(pwd)/config ${HOME}/.config/nvim
+

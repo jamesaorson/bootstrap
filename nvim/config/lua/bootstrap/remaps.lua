@@ -1,0 +1,16 @@
+local common = require("bootstrap.common")
+
+common.run("remaps", function()
+    vim.keymap.set("n", "<leader>d", vim.cmd.Ex)
+	vim.keymap.set("n", "<C-h>", "<cmd> TmuxNavigateLeft<CR>")
+	vim.keymap.set("n", "<C-l>", "<cmd> TmuxNavigateRight<CR>")
+	vim.keymap.set("n", "<C-j>", "<cmd> TmuxNavigateDown<CR>")
+	vim.keymap.set("n", "<C-k>", "<cmd> TmuxNavigateUp<CR>")
+    -- Trouble
+    vim.keymap.set("n", "<leader>xx", function() require("trouble").toggle() end)
+    vim.keymap.set("n", "<leader>xw", function() require("trouble").toggle("workspace_diagnostics") end)
+    vim.keymap.set("n", "<leader>xd", function() require("trouble").toggle("document_diagnostics") end)
+    vim.keymap.set("n", "<leader>xq", function() require("trouble").toggle("quickfix") end)
+    vim.keymap.set("n", "<leader>xl", function() require("trouble").toggle("loclist") end)
+    vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end)
+end)
