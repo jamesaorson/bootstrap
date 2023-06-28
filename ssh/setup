@@ -1,0 +1,18 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+bootstrap_install ssh
+
+ssh -V
+
+DIR=${HOME}/.ssh
+mkdir -p ${DIR}
+
+rm -f ${DIR}/config
+cp $(pwd)/config ${DIR}/config
+

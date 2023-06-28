@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+bootstrap_install rlwrap
+bootstrap_install sbcl
+
+rlwrap --version
+sbcl --version
+
+rm -f ${HOME}/.sbclrc
+rm -rf ~/.quicklisp
+
+sbcl --no-sysinit --no-userinit --load $(pwd)/quicklisp.lisp \
+    --eval '(quicklisp-quickstart:install :path "~/.quicklisp")' \
+    --quit
+    ln -s -f $(pwd)/sbclrc ${HOME}/.sbclrc
+

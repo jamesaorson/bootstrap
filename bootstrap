@@ -1,0 +1,135 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+install_deps() {
+    SHOULD_RESOLVE=0
+    local DEPS=(
+        apt-transport-https
+        build-essential
+        locales
+        make
+        parallel
+        psmisc
+        software-properties-common
+    )
+    for dep in ${DEPS[@]}; do
+        echo "Checking for dep ${dep}..."
+        if ! dpkg --get-selections | grep "^$dep\s"; then
+            SHOULD_RESOLVE=1
+            echo "Did not find dep ${dep}"
+        else
+            echo "Found dep ${dep}"
+        fi
+    done
+    if [[ ${SHOULD_RESOLVE} == "1" ]]; then
+        if ! sudo -v; then
+            echo "sudo required to resolve deps"
+            exit 1
+        fi
+        if command -v fuser >> /dev/null; then
+            local RETRIES=3
+            local BACKOFF=1
+            while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+                sleep ${BACKOFF}
+            done
+        fi
+        sudo apt-get \
+            -o DPkg::Lock::Timeout=120 \
+            -qy \
+            install \
+            ${DEPS[@]}
+     fi
+}
+
+
+. ./functions.sh
+
+if [ $# -gt 0 ]; then
+    SERVICES=$@
+    PLATFORM="$(uname -s)"
+    case ${PLATFORM} in
+        Linux*)
+            install_deps
+            ;;
+        *)
+            ;;
+    esac
+else
+    PLATFORM="$(uname -s)"
+    case ${PLATFORM} in
+        Linux*)
+            install_deps
+            SERVICES=(
+                "apt"
+                "curl"
+                "brew"
+                "git"
+                "npm"
+                "nvim"
+                "emacs"
+                "ssh"
+                "gh"
+                "cl"
+                "golang"
+                "guile"
+                "rust"
+                "bat"
+                "podman"
+                "terraform"
+                "tmux"
+                "tree"
+                "vscode"
+                "zsh"
+                "kazam"
+            )
+            ;;
+        Darwin*)
+            SERVICES=(
+                "curl"
+                "brew"
+                "git"
+                "npm"
+                "nvim"
+                "emacs"
+                "ssh"
+                "gh"
+                "cl"
+                "golang"
+                "guile"
+                "rust"
+                "alacritty"
+                "bat"
+                "podman"
+                "tmux"
+                "tree"
+                "vscode"
+                "zsh"
+            )
+            ;;
+        *)
+            echo "UNKNOWN:${PLATFORM}"
+            exit 1
+            ;;
+    esac
+fi
+
+mkdir -p ${HOME}/.local/bin
+
+export AS_PARALLEL=${AS_PARALLEL:-0}
+export IN_CONTAINER=${IN_CONTAINER:-0}
+if [[ ${IN_CONTAINER} == "1" ]]; then
+    export AS_PARALLEL=0
+fi
+if [[ ${AS_PARALLEL} == "1" ]]; then
+    parallel ./{}/setup ::: ${SERVICES[@]}
+else
+    for service in ${SERVICES[@]}; do
+        echo "[${service}] Setting up"
+        ./${service}/setup
+        echo "[${service}] Finished setting up"
+    done
+fi
+

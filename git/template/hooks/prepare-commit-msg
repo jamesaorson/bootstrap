@@ -1,0 +1,17 @@
+#! /bin/bash
+
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(main master trunk)
+fi
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+TICKET_NAME=$(echo ${BRANCH_NAME} | cut -d "_" -f 1)
+
+BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
+ALREADY_IN_MSG=$(grep -c "^${TICKET_NAME}: " $1)
+
+# If it isn't excluded or already in commit message, prepend the ticket name to the given message
+if [ -n "$BRANCH_NAME" ] && ! [[ "$BRANCH_EXCLUDED" -eq 1 ]] && ! [[ "$ALREADY_IN_MSG" -eq 1 ]]; then
+    sed -i.bak -e "1s/^/${TICKET_NAME}: /" "$1"
+fi
+

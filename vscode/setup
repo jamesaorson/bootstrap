@@ -1,0 +1,42 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        DIR=${HOME}/.config/Code/User
+        if sudo -v; then
+            curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+            SOURCES=/etc/apt/sources.list.d/vscode.list
+            sudo rm -f ${SOURCES}
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" | sudo tee -a ${SOURCES} > /dev/null
+            bootstrap_install code
+        fi
+        ;;
+    Darwin*)
+        brew install --cask visual-studio-code
+        DIR="${HOME}/Library/Application Support/Code/User"
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+code -v
+
+mkdir -p ${DIR}
+ln -s -f $(pwd)/settings.json "${DIR}/settings.json"
+ln -s -f $(pwd)/keybindings.json "${DIR}/keybindings.json"
+
+# Install extensions
+EXTENSIONS=(
+)
+
+for extension in ${EXTENSIONS[@]}; do
+    code --install-extension ${extension}
+done
+
+

@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+bootstrap_install git
+
+git --version
+
+DIR=${HOME}/.local/git
+TEMPLATE_DIR=${DIR}/template
+
+mkdir -p ${DIR}
+
+rm -f ~/.gitconfig
+ln -s $(pwd)/.gitconfig ~/.gitconfig
+rm -f ${TEMPLATE_DIR}
+ln -s $(pwd)/template ${TEMPLATE_DIR}
+

@@ -1,0 +1,63 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+. ${HOME}/.cargo/env
+
+CWD=$(pwd)
+DIR=${HOME}/.config/alacritty
+SRC=${DIR}/src
+BIN_DIR=${HOME}/.local/bin
+mkdir -p ${DIR}
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        if sudo -v; then
+            bootstrap_install \
+                cmake \
+                pkg-config \
+                libfreetype6-dev \
+                libfontconfig1-dev \
+                libxcb-xfixes0-dev \
+                libxkbcommon-dev \
+                python3
+        fi
+        bootstrap_clone 'https://github.com/alacritty/alacritty.git' ${SRC}
+
+        cd ${SRC}
+
+        rustup override set stable
+        rustup update stable
+
+        cargo build --release
+        mkdir -p ${BIN_DIR}
+        rm -f ${BIN_DIR}/alacritty
+        ln -s -f $(pwd)/target/release/alacritty ${BIN_DIR}/alacritty
+
+        if sudo -v; then
+            sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+        fi
+        cd ${CWD}
+        FILE=com.alacritty.Alacritty.desktop
+        DESKTOP_FILE=${HOME}/.local/share/applications/${FILE}
+        rm -f ${DESKTOP_FILE}
+        cp ${CWD}/${FILE} ${DESKTOP_FILE}
+        ${BIN_DIR}/alacritty --version
+        ;;
+    Darwin*)
+        brew install --HEAD \
+            alacritty
+        alacritty --version
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+
+mkdir -p ${DIR}
+ln -s -f $(pwd)/alacritty.toml ${DIR}
+

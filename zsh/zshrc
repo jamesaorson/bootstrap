@@ -1,0 +1,81 @@
+#! /bin/zsh
+
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${HOME}/.zprezto/init.zsh" ]]; then
+  source "${HOME}/.zprezto/init.zsh"
+fi
+
+# Java classpath
+export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
+
+# Golang env vars
+export GOVERSION="${GOVERSION:-1.21.5}"
+export GOPATH="${HOME}/.local/go/path"
+export GOROOT="${HOME}/.local/go/root/${GOVERSION}/go"
+
+# PATH
+export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="${HOME}/.local/brew/bin:${PATH}"
+export PATH="${HOME}/.local/opt/go/bin:${PATH}"
+export PATH="${HOME}/.cargo/bin:${PATH}"
+export PATH="${GOROOT}/go/bin:${GOPATH}/bin:${PATH}"
+export PATH="${PATH}:/Applications/Emacs.app/Contents/MacOS/bin"
+
+# Guile
+export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"
+export GUILE_LOAD_COMPILED_PATH="${HOME}/.local/brew/lib/guile/3.0/site-ccache"
+export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extensions"
+
+# Emacs
+export LSP_USE_PLISTS=true
+    
+# Aliases
+EMACSCLIENT=$(which emacsclient)
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        alias bat="batcat"
+        alias cat="batcat"
+        unalias emacs >> /dev/null
+        EMACS="$(which emacs) --daemon"
+        alias emacs="${EMACSCLIENT} -c -a=''"
+        export ALTERNATE_EDITOR=""
+        export EDITOR="${EMACSCLIENT} -c"
+        export VISUAL="${EMACSCLIENT} -c -a=''"
+        ;;
+    Darwin*)
+        alias cat="bat"
+        alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
+        alias EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs"
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+alias woman="man"
+alias dwr="dotnet watch run"
+alias dwt="dotnet watch test"
+alias vi="nvim"
+alias vim="nvim"
+alias sbcl="rlwrap -c sbcl --disable-debugger"
+
+# Autocompletion
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
+# Clojars
+export CLOJARS_DEPLOY_TOKEN="CLOJARS_1e9c011d2a6190ac7f1ab8e9a8a8e34a6fadec164393816ec6ce6be77536"
+
+# NVM
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+# Starship
+eval "$(starship init zsh)"
+
+eval "$(ssh-agent -s)" >> /dev/null
+

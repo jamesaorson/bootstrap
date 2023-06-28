@@ -1,0 +1,17 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        bootstrap_install kazam
+        kazam --version
+        ;;
+    *)          echo "UNSUPPORTED:${unameOut}"; exit 1;;
+esac
+

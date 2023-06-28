@@ -1,0 +1,50 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+if ! command -v curl >> /dev/null; then
+    # NOTE: Directly call, bypassing setup to avoid accidental recursion
+    # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
+    ../curl/setup curl
+fi
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        if sudo -v; then
+            sudo dpkg-reconfigure -f noninteractive tzdata
+        fi
+        ;;
+    Darwin*)
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+bootstrap_install zsh
+
+zsh --version
+mkdir -p ~/.local/bin
+
+ZPREZTO_DIR="${HOME}/.zprezto"
+bootstrap_clone 'https://github.com/sorin-ionescu/prezto.git' ${ZPREZTO_DIR}
+
+zsh -s <<- EOF
+setopt EXTENDED_GLOB
+for rcfile in \${ZPREZTO_DIR}/runcoms/^README.md(.N); do
+    ln -s -f "\$rcfile" "\${ZDOTDIR:-\$HOME}/.\${rcfile:t}"
+done
+EOF
+
+for rcfile in "zshrc" "zpreztorc"; do
+    rcfile_path="${ZDOTDIR:-$HOME}/.${rcfile}"
+    rm -f ${rcfile_path}
+    ln -s "$(pwd)/${rcfile}" ${rcfile_path}
+done
+
+export BIN_DIR="${HOME}/.local/bin"
+curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
+

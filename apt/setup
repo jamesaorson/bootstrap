@@ -1,0 +1,12 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+BIN_DIR=${BIN_DIR:-${HOME}/.local/bin}
+
+for script in $(ls -G | grep "^[a-zA-Z]*$"); do
+    ln -s -f $(pwd)/${script} ${BIN_DIR}/${script}
+done
+

@@ -1,0 +1,20 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+if ! command -v curl >> /dev/null; then
+    # NOTE: Directly call, bypassing setup to avoid accidental recursion
+    # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
+    ../curl/setup curl
+fi
+
+PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash'
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install 18
+nvm use 18
+

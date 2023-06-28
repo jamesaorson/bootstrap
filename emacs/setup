@@ -1,0 +1,61 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+SRC_DIR=${HOME}/.local/src
+mkdir -p ${SRC_DIR}
+EMACS_SRC_DIR=${SRC_DIR}/emacsconfig
+
+if [[ -d ${EMACS_SRC_DIR} ]]; then
+    pushd ${EMACS_SRC_DIR}
+    git pull
+    popd
+else
+  if [[ ${IN_CONTAINER} == "1" ]]; then
+    BRANCH=main bootstrap_clone 'https://github.com/jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
+  else
+    BRANCH=main bootstrap_clone 'git@github.com:jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
+  fi
+fi
+MUST_BUILD=1
+if command -v ${HOME}/.local/bin/emacs; then
+    pushd ${EMACS_SRC_DIR}/src
+    SRC_VERSION=$(git show-ref --head -s | head -n 1)
+    INSTALLED_VERSION=$(${HOME}/.local/bin/emacs --version | head -n 2 | tail -n 1 | cut -d ' ' -f 3)
+    if [[ ${SRC_VERSION} == "${INSTALLED_VERSION}"* ]]; then
+        MUST_BUILD=0
+    fi
+    popd
+elif command -v /Applications/Emacs.app/Contents/MacOS/Emacs; then
+    pushd ${EMACS_SRC_DIR}/src
+    SRC_VERSION=$(git show-ref --head -s | head -n 1)
+    INSTALLED_VERSION=$(/Applications/Emacs.app/Contents/MacOS/Emacs --version | head -n 2 | tail -n 1 | cut -d ' ' -f 3)
+    if [[ ${SRC_VERSION} == "${INSTALLED_VERSION}"* ]]; then
+        MUST_BUILD=0
+    fi
+    popd
+fi
+if [[ ${MUST_BUILD} == "1" ]]; then
+    ${EMACS_SRC_DIR}/scripts/setup.bash
+else
+    ${EMACS_SRC_DIR}/scripts/post.bash
+fi
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        bootstrap_install \
+          mpv
+        ;;
+    Darwin*)
+        sudo rm -f ~/Library/LaunchAgents/gnu.emacs.daemon.plist
+        sudo ln -s $(pwd)/gnu.emacs.daemon.plist ~/Library/LaunchAgents/gnu.emacs.daemon.plist
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+

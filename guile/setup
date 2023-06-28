@@ -1,0 +1,26 @@
+#! /bin/bash
+
+set -euox pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+export PATH="${HOME}/.local/brew/bin:${PATH}"
+if ! command -v brew; then
+    ../brew/setup
+fi
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        ;&
+    Darwin*)
+        brew install \
+             guile
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+guile --version
+

@@ -1,0 +1,29 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+bootstrap_install bat
+BAT=bat
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        BAT=batcat
+        batcat --version
+        ;;
+    Darwin*)
+        bat --version
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+mkdir -p ${HOME}/.config/bat/
+ln -s -f $(pwd)/config ${HOME}/.config/bat/config
+
+BRANCH=main bootstrap_clone 'https://github.com/catppuccin/bat' ${HOME}/.config/bat/themes
+${BAT} cache --build
+

@@ -1,0 +1,14 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+if ! command -v curl >> /dev/null; then
+    # NOTE: Directly call, bypassing setup to avoid accidental recursion
+    # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
+    ../curl/setup curl
+fi
+
+curl -fSsL https://sh.rustup.rs -sSf | sh -s -- -y
+
