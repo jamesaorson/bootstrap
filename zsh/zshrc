@@ -37,18 +37,15 @@ export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extension
 export LSP_USE_PLISTS=true
     
 # Aliases
-EMACSCLIENT=$(which emacsclient)
 PLATFORM="$(uname -s)"
 case ${PLATFORM} in
     Linux*)
         alias bat="batcat"
         alias cat="batcat"
-        unalias emacs >> /dev/null
-        EMACS="$(which emacs) --daemon"
-        alias emacs="${EMACSCLIENT} -c -a=''"
+        EMACS=$(which emacs)
         export ALTERNATE_EDITOR=""
-        export EDITOR="${EMACSCLIENT} -c"
-        export VISUAL="${EMACSCLIENT} -c -a=''"
+        export EDITOR="${EMACS}"
+        export VISUAL="${EMACS}"
         ;;
     Darwin*)
         alias cat="bat"
