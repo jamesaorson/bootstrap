@@ -22,14 +22,6 @@ Host github-work
 	ServerAliveInterval=5
     User org-107236519
     IdentityFile ~/.ssh/id_github-work
-Host james
-    ControlMaster auto
-	ControlPath ~/.ssh/%r%h:%p
-	ServerAliveCountMax=30
-	ServerAliveInterval=5
-	HostName 10.0.0.139
-	User james
-	IdentityFile ~/.ssh/id_ursinia
 Host school
      ControlMaster auto
      ControlPath ~/.ssh/%r%h:%p
@@ -38,6 +30,14 @@ Host school
      HostName login-ice.pace.gatech.edu
      User jorson6
      IdentityFile ~/.ssh/id_school
+Host pi
+    ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 10.0.0.217
+	User james
+	IdentityFile ~/.ssh/id_pi
 Host ursinia
     ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p

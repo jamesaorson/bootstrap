@@ -12,7 +12,5 @@ ssh -V
 
 DIR=${HOME}/.ssh
 mkdir -p ${DIR}
-
-rm -f ${DIR}/config
-cp $(pwd)/config ${DIR}/config
+ln -s -f $(pwd)/config ${DIR}/config
 
