@@ -32,8 +32,7 @@ ln -s -f $(pwd)/settings.json "${DIR}/settings.json"
 ln -s -f $(pwd)/keybindings.json "${DIR}/keybindings.json"
 
 # Install extensions
-EXTENSIONS=(
-)
+EXTENSIONS=""
 
 for extension in ${EXTENSIONS[@]}; do
     code --install-extension ${extension}

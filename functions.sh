@@ -43,7 +43,9 @@ bootstrap_install() {
             fi
             ;;
         Darwin*)
-            brew install --HEAD $@
+            if ! brew install --HEAD $@; then
+		brew install $@
+	    fi
             ;;
         *)          echo "UNKNOWN:${unameOut}"; exit 1;;
     esac

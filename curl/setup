@@ -6,7 +6,9 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 . ../functions.sh
 
-bootstrap_install curl
+if ! command -v curl; then
+    bootstrap_install curl
+fi
 
 curl --version
 

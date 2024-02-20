@@ -6,8 +6,6 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 . ../functions.sh
 
-bootstrap_install ssh
-
 ssh -V
 
 DIR=${HOME}/.ssh

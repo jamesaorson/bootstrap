@@ -1,0 +1,21 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.fontFamily": "FiraCode Nerd Font Mono",
+    "editor.renderWhitespace": "all",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "GitHub Dark Default",
+    "yaml.schemas": {
+        "file:///Users/jorson/.vscode/extensions/docsmsft.docs-yaml-1.0.1/dist/toc.schema.json": "/toc\\.yml/i"
+    },
+    "redhat.telemetry.enabled": false,
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+    "git.ignoreMissingGitWarning": true
+}

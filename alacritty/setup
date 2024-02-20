@@ -50,8 +50,7 @@ case ${PLATFORM} in
         ${BIN_DIR}/alacritty --version
         ;;
     Darwin*)
-        brew install --HEAD \
-            alacritty
+        bootstrap_install --HEAD alacritty
         alacritty --version
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;

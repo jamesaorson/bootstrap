@@ -6,7 +6,14 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 . ../functions.sh
 
-bootstrap_install git
+PLATFORM=$(uname -s)
+case ${PLATFORM} in
+    Linux*)
+        bootstrap_install git
+        ;;
+    *)
+        ;;
+esac
 
 git --version
 
@@ -16,7 +23,12 @@ TEMPLATE_DIR=${DIR}/template
 mkdir -p ${DIR}
 
 rm -f ~/.gitconfig
-ln -s $(pwd)/.gitconfig ~/.gitconfig
+
+GITCONFIG=gitconfig.default
+if [[ $(hostname) == *jorson* ]]; then
+    GITCONFIG=gitconfig.work
+fi
+ln -s -f $(pwd)/${GITCONFIG} ~/.gitconfig
 rm -f ${TEMPLATE_DIR}
-ln -s $(pwd)/template ${TEMPLATE_DIR}
+ln -s -f $(pwd)/template ${TEMPLATE_DIR}
 

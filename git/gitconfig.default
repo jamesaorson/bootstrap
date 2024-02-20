@@ -1,5 +1,6 @@
 [user]  
 	name = James Orson
+	email = jamesaorson@gmail.com
 [alias]
     co = checkout
 	cp = cherry-pick

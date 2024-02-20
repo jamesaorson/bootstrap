@@ -84,7 +84,6 @@ else
                 "tree"
                 "vscode"
                 "zsh"
-                "kazam"
             )
             ;;
         Darwin*)
@@ -94,14 +93,11 @@ else
                 "git"
                 "npm"
                 "nvim"
-                "emacs"
                 "ssh"
                 "gh"
                 "cl"
                 "golang"
-                "guile"
                 "rust"
-                "alacritty"
                 "bat"
                 "docker"
                 "podman"
@@ -109,6 +105,7 @@ else
                 "tree"
                 "vscode"
                 "zsh"
+                "alacritty"
             )
             ;;
         *)

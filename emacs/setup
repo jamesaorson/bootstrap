@@ -40,6 +40,7 @@ elif command -v /Applications/Emacs.app/Contents/MacOS/Emacs; then
     popd
 fi
 if [[ ${MUST_BUILD} == "1" ]]; then
+    bootstrap_install autoconf pkg-config
     ${EMACS_SRC_DIR}/scripts/setup.bash
 else
     ${EMACS_SRC_DIR}/scripts/post.bash
