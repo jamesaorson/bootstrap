@@ -17,5 +17,18 @@
         "markdown": false,
         "scminput": false
     },
-    "git.ignoreMissingGitWarning": true
+    "git.ignoreMissingGitWarning": true,
+    "cSpell.userWords": [
+        "agentpool",
+        "azuread",
+        "azurerm",
+        "eastus",
+        "snet",
+        "vnet"
+    ],
+    "sonarlint.rules": {
+        "terraform:S1135": {
+            "level": "off"
+        }
+    }
 }
