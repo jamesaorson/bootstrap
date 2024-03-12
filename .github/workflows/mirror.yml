@@ -1,0 +1,19 @@
+name: Mirror
+on:
+  push:
+    branches:
+      - '*' 
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Add ssh key
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - uses: jamesaorson/composite-git-mirror
+        with:
+          target-git-url: git@git.sr.ht:~jamesaorson/bootstrap
