@@ -30,5 +30,6 @@
         "terraform:S1135": {
             "level": "off"
         }
-    }
+    },
+    "FSharp.suggestGitignore": false
 }
