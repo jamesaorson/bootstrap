@@ -6,14 +6,14 @@ Host git.sr.ht
 	ServerAliveInterval=5
     User git
     IdentityFile ~/.ssh/id_sourcehut
-Host gitclarity
+Host saucetree
     Hostname 209.38.173.226
     ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
     User root
-    IdentityFile ~/.ssh/gitclarity
+    IdentityFile ~/.ssh/saucetree
 Host github.com
     ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p
