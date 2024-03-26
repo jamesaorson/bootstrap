@@ -25,9 +25,14 @@
     recurse = true
 [core]
     autocrlf = input
+	compression = 0
 
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[http]
+	postBuffer = 52428800
+[lfs "https://git.sr.ht/~jamesaorson/all.git/info/lfs"]
+	locksverify = false
