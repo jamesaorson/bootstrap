@@ -31,5 +31,6 @@
             "level": "off"
         }
     },
-    "FSharp.suggestGitignore": false
+    "FSharp.suggestGitignore": false,
+    "git.openRepositoryInParentFolders": "always"
 }
