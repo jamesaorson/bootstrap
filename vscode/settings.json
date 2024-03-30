@@ -29,8 +29,17 @@
     "sonarlint.rules": {
         "terraform:S1135": {
             "level": "off"
+        },
+        "csharpsquid:S6602": {
+            "level": "off"
         }
     },
     "FSharp.suggestGitignore": false,
-    "git.openRepositoryInParentFolders": "always"
+    "git.openRepositoryInParentFolders": "always",
+    "calva.prettyPrintingOptions": {
+        "printEngine": "pprint",
+        "enabled": false,
+        "width": 120,
+        "maxLength": 50
+    }
 }
