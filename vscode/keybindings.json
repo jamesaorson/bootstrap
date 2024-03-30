@@ -1,6 +1,6 @@
 [
     {
-        "key": "o",
+        "key": "ctrl+o",
         "command": "workbench.action.switchWindow"
     },
     {
