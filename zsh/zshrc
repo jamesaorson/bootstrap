@@ -41,14 +41,12 @@ PLATFORM="$(uname -s)"
 case ${PLATFORM} in
     Linux*)
         alias bat="batcat"
-        alias cat="batcat"
         EMACS=$(which emacs)
         export ALTERNATE_EDITOR=""
         export EDITOR="${EMACS}"
         export VISUAL="${EMACS}"
         ;;
     Darwin*)
-        alias cat="bat"
         alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
         alias EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs"
         ;;
