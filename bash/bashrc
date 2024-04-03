@@ -28,11 +28,22 @@ export LSP_USE_PLISTS=true
 PLATFORM="$(uname -s)"
 case ${PLATFORM} in
     Linux*)
-        alias bat="batcat"
-        EMACS=$(which emacs)
+        if command -v batcat; then
+            alias bat="batcat"
+        fi
+        if command -v nvim; then
+            _EDITOR=$(which nvim)
+        elif command -v emacs; then
+            _EDITOR=$(which emacs)
+        else command -v vim; then
+            _EDITOR=$(which vim)
+        else
+            _EDITOR=$(which nano)
+        fi
         export ALTERNATE_EDITOR=""
-        export EDITOR="${EMACS}"
-        export VISUAL="${EMACS}"
+        export EDITOR="${_EDITOR}"
+        export VISUAL="${_EDITOR}"
+        export GIT_EDITOR="${_EDITOR}"
         ;;
     Darwin*)
         alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
@@ -43,8 +54,6 @@ esac
 alias woman="man"
 alias dwr="dotnet watch run"
 alias dwt="dotnet watch test"
-alias vi="nvim"
-alias vim="nvim"
 alias sbcl="rlwrap -c sbcl --disable-debugger"
 
 # Kubectl autocompletion

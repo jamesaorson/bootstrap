@@ -19,6 +19,7 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
 export GOVERSION="${GOVERSION:-1.21.5}"
 export GOPATH="${HOME}/.local/go/path"
 export GOROOT="${HOME}/.local/go/root/${GOVERSION}/go"
+export GIT_EDITOR=""
 
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
@@ -40,23 +41,31 @@ export LSP_USE_PLISTS=true
 PLATFORM="$(uname -s)"
 case ${PLATFORM} in
     Linux*)
-        alias bat="batcat"
-        EMACS=$(which emacs)
+        if command -v batcat; then
+            alias bat="batcat"
+        fi
+        if command -v nvim; then
+            _EDITOR=$(which nvim)
+        elif command -v emacs; then
+            _EDITOR=$(which emacs)
+        else command -v vim; then
+            _EDITOR=$(which vim)
+        else
+            _EDITOR=$(which nano)
+        fi
         export ALTERNATE_EDITOR=""
-        export EDITOR="${EMACS}"
-        export VISUAL="${EMACS}"
+        export EDITOR="${_EDITOR}"
+        export VISUAL="${_EDITOR}"
+        export GIT_EDITOR="${_EDITOR}"
         ;;
     Darwin*)
         alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-        alias EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs"
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
 alias woman="man"
 alias dwr="dotnet watch run"
 alias dwt="dotnet watch test"
-alias vi="nvim"
-alias vim="nvim"
 alias sbcl="rlwrap -c sbcl --disable-debugger"
 
 # Autocompletion
