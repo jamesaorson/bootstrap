@@ -13,7 +13,7 @@ install_deps() {
         make
         parallel
         psmisc
-        software-properties-common
+        software-properties-cxommon
     )
     for dep in ${DEPS[@]}; do
         echo "Checking for dep ${dep}..."
@@ -67,6 +67,7 @@ else
                 "curl"
                 "brew"
                 "git"
+                "bash"
                 "npm"
                 "nvim"
                 "emacs"
@@ -83,7 +84,6 @@ else
                 "tmux"
                 "tree"
                 "vscode"
-                "zsh"
             )
             ;;
         Darwin*)
@@ -91,6 +91,7 @@ else
                 "curl"
                 "brew"
                 "git"
+                "bash"
                 "npm"
                 "nvim"
                 "ssh"
@@ -103,7 +104,6 @@ else
                 "tmux"
                 "tree"
                 "vscode"
-                "zsh"
                 "alacritty"
             )
             ;;

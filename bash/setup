@@ -1,0 +1,24 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+if ! command -v curl >> /dev/null; then
+    # NOTE: Directly call, bypassing setup to avoid accidental recursion
+    # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
+    ../curl/setup curl
+fi
+
+bash --version
+
+for rcfile in bashrc; do
+    rcfile_path="${ZDOTDIR:-$HOME}/.${rcfile}"
+    rm -f ${rcfile_path}
+    ln -s "$(pwd)/${rcfile}" ${rcfile_path}
+done
+
+export BIN_DIR="${HOME}/.local/bin"
+curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
