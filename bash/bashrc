@@ -1,16 +1,4 @@
-#! /bin/zsh
-
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Source Prezto.
-if [[ -s "${HOME}/.zprezto/init.zsh" ]]; then
-  source "${HOME}/.zprezto/init.zsh"
-fi
+#! /bin/bash
 
 # Java classpath
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
@@ -61,18 +49,19 @@ alias vi="nvim"
 alias vim="nvim"
 alias sbcl="rlwrap -c sbcl --disable-debugger"
 
-# Autocompletion
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
-
-# Clojars
-export CLOJARS_DEPLOY_TOKEN="CLOJARS_1e9c011d2a6190ac7f1ab8e9a8a8e34a6fadec164393816ec6ce6be77536"
+# Kubectl autocompletion
+if [[ command -v kubectl ]]; then
+    . <(kubectl completion zsh)
+fi
 
 # NVM
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"
+fi
 
 # Starship
-eval "$(starship init zsh)"
+eval "$(starship init bash)"
 
 eval "$(ssh-agent -s)" >> /dev/null
 
