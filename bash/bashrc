@@ -50,7 +50,7 @@ alias vim="nvim"
 alias sbcl="rlwrap -c sbcl --disable-debugger"
 
 # Kubectl autocompletion
-if [[ command -v kubectl ]]; then
+if command -v kubectl; then
     . <(kubectl completion zsh)
 fi
 
