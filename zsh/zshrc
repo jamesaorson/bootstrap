@@ -48,7 +48,7 @@ case ${PLATFORM} in
             _EDITOR=$(which nvim)
         elif command -v emacs; then
             _EDITOR=$(which emacs)
-        else command -v vim; then
+        elif command -v vim; then
             _EDITOR=$(which vim)
         else
             _EDITOR=$(which nano)
