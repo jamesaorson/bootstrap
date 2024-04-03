@@ -23,7 +23,7 @@ export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extension
 
 # Emacs
 export LSP_USE_PLISTS=true
-    
+
 # Aliases
 PLATFORM="$(uname -s)"
 case ${PLATFORM} in
