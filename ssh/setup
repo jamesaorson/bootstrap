@@ -10,5 +10,9 @@ ssh -V
 
 DIR=${HOME}/.ssh
 mkdir -p ${DIR}
-ln -s -f $(pwd)/config ${DIR}/config
+SSH_CONFIG=config.default
+if [[ $(hostname) == *jorson* ]]; then
+    SSH_CONFIG=config.work
+fi
+ln -s -f $(pwd)/${SSH_CONFIG} ${DIR}/config
 
