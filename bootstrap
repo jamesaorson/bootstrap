@@ -52,7 +52,9 @@ if [ $# -gt 0 ]; then
     PLATFORM="$(uname -s)"
     case ${PLATFORM} in
         Linux*)
-            install_deps
+            if sudo -v; then
+                install_deps
+            fi
             ;;
         *)
             ;;
@@ -61,7 +63,9 @@ else
     PLATFORM="$(uname -s)"
     case ${PLATFORM} in
         Linux*)
-            install_deps
+            if sudo -v; then
+                install_deps
+            fi
             SERVICES=(
                 "apt"
                 "curl"
@@ -75,7 +79,6 @@ else
                 "gh"
                 "cl"
                 "golang"
-                "guile"
                 "rust"
                 "bat"
                 "docker"
