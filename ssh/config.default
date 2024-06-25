@@ -46,6 +46,14 @@ Host pi
 	HostName 10.0.0.217
 	User james
 	IdentityFile ~/.ssh/id_pi
+Host pi-ota
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName ursinia.net
+	User james
+	IdentityFile ~/.ssh/id_pi
 Host ursinia
 	ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p
