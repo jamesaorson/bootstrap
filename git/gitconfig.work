@@ -1,6 +1,7 @@
-[user]  
+[user]
 	name = James Orson
 	email = jorson@purestorage.com
+	signingkey = 8983B7C5964AAD8DF2C874651650B9F10929B9A1
 [alias]
     co = checkout
 	cp = cherry-pick
@@ -32,4 +33,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 [pull]
-	rebase = true
+	rebase = false
+[commit]
+	gpgsign = true
