@@ -19,7 +19,6 @@ export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
 export GOVERSION="${GOVERSION:-1.21.5}"
 export GOPATH="${HOME}/.local/go/path"
 export GOROOT="${HOME}/.local/go/root/${GOVERSION}/go"
-export GIT_EDITOR=""
 
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
