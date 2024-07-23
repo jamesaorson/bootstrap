@@ -43,8 +43,8 @@ bootstrap_install() {
             fi
             ;;
         Darwin*)
-            if ! brew install --HEAD $@; then
-		brew install $@
+            if ! HOMEBREW_NO_AUTO_UPDATE=0 brew install --HEAD $@; then
+		HOMEBREW_NO_AUTO_UPDATE=0 brew install $@
 	    fi
             ;;
         *)          echo "UNKNOWN:${unameOut}"; exit 1;;

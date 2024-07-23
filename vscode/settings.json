@@ -41,5 +41,16 @@
         "enabled": false,
         "width": 120,
         "maxLength": 50
-    }
+    },
+    "workbench.preferredHighContrastColorTheme": "GitHub Dark Default",
+    "files.associations": {
+        "*.fs": "fsharp",
+        "*.fsproj": "xml"
+    },
+    "godotTools.editorPath.godot3": "/Applications/Godot_mono_v4",
+    "godot.csharp.executablePath": "/Applications/Godot_mono_v4",
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "githubPullRequests.pullBranch": "never"
 }
