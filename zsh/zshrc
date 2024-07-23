@@ -43,7 +43,7 @@ case ${PLATFORM} in
     Linux*)
         if command -v batcat; then
             alias bat="batcat"
-        f
+        fi
         ;;
     Darwin*)
         alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
