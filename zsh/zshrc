@@ -52,7 +52,7 @@ esac
 alias woman="man"
 alias dwr="dotnet watch run"
 alias dwt="dotnet watch test"
-alias sbcl="rlwrap -c sbcl --disable-debugger"
+alias sbcl="rlwrap -c sbcl"
 
 # Autocompletion
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
