@@ -13,10 +13,4 @@ rlwrap --version
 sbcl --version
 
 rm -f ${HOME}/.sbclrc
-rm -rf ~/.quicklisp
-
-sbcl --no-sysinit --no-userinit --load $(pwd)/quicklisp.lisp \
-    --eval '(quicklisp-quickstart:install :path "~/.quicklisp")' \
-    --quit
-    ln -s -f $(pwd)/sbclrc ${HOME}/.sbclrc
-
+ln -s -f $(pwd)/sbclrc ${HOME}/.sbclrc
