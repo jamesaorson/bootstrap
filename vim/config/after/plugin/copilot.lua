@@ -6,3 +6,4 @@ common.run("copilot", function()
 		panel = { enabled = false },
 	})
 end)
+

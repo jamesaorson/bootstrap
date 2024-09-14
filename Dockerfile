@@ -38,23 +38,24 @@ RUN ./bootstrap \
     curl \
     git
 RUN ./bootstrap \
-    emacs
-RUN ./bootstrap \
     apt \
-    brew \
-    npm \
-    nvim \
-    ssh \
-    gh \
+    brew
+RUN ./bootstrap \
+    bat \
     cl \
+	gf2 \
+    gh \
     golang \
     guile \
+    npm \
     rust \
-    bat \
+    ssh \
     tmux \
     tree \
-    zsh \
-    gf2
+	vim \
+    zsh
+RUN ./bootstrap \
+    emacs
 RUN sudo usermod --shell zsh ${USERNAME}
 RUN /home/${USERNAME}/.local/brew/bin/brew cleanup --prune=all
 

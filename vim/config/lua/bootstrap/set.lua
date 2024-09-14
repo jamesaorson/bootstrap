@@ -4,7 +4,7 @@ common.run("cursor and columns", function()
 	vim.opt.guicursor = ""
 	vim.opt.cursorline = true
 	vim.opt.cursorcolumn = true
-	vim.opt.colorcolumn = "81"
+	vim.opt.colorcolumn = "121"
 	vim.opt.cursorline = true
 end)
 
@@ -24,13 +24,13 @@ common.run("indent", function()
 	vim.opt.tabstop = 4
 	vim.opt.softtabstop = 4
 	vim.opt.shiftwidth = 4
-	vim.opt.expandtab = true
+	vim.opt.expandtab = false
 	vim.opt.smartindent = true
 	vim.opt.wrap = false
 end)
 
 common.run("netrw", function()
-    vim.g.netrw_banner = false
+	vim.g.netrw_banner = false
 end)
 
 common.run("search", function()
@@ -44,6 +44,6 @@ common.run("other options", function()
 	vim.opt.updatetime = 50
 
 	vim.g.mapleader = " "
-    vim.g.netrw_liststyle = 3
+	vim.g.netrw_liststyle = 3
 end)
 

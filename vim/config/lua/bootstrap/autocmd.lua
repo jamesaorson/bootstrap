@@ -23,3 +23,4 @@ common.run("autocmds", function()
 		api.nvim_command("augroup END")
 	end
 end)
+
