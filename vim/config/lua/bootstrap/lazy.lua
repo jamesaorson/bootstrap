@@ -122,5 +122,18 @@ common.run("lazy", function()
 				require("copilot_cmp").setup()
 			end,
 		},
+		-- Snip run
+		{
+			"michaelb/sniprun",
+			branch = "master",
+
+			build = "sh install.sh 1",
+
+			config = function()
+				require("sniprun").setup({
+					-- your options
+				})
+			end,
+		},
 	})
 end)
