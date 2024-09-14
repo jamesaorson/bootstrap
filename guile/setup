@@ -1,0 +1,21 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+		bootstrap_install guile-3.0
+        ;;
+    Darwin*)
+		bootstrap_install guile
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+
+ln -s -f $(pwd)/.guile ${HOME}/.guile
+
