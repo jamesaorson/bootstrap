@@ -1,8 +1,8 @@
 local common = require("bootstrap.common")
 
 common.run("lazy", function()
-	local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-	if not vim.loop.fs_stat(lazypath) then
+		local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+		if not vim.loop.fs_stat(lazypath) then
 		vim.fn.system({
 			"git",
 			"clone",
@@ -10,130 +10,113 @@ common.run("lazy", function()
 			"https://github.com/folke/lazy.nvim.git",
 			"--branch=stable", -- latest stable release
 			lazypath,
-		})
-	end
-	vim.opt.rtp:prepend(lazypath)
-	require("lazy").setup({
-		-- Color scheme
-		{
+			})
+		end
+		vim.opt.rtp:prepend(lazypath)
+		require("lazy").setup({
+			-- Color scheme
+			{
 			"catppuccin/nvim",
 			lazy = false,
 			name = "catppuccin",
 			priority = 1000,
-		},
-		-- Fuzzy finder
-		{
+			},
+			-- Fuzzy finder
+			{
 			"nvim-telescope/telescope.nvim",
 			tag = "0.1.4",
 			dependencies = { "nvim-lua/plenary.nvim" },
-		},
-		-- Syntax highlighter/inspector
-		{
+			},
+			-- Syntax highlighter/inspector
+			{
 			"nvim-treesitter/nvim-treesitter",
 			build = ":TSUpdate",
-		},
-		-- File marking utility
-		{
-			"theprimeagen/harpoon",
-		},
-		-- Git client
-		{
-			"tpope/vim-fugitive",
-		},
-		-- Autocompletion
-		{
-			"hrsh7th/nvim-cmp",
-			dependencies = {
-				{ "L3MON4D3/LuaSnip" },
 			},
-		},
-		-- Formatter
-		{ "mhartington/formatter.nvim" },
-		-- Task tracking
-		{
-			"folke/todo-comments.nvim",
-			dependencies = { "nvim-lua/plenary.nvim" },
-			opts = {},
-		},
-		-- Tabs on top of window
-		{
-			"romgrk/barbar.nvim",
-			dependencies = {
-				"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
-				"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+			-- File marking utility
+			{
+				"theprimeagen/harpoon",
 			},
-			init = function()
-				vim.g.barbar_auto_setup = false
-			end,
-			opts = {
-				-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-				-- animation = true,
-				-- insert_at_start = true,
-				-- …etc.
+			-- Git client
+			{
+				"tpope/vim-fugitive",
 			},
-			version = "^1.0.0", -- optional: only update when a new 1.x version is released
-		},
-		-- Floating terminal
-		{
-			"voldikss/vim-floaterm",
-		},
-		-- Tmux navigator
-		{
-			"christoomey/vim-tmux-navigator",
-			lazy = false,
-		},
-		-- Trouble
-		{
-			"folke/trouble.nvim",
-			dependencies = { "nvim-tree/nvim-web-devicons" },
-			opts = {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
+			-- Autocompletion
+			{
+				"hrsh7th/nvim-cmp",
+				dependencies = {
+				}
 			},
-		},
-		-- Which key
-		{
-			"folke/which-key.nvim",
-			event = "VeryLazy",
-			init = function()
-				vim.o.timeout = true
-				vim.o.timeoutlen = 300
-			end,
-			opts = {
-				-- your configuration comes here
-				-- or leave it empty to use the default settings
-				-- refer to the configuration section below
+			-- Formatter
+			{ "mhartington/formatter.nvim" },
+			-- Task tracking
+			{
+				"folke/todo-comments.nvim",
+				dependencies = { "nvim-lua/plenary.nvim" },
+				opts = {},
 			},
-		},
-		-- Copilot
-		{
-			"zbirenbaum/copilot.lua",
-			cmd = "Copilot",
-			event = "InsertEnter",
-			config = function()
-				require("copilot").setup({})
-			end,
-		},
-		{
-			"zbirenbaum/copilot-cmp",
-			after = { "copilot.lua" },
-			config = function()
-				require("copilot_cmp").setup()
-			end,
-		},
-		-- Snip run
-		{
-			"michaelb/sniprun",
-			branch = "master",
+			-- Tabs on top of window
+			{
+				"romgrk/barbar.nvim",
+				dependencies = {
+					"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+						"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+				},
+				init = function()
+					vim.g.barbar_auto_setup = false
+					end,
+				opts = {
+					-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+						-- animation = true,
+					-- insert_at_start = true,
+					-- …etc.
+				},
+				version = "^1.0.0", -- optional: only update when a new 1.x version is released
+			},
+			-- Floating terminal
+			{
+				"voldikss/vim-floaterm",
+			},
+			-- Tmux navigator
+			{
+				"christoomey/vim-tmux-navigator",
+				lazy = false,
+			},
+			-- Trouble
+			{
+				"folke/trouble.nvim",
+				dependencies = { "nvim-tree/nvim-web-devicons" },
+				opts = {
+					-- your configuration comes here
+						-- or leave it empty to use the default settings
+						-- refer to the configuration section below
+				},
+			},
+			-- Which key
+			{
+				"folke/which-key.nvim",
+				event = "VeryLazy",
+				init = function()
+					vim.o.timeout = true
+					vim.o.timeoutlen = 300
+					end,
+				opts = {
+					-- your configuration comes here
+						-- or leave it empty to use the default settings
+						-- refer to the configuration section below
+				},
+			},
+			-- Snip Run
+			{
+				"michaelb/sniprun",
+				branch = "master",
 
-			build = "sh install.sh 1",
+				build = "sh install.sh 1",
 
-			config = function()
-				require("sniprun").setup({
-					-- your options
-				})
-			end,
-		},
-	})
+				config = function()
+					require("sniprun").setup({
+							-- your options
+							})
+				end,
+			},
+		})
 end)

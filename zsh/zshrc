@@ -53,7 +53,7 @@ alias woman="man"
 alias dwr="dotnet watch run"
 alias dwt="dotnet watch test"
 alias sbcl="rlwrap -c sbcl"
-if command -v nvim; then
+if command -v nvim >> /dev/null; then
 	alias vim=$(which nvim)
 fi
 
