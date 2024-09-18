@@ -1,4 +1,0 @@
-[submodule "vim/scheme-langserver"]
-	path = vim/scheme-langserver
-	url = https://github.com/ufo5260987423/scheme-langserver
-	branch = main
