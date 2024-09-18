@@ -1,0 +1,20 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+. ../functions.sh
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+		bootstrap_install guix
+        ;;
+    Darwin*)
+        echo "UNSUPPORTED"
+		exit 1
+        ;;
+    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+esac
+

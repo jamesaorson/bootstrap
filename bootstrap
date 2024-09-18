@@ -80,6 +80,7 @@ else
                 "gh"
                 "cl"
                 "golang"
+				"guix"
                 "rust"
                 "bat"
                 "docker"

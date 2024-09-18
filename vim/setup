@@ -19,6 +19,10 @@ case ${PLATFORM} in
         if sudo -v; then
             sudo add-apt-repository -y ppa:neovim-ppa/unstable
         fi
+		PACKAGE=guix.scm
+		rm -f ${PACKAGE}
+		curl -s https://codeberg.org/rgherdt/scheme-lsp-server/raw/commit/428f2e8dbe37eff8c769f40ede8a80e99417e28e/guix.scm > ${PACKAGE}
+		guix package -f ${PACKAGE}
         ;;
     Darwin*)
         ;;
@@ -32,4 +36,10 @@ CONFIG_DIR=${HOME}/.config
 mkdir -p ${CONFIG_DIR}
 rm -f ${HOME}/.config/nvim
 ln -s -f $(pwd)/config ${HOME}/.config/nvim
+
+# Language Servers
+
+
+## Scheme Language Server - https://github.com/ufo5260987423/scheme-langserver
+
 
