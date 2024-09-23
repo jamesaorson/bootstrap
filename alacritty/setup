@@ -9,10 +9,10 @@ cd $(dirname ${BASH_SOURCE[0]})
 . ${HOME}/.cargo/env
 
 CWD=$(pwd)
-DIR=${HOME}/.config/alacritty
-SRC=${DIR}/src
+CONFIG_DIR=${HOME}/.config/alacritty
+mkdir -p ${CONFIG_DIR}
+SRC=${CONFIG_DIR}/src
 BIN_DIR=${HOME}/.local/bin
-mkdir -p ${DIR}
 
 PLATFORM="$(uname -s)"
 case ${PLATFORM} in
@@ -50,13 +50,12 @@ case ${PLATFORM} in
         ${BIN_DIR}/alacritty --version
         ;;
     Darwin*)
-        bootstrap_install --HEAD alacritty
+        bootstrap_install alacritty
         alacritty --version
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
 
-
-mkdir -p ${DIR}
-ln -s -f $(pwd)/alacritty.toml ${DIR}
+rm -f ${CONFIG_DIR}/alacritty.toml
+ln -s -f $(pwd)/alacritty.toml ${CONFIG_DIR}/alacritty.toml
 
