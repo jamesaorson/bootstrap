@@ -13,12 +13,13 @@ TERM = "xterm-256color"
 
 [cursor.style]
 blinking = "On"
-shape = "Block"
+shape = "Beam"
 
 [font]
-size = 18.0
+size = 22.0
 
 [font.bold]
+family = "FiraMono Nerd Font"
 style = "Bold"
 
 [font.normal]
@@ -33,37 +34,12 @@ dynamic_title = true
 startup_mode = "Maximized"
 title = "Alacritty"
 
-[[colors.indexed_colors]]
-color = "#FAB387"
-index = 16
-
-[[colors.indexed_colors]]
-color = "#F5E0DC"
-index = 17
-
-[colors.bright]
-black = "#585B70"
-blue = "#89B4FA"
-cyan = "#94E2D5"
-green = "#A6E3A1"
-magenta = "#F5C2E7"
-red = "#F38BA8"
-white = "#A6ADC8"
-yellow = "#F9E2AF"
+[colors]
+draw_bold_text_with_bright_colors = true
 
 [colors.cursor]
-cursor = "#F5E0DC"
-text = "#1E1E2E"
-
-[colors.dim]
-black = "#45475A"
-blue = "#89B4FA"
-cyan = "#94E2D5"
-green = "#A6E3A1"
-magenta = "#F5C2E7"
-red = "#F38BA8"
-white = "#BAC2DE"
-yellow = "#F9E2AF"
+cursor = "#c7c7c7"
+text = "#feffff"
 
 [colors.hints.end]
 background = "#A6ADC8"
@@ -73,21 +49,31 @@ foreground = "#1E1E2E"
 background = "#F9E2AF"
 foreground = "#1E1E2E"
 
+[colors.bright]
+black = "#2b2b2b"
+blue = "#56bcf0"
+cyan = "#8ef9fd"
+green = "#77f54a"
+magenta = "#b93ec1"
+red = "#ef766d"
+white = "#feffff"
+yellow = "#fefb7e"
+
 [colors.normal]
-black = "#45475A"
-blue = "#89B4FA"
-cyan = "#94E2D5"
-green = "#A6E3A1"
-magenta = "#F5C2E7"
-red = "#F38BA8"
-white = "#BAC2DE"
-yellow = "#F9E2AF"
+black = "#2b2b2b"
+blue = "#6a71f6"
+cyan = "#53c2c5"
+green = "#77d049"
+magenta = "#b93ec1"
+red = "#ea4127"
+white = "#c7c7c7"
+yellow = "#efec4e"
 
 [colors.primary]
 background = "#181818"
-bright_foreground = "#CDD6F4"
-dim_foreground = "#CDD6F4"
-foreground = "#CDD6F4"
+bright_foreground = "#c7c7c7"
+dim_foreground = "#c7c7c7"
+foreground = "#c7c7c7"
 
 [colors.search.focused_match]
 background = "#A6E3A1"
@@ -108,3 +94,4 @@ text = "#1E1E2E"
 [colors.vi_mode_cursor]
 cursor = "#B4BEFE"
 text = "#1E1E2E"
+
