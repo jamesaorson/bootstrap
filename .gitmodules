@@ -1,4 +1,0 @@
-[submodule "vim/config/pack/dkendal/opt/nvim-treeclimber"]
-	path = vim/config/pack/dkendal/opt/nvim-treeclimber
-	url = https://github.com/Dkendal/nvim-treeclimber
-	branch = main
