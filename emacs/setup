@@ -6,9 +6,7 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 . ../functions.sh
 
-SRC_DIR=${HOME}/.local/src
-mkdir -p ${SRC_DIR}
-EMACS_SRC_DIR=${SRC_DIR}/emacsconfig
+EMACS_SRC_DIR=${HOME}/git.sr.ht/jamesaorson/emacsconfig
 
 if [[ -d ${EMACS_SRC_DIR} ]]; then
     pushd ${EMACS_SRC_DIR}
@@ -16,9 +14,9 @@ if [[ -d ${EMACS_SRC_DIR} ]]; then
     popd
 else
   if [[ ${IN_CONTAINER} == "1" ]]; then
-    BRANCH=main bootstrap_clone 'https://github.com/jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
+    BRANCH=main bootstrap_clone 'https://git.sr.ht/~jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
   else
-    BRANCH=main bootstrap_clone 'git@github.com:jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
+    BRANCH=main bootstrap_clone 'git@git.sr.ht:~jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
   fi
 fi
 MUST_BUILD=1
