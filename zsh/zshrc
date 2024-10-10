@@ -69,3 +69,4 @@ eval "$(starship init zsh)"
 
 eval "$(ssh-agent -s)" >> /dev/null
 
+alias ursinia-deploy='cd ./git.sr.ht/jamesaorson/ursinia && git pull && ./deploy.bash'
