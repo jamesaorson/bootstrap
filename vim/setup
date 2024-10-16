@@ -12,24 +12,29 @@ ln -s -f $(pwd)/.vimrc ${HOME}/.vimrc
 PLATFORM="$(uname -a)"
 case ${PLATFORM} in
     Linux*)
- 	if [ $(echo ${PLATFORM} | grep -ic "Linux pi") -gt 0 ]; then
-	    sudo apt-get install \
-                python3-launchpadlib
-	fi
-        if sudo -v; then
+		    if [[ ${PLATFORM} == "Linux pi"* ]]; then
+				  sudo apt install ninja-build gettext cmake unzip curl
+				  mkdir -p ${HOME}/.local/src
+					sudo rm -rf ${HOME}/.local/src/neovim/{build,.deps}
+				  BRANCH=v0.10.2 bootstrap_clone https://github.com/neovim/neovim ${HOME}/.local/src/neovim
+				  pushd ${HOME}/.local/src/neovim
+					sudo make CMAKE_BUILD_TYPE=Release
+					cd build && sudo cpack -G DEB && sudo dpkg -i nvim-linux64.deb
+					popd
+				else
+          if sudo -v; then
             sudo add-apt-repository -y ppa:neovim-ppa/unstable
-        fi
-		PACKAGE=guix.scm
-		rm -f ${PACKAGE}
-		curl -s https://codeberg.org/rgherdt/scheme-lsp-server/raw/commit/428f2e8dbe37eff8c769f40ede8a80e99417e28e/guix.scm > ${PACKAGE}
-		guix package -f ${PACKAGE}
-        ;;
+						sudo apt-get update
+          fi
+				  bootstrap_install neovim
+				fi
+		    ;;
     Darwin*)
+		    bootstrap_install neovim --HEAD
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
 
-bootstrap_install neovim
 nvim -V1 -v
 
 CONFIG_DIR=${HOME}/.config

@@ -15,18 +15,12 @@ fi
 # Java classpath
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
 
-# Golang env vars
-export GOVERSION="${GOVERSION:-1.21.5}"
-export GOPATH="${HOME}/.local/go/path"
-export GOROOT="${HOME}/.local/go/root/${GOVERSION}/go"
-
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${HOME}/.local/brew/bin:${PATH}"
-export PATH="${HOME}/.local/opt/go/bin:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
-export PATH="${GOROOT}/go/bin:${GOPATH}/bin:${PATH}"
 export PATH="${PATH}:/Applications/Emacs.app/Contents/MacOS/bin"
+export PATH="${HOME}/.local/go/bin:${PATH}"
 
 # Guile
 export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"

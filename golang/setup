@@ -10,28 +10,25 @@ if ! command -v curl >> /dev/null; then
     ../curl/setup curl
 fi
 
-export GOVERSION="${GOVERSION:-1.21.5}"
-export GOPATH="${GOPATH:-${HOME}/.local/go/path}"
-export GOROOT="${GOROOT:-${HOME}/.local/go/root/${GOVERSION}}"
-mkdir -p ${GOPATH}
+LOCAL_DIRECTORY="${HOME}/.local"
+GO_INSTALL_DIRECTORY=${LOCAL_DIRECTORY}/go
+GO_VERSION="1.23.2"
 
-set -u
-
-if [[ -d ${GOROOT} ]]; then
-    echo "Go ${GOVERSION} is already installed"
+GO="${GO_INSTALL_DIRECTORY}/bin/go"
+if [[ -f ${GO} ]]; then
+    echo "Go ${GO_VERSION} is already installed"
     exit 0
 fi
 
-mkdir -p ${GOROOT}
+UNAME_S=$(uname -s | tr '[:upper:]' '[:lower:]')
+UNAME_M=$(uname -m)
+if [[ ${UNAME_M} == aarch64 ]]; then
+	ARCH=arm64
+else
+	ARCH=${UNAME_M}
+fi
 
-TARBALL="go${GOVERSION}.linux-amd64.tar.gz"
-curl -fsSL -O "https://go.dev/dl/${TARBALL}"
-mkdir -p ${GOROOT}
-tar -C "${GOROOT}" -xzf ./${TARBALL}
-rm -f ./${TARBALL}
-
-${GOROOT}/go/bin/go version
-
-rm -f ${HOME}/.local/bin/go
-ln -s ${GOROOT}/go/bin/go ${HOME}/.local/bin/go
+mkdir -p ${LOCAL_DIRECTORY}
+rm -rf ${GO_INSTALL_DIRECTORY}
+curl -L "https://go.dev/dl/go${GO_VERSION}.${UNAME_S}-${ARCH}.tar.gz" | tar -C ${LOCAL_DIRECTORY} -xz
 
