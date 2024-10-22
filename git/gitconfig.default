@@ -26,7 +26,6 @@
 [core]
 	autocrlf = input
 	compression = 0
-	editor = /usr/bin/vim
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

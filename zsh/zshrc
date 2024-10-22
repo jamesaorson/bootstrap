@@ -49,6 +49,7 @@ alias dwt="dotnet watch test"
 alias sbcl="rlwrap -c sbcl"
 if command -v nvim >> /dev/null; then
 	alias vim=$(which nvim)
+	export GIT_EDITOR=$(which nvim)
 fi
 
 # Autocompletion
@@ -64,3 +65,4 @@ eval "$(starship init zsh)"
 eval "$(ssh-agent -s)" >> /dev/null
 
 alias ursinia-deploy='cd ./git.sr.ht/jamesaorson/ursinia && git pull && ./deploy.bash'
+
