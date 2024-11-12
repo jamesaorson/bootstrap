@@ -24,6 +24,8 @@ esac
 mkdir -p ${HOME}/.config/bat/
 ln -s -f $(pwd)/config ${HOME}/.config/bat/config
 
-BRANCH=main bootstrap_clone 'https://github.com/catppuccin/bat' ${HOME}/.config/bat/themes
+if ! [[ -d ${HOME}/.config/bat/themes ]]; then
+    BRANCH=main bootstrap_clone 'https://github.com/catppuccin/bat' ${HOME}/.config/bat/themes
+fi
 ${BAT} cache --build
 

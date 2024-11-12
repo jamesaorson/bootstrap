@@ -4,7 +4,6 @@
     "editor.renderWhitespace": "all",
     "workbench.iconTheme": "material-icon-theme",
     "yaml.schemas": {
-        "file:///Users/jorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
     },
     "redhat.telemetry.enabled": false,
     "git.autofetch": true,
@@ -55,5 +54,12 @@
     "workbench.colorTheme": "GitHub Dark Default",
     "[html]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
-    }
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "database-client.autoSync": true
 }

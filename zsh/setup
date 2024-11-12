@@ -30,6 +30,9 @@ zsh --version
 mkdir -p ~/.local/bin
 
 ZPREZTO_DIR="${HOME}/.zprezto"
+if [[ -d ${ZPREZTO_DIR} ]]; then
+    exit 0
+fi
 bootstrap_clone 'https://github.com/sorin-ionescu/prezto.git' ${ZPREZTO_DIR}
 
 zsh -s <<- EOF

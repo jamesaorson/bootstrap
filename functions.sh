@@ -43,9 +43,11 @@ bootstrap_install() {
             fi
             ;;
         Darwin*)
-            if ! HOMEBREW_NO_AUTO_UPDATE=0 brew install $@; then
-		HOMEBREW_NO_AUTO_UPDATE=0 brew reinstall $@
-	    fi
+            if ! command -v; then
+                if ! HOMEBREW_NO_AUTO_UPDATE= brew install $@; then
+                    HOMEBREW_NO_AUTO_UPDATE= brew reinstall $@
+                fi
+            fi
             ;;
         *)          echo "UNKNOWN:${unameOut}"; exit 1;;
     esac

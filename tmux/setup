@@ -24,15 +24,17 @@ INFO "Finished setting up config"
 
 INFO "Installing tmux"
 bootstrap_install tmux
-tmux -V
 INFO "Finished installing tmux"
+tmux -V
 
 INFO "Installing tmux plugin manager"
 PLUGIN_DIR=${HOME}/.tmux/plugins
 INSTALL_DIR=${PLUGIN_DIR}/tpm
 mkdir -p ${PLUGIN_DIR}
 
-bootstrap_clone 'https://github.com/tmux-plugins/tpm' ${INSTALL_DIR}
+if ! [[ -d ${INSTALL_DIR} ]]; then
+    bootstrap_clone 'https://github.com/tmux-plugins/tpm' ${INSTALL_DIR}
+fi
 INFO "Finished installing tmux plugin manager"
 
 INFO "REMEMBER TO RUN THE TMUX SOURCE COMMAND"

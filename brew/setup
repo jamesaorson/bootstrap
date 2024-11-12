@@ -4,17 +4,15 @@ set -euo pipefail
 
 cd $(dirname ${BASH_SOURCE[0]})
 
+if command -v brew; then
+    exit 0
+fi
+
 if ! command -v curl >> /dev/null; then
     # NOTE: Directly call, bypassing setup to avoid accidental recursion
     # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
     ../curl/setup curl
 fi
 
-BREW=brew
-LOCAL_DIR=${HOME}/.local
-DIR=${LOCAL_DIR}/${BREW}
-
-mkdir -p ${DIR}
-cd ${LOCAL_DIR}
-curl -fsSL https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C ${BREW}
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
