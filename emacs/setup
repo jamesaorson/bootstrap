@@ -8,11 +8,7 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 EMACS_SRC_DIR=${HOME}/git.sr.ht/jamesaorson/emacsconfig
 
-if [[ -d ${EMACS_SRC_DIR} ]]; then
-    pushd ${EMACS_SRC_DIR}
-    git pull
-    popd
-else
+if ! [[ -d ${EMACS_SRC_DIR} ]]; then
   if [[ ${IN_CONTAINER} == "1" ]]; then
     BRANCH=main bootstrap_clone 'https://git.sr.ht/~jamesaorson/emacsconfig' ${EMACS_SRC_DIR}
   else
