@@ -97,3 +97,12 @@ load-nvmrc() {
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 
+zoomer() {
+    alias vibe_check="git status"
+    alias whip="git add $@"
+    alias rizz="git commit -m $@"
+    alias yeet="git push $@"
+    alias no_cap="-f"
+    alias yap="--verbose"
+    alias no_yap="-q"
+}
