@@ -7,7 +7,7 @@ Host git.sr.ht
 	User git
 	IdentityFile ~/.ssh/id_sourcehut
 Host saucetree
-Hostname 209.38.173.226
+    Hostname 209.38.173.226
 	ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p
 	ServerAliveCountMax=30
@@ -85,5 +85,6 @@ Host dev_ursinia
 	ServerAliveInterval=5
 	HostName 192.168.4.51
 	User james
-	ProxyCommand ssh -W %h:%p james@ursinia.net
+	ProxyCommand ssh -W %h:%p pi-ota
+	IdentityFile ~/.ssh/id_pi
 
