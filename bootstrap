@@ -78,7 +78,6 @@ else
                 "ssh"
                 "gh"
                 "cl"
-                "golang"
 								"guix"
                 "rust"
                 "bat"

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -euo pipefail
+set -euox pipefail
 
 cd $(dirname ${BASH_SOURCE[0]})
 
@@ -17,14 +17,14 @@ case ${PLATFORM} in
     Linux*)
         if sudo -v; then
             sudo dpkg-reconfigure -f noninteractive tzdata
+						bootstrap_install zsh
         fi
         ;;
     Darwin*)
+			  bootstrap_install zsh
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
-
-bootstrap_install zsh
 
 zsh --version
 mkdir -p ~/.local/bin
