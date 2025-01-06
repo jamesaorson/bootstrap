@@ -27,6 +27,7 @@
 [core]
 	autocrlf = input
 	editor = /usr/bin/vim
+	excludesFile = ~/.gitignore
 [filter "lfs"]
 	required = true
 	clean = git-lfs clean -- %f

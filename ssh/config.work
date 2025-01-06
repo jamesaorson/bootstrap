@@ -78,7 +78,7 @@ Host work-dev-jorson
 	HostName 10.7.69.7
 	User jorson
 	IdentityFile ~/.ssh/id_work-dev-jorson
-Host dev_ursinia
+Host dev_ursinia-ota
 	ControlMaster auto
 	ControlPath ~/.ssh/%r%h:%p
 	ServerAliveCountMax=30
@@ -87,4 +87,12 @@ Host dev_ursinia
 	User james
 	ProxyCommand ssh -W %h:%p pi-ota
 	IdentityFile ~/.ssh/id_pi
+Host dev_ursinia
+	ControlMaster auto
+	ControlPath ~/.ssh/%r%h:%p
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 192.168.4.51
+	User james
+	# IdentityFile ~/.ssh/id_pi
 
