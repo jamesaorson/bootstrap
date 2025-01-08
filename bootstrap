@@ -78,7 +78,7 @@ else
                 "ssh"
                 "gh"
                 "cl"
-								"guix"
+				"guix"
                 "rust"
                 "bat"
                 "docker"
@@ -87,6 +87,7 @@ else
                 "tmux"
                 "tree"
                 "vscode"
+                "kitty"
             )
             ;;
         Darwin*)
@@ -107,6 +108,7 @@ else
                 "tmux"
                 "tree"
                 "vscode"
+                "kitty"
                 "alacritty"
             )
             ;;

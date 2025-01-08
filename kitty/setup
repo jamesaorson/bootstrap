@@ -1,0 +1,25 @@
+#! /bin/bash
+
+set -euo pipefail
+
+cd $(dirname ${BASH_SOURCE[0]})
+
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        ;;
+    Darwin*)
+        if ! [[ -f /Applications/kitty.app/Contents/MacOS/kitty ]]; then
+            curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+        fi
+        ;;
+    *)
+        echo "UNSUPPORTED PLATFORM: ${PLATFORM}"
+        exit 1
+        ;;
+esac
+
+KITTY_DIR=${HOME}/.config/kitty
+mkdir -p ${KITTY_DIR}
+ln -s -f $(pwd)/kitty.conf ${KITTY_DIR}/kitty.conf
+
