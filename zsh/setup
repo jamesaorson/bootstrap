@@ -27,13 +27,13 @@ case ${PLATFORM} in
 esac
 
 zsh --version
-mkdir -p ~/.local/bin
+export BIN_DIR="${HOME}/.local/bin"
+mkdir -p ${BIN_DIR}
 
 ZPREZTO_DIR="${HOME}/.zprezto"
-if [[ -d ${ZPREZTO_DIR} ]]; then
-    exit 0
+if ! [[ -d ${ZPREZTO_DIR} ]]; then
+    bootstrap_clone 'https://github.com/sorin-ionescu/prezto.git' ${ZPREZTO_DIR}
 fi
-bootstrap_clone 'https://github.com/sorin-ionescu/prezto.git' ${ZPREZTO_DIR}
 
 zsh -s <<- EOF
 setopt EXTENDED_GLOB
@@ -48,6 +48,4 @@ for rcfile in "zshrc" "zpreztorc"; do
     ln -s "$(pwd)/${rcfile}" ${rcfile_path}
 done
 
-export BIN_DIR="${HOME}/.local/bin"
 curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
-
