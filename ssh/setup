@@ -15,4 +15,4 @@ if [[ $(hostname) == *jorson* ]]; then
     SSH_CONFIG=config.work
 fi
 rm -f ${DIR}/config
-ln -s -f ~/git.sr.ht/jamesaorson/bootstrap/ssh/${SSH_CONFIG} ${DIR}/config
+cp -vf ~/git.sr.ht/jamesaorson/bootstrap/ssh/${SSH_CONFIG} ${DIR}/config
