@@ -94,8 +94,10 @@ load-nvmrc() {
   fi
 }
 
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
+if command -v nvm_find_nvmrc >> /dev/null; then
+  add-zsh-hook chpwd load-nvmrc
+  load-nvmrc
+fi
 
 zoomer() {
     alias vibe_check="git status"
