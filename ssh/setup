@@ -8,7 +8,7 @@ cd $(dirname ${BASH_SOURCE[0]})
 
 ssh -V
 
-DIR=${HOME}/.ssh
+DIR=~/.ssh
 mkdir -p ${DIR}
 SSH_CONFIG=config.default
 if [[ $(hostname) == *jorson* ]]; then
