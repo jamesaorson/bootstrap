@@ -14,5 +14,6 @@ SSH_CONFIG=config.default
 if [[ $(hostname) == *jorson* ]]; then
     SSH_CONFIG=config.work
 fi
+rm -f ${DIR}/config
 ln -s -f $(pwd)/${SSH_CONFIG} ${DIR}/config
 
