@@ -30,7 +30,7 @@ case ${PLATFORM} in
 				fi
 		    ;;
     Darwin*)
-		    bootstrap_install neovim --HEAD
+		    bootstrap_install neovim
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac

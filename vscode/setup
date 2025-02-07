@@ -28,8 +28,13 @@ esac
 code -v
 
 mkdir -p ${DIR}
-ln -s -f $(pwd)/settings.json "${DIR}/settings.json"
-ln -s -f $(pwd)/keybindings.json "${DIR}/keybindings.json"
+SETTINGS=settings.json
+KEYBINDINGS=keybindings.json
+if [[ $(hostname) == *jorson* ]]; then
+    SETTINGS=settings.work.json
+fi
+ln -s -f $(pwd)/${SETTINGS} "${DIR}/settings.json"
+ln -s -f $(pwd)/${KEYBINDINGS} "${DIR}/keybindings.json"
 
 # Install extensions
 EXTENSIONS=""
