@@ -8,7 +8,7 @@
 	co = checkout
 	cp = cherry-pick
 	cob = checkout -b
-	com = commit --allow-empty -m
+	com = commit -s --allow-empty -m
 	st = status
 	pish = push
 	pushup = !git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
