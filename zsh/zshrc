@@ -108,3 +108,11 @@ zoomer() {
     alias yap="--verbose"
     alias no_yap="-q"
 }
+
+if command -v python3.12 >> /dev/null; then
+    alias python3=$(which python3.12)
+fi
+
+export PIP_EXTRA_INDEX_URL=https://pure-artifactory.dev.purestorage.com/artifactory/api/pypi/fa-krypton-pypi/simple
+
+export GPG_TTY=$(tty)

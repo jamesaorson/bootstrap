@@ -5,7 +5,7 @@
     "workbench.iconTheme": "material-icon-theme",
     "workbench.colorTheme": "GitHub Dark Default",
     "yaml.schemas": {
-        "file:///Users/jorson/.vscode-insiders/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
+        "file:///Users/jorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
     },
     "redhat.telemetry.enabled": false,
     "git.autofetch": true,
