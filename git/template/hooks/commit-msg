@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# commit-msg hook to ensure that commits are signed-off-by.
+# Place this script in your repository's .git/hooks/commit-msg and make it executable.
+#
+# It checks that the commit message contains a line starting with "Signed-off-by:".
+# If not, the commit is aborted and an error message is printed.
+
+COMMIT_MSG_FILE="$1"
+
+if ! grep -q "^Signed-off-by: " "$COMMIT_MSG_FILE"; then
+  echo "Error: Commit message is missing a 'Signed-off-by:' line." >&2
+  echo "Please use 'git commit -s' to sign off your commit." >&2
+  exit 1
+fi
+
+exit 0
+

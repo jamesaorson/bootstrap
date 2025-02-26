@@ -65,5 +65,8 @@
     "cmake.pinnedCommands": [
         "workbench.action.tasks.configureTaskRunner",
         "workbench.action.tasks.runTask"
-    ]
+    ],
+    "git.alwaysSignOff": true,
+    "git.enableCommitSigning": true
 }
+
