@@ -89,5 +89,7 @@
         "ultram4rine",
         "yandeu",
         "zainchen"
-    ]
+    ],
+    "git.alwaysSignOff": true,
+    "git.enableCommitSigning": true
 }
