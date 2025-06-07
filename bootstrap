@@ -71,23 +71,17 @@ else
                 "curl"
                 "brew"
                 "git"
-                "gf2"
                 "zsh"
                 "npm"
                 "vim"
                 "ssh"
                 "gh"
-                "cl"
-				"guix"
                 "rust"
                 "bat"
                 "docker"
                 "podman"
-                "terraform"
-                "tmux"
                 "tree"
                 "vscode"
-                "kitty"
             )
             ;;
         Darwin*)

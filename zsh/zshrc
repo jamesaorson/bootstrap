@@ -21,6 +21,7 @@ export PATH="${HOME}/.local/brew/bin:${PATH}"
 export PATH="${HOME}/.cargo/bin:${PATH}"
 export PATH="${PATH}:/Applications/Emacs.app/Contents/MacOS/bin"
 export PATH="${HOME}/.local/go/bin:${PATH}"
+export PATH="${PATH}:${HOME}/.bun/bin"
 
 # Guile
 export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"
@@ -29,6 +30,7 @@ export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extension
 
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=
+export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 
 # Emacs
 export LSP_USE_PLISTS=true
@@ -108,11 +110,5 @@ zoomer() {
     alias yap="--verbose"
     alias no_yap="-q"
 }
-
-if command -v python3.12 >> /dev/null; then
-    alias python3=$(which python3.12)
-fi
-
-export PIP_EXTRA_INDEX_URL=https://pure-artifactory.dev.purestorage.com/artifactory/api/pypi/fa-krypton-pypi/simple
 
 export GPG_TTY=$(tty)
