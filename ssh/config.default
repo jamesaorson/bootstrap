@@ -21,6 +21,12 @@ Host gitlab.com
 	User git
 	IdentityFile ~/.ssh/id_gitlab
 # Aliases
+Host plex
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 192.168.5.255
+	User butler
+	IdentityFile ~/.ssh/id_plex
 Host school
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
@@ -42,8 +48,8 @@ Host pi-ota
 Host ursinia
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
-	HostName 10.0.0.139
-	User ursinia
+	HostName 192.168.4.51
+	User james
 	IdentityFile ~/.ssh/id_ursinia
 Host work-dev-jorson
 	ServerAliveCountMax=30
@@ -51,11 +57,4 @@ Host work-dev-jorson
 	HostName 10.7.69.7
 	User jorson
 	IdentityFile ~/.ssh/id_work-dev-jorson
-Host dev_ursinia
-	ServerAliveCountMax=30
-	ServerAliveInterval=5
-	HostName 192.168.4.51
-	User james
-	ProxyCommand ssh -W %h:%p pi-ota
-    IdentityFile ~/.ssh/id_pi
 

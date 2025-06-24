@@ -4,7 +4,7 @@
   "editor.renderWhitespace": "all",
   "workbench.iconTheme": "material-icon-theme",
   "yaml.schemas": {
-    "file:///Users/jamesaorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
+    "file:///home/jamesaorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
   "redhat.telemetry.enabled": false,
   "git.autofetch": true,
@@ -68,5 +68,7 @@
   "github.copilot.nextEditSuggestions.enabled": false,
   "editor.defaultFormatter": "ms-python.black-formatter",
   "terminal.integrated.defaultProfile.linux": "zsh",
-  "go.toolsManagement.autoUpdate": true
+  "go.toolsManagement.autoUpdate": true,
+  "git.alwaysSignOff": true,
+  "docker.extension.enableComposeLanguageServer": false
 }
