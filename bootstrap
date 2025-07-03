@@ -78,10 +78,6 @@ else
                 "gh"
                 "rust"
                 "bat"
-                "docker"
-                "podman"
-                "tree"
-                "vscode"
             )
             ;;
         Darwin*)
@@ -97,12 +93,8 @@ else
                 "cl"
                 "rust"
                 "bat"
-                "docker"
-                "podman"
                 "tmux"
                 "tree"
-                "vscode"
-                "kitty"
                 "alacritty"
             )
             ;;
