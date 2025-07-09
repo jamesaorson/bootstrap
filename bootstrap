@@ -9,10 +9,7 @@ install_deps() {
     local DEPS=(
         apt-transport-https
         build-essential
-        locales
         make
-        parallel
-        psmisc
         software-properties-common
     )
     for dep in ${DEPS[@]}; do
