@@ -68,7 +68,6 @@ else
             SERVICES=(
                 "apt"
                 "curl"
-                "brew"
                 "git"
                 "zsh"
                 "vim"
