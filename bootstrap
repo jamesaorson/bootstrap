@@ -69,12 +69,8 @@ else
                 "brew"
                 "git"
                 "zsh"
-                "npm"
                 "vim"
-                "ssh"
                 "gh"
-                "rust"
-                "bat"
             )
             ;;
         Darwin*)
