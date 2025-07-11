@@ -13,6 +13,7 @@ install_deps() {
         software-properties-common
     )
     sudo apt-get update
+    sudo ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
     for dep in ${DEPS[@]}; do
         echo "Checking for dep ${dep}..."
         if ! dpkg --get-selections | grep "^$dep\s"; then
