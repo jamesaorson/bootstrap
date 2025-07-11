@@ -16,11 +16,6 @@ PLATFORM="$(uname -s)"
 case ${PLATFORM} in
     Linux*)
         if sudo -v; then
-            # ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-            # DEBIAN_FRONTEND=noninteractive sudo apt-get install \
-            #     -y \
-            #     --no-install-recommends \
-            #     tzdata
             bootstrap_install zsh
         fi
         ;;
