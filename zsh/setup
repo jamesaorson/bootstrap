@@ -17,11 +17,15 @@ case ${PLATFORM} in
     Linux*)
         if sudo -v; then
             sudo dpkg-reconfigure -f noninteractive tzdata
-						bootstrap_install zsh
+            DEBIAN_FRONTEND=noninteractive apt-get install \
+                -y \
+                --no-install-recommends \
+                tzdata
+            bootstrap_install zsh
         fi
         ;;
     Darwin*)
-			  bootstrap_install zsh
+            bootstrap_install zsh
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
