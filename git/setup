@@ -22,7 +22,7 @@ TEMPLATE_DIR=${DIR}/template
 
 mkdir -p ${DIR}
 
-rm -f ~/.gitconfig
+rm -f ${HOME}/.gitconfig
 
 GITCONFIG=gitconfig.default
 if [[ $(hostname) == *jorson* ]]; then
