@@ -12,6 +12,7 @@ install_deps() {
         make
         software-properties-common
     )
+    sudo apt-get update
     for dep in ${DEPS[@]}; do
         echo "Checking for dep ${dep}..."
         if ! dpkg --get-selections | grep "^$dep\s"; then
