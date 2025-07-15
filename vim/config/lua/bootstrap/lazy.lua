@@ -105,19 +105,6 @@ common.run("lazy", function()
 						-- refer to the configuration section below
 				},
 			},
-			-- Snip Run
-			{
-				"michaelb/sniprun",
-				branch = "master",
-
-				build = "sh install.sh 1",
-
-				config = function()
-					require("sniprun").setup({
-							-- your options
-							})
-				end,
-			},
 			-- LSP
 			{'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'},
 			{'neovim/nvim-lspconfig'},
