@@ -25,7 +25,7 @@ mkdir -p ${DIR}
 rm -f ${HOME}/.gitconfig
 
 GITCONFIG=gitconfig.default
-if [[ $(hostname) == *jorson* ]]; then
+if [[ -n "${IS_WORK}" ]]; then
     GITCONFIG=gitconfig.work
 fi
 ln -s -f $(pwd)/${GITCONFIG} ~/.gitconfig
