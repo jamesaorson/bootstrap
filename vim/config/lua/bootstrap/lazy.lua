@@ -105,14 +105,8 @@ common.run("lazy", function()
 						-- refer to the configuration section below
 				},
 			},
-			-- LSP
-			{'VonHeikemen/lsp-zero.nvim', branch = 'v4.x'},
-			{'neovim/nvim-lspconfig'},
-			{'hrsh7th/cmp-nvim-lsp'},
 			{'hrsh7th/nvim-cmp'},
 			-- Mason
 			{"williamboman/mason.nvim"},
-			{"williamboman/mason-lspconfig.nvim"},
-			{"neovim/nvim-lspconfig"},
 		})
 end)
