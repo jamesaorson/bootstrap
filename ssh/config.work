@@ -1,86 +1,70 @@
 # Hosts
 Host git.sr.ht
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User git
 	IdentityFile ~/.ssh/id_sourcehut
 Host saucetree
     Hostname 209.38.173.226
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User root
 	IdentityFile ~/.ssh/saucetree
 Host github.com
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User git
-	IdentityFile ~/.ssh/id_github
+    IdentityFile ~/.ssh/id_github
 # Aliases
 Host github-work
 	Hostname github.com
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User org-107236519
 	IdentityFile ~/.ssh/id_github-work
 Host github-jamesaorson
 	Hostname github.com
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User org-107236519
 	IdentityFile ~/.ssh/id_github_jamesaorson
 Host school
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName login-ice.pace.gatech.edu
 	User jorson6
 	IdentityFile ~/.ssh/id_school
 Host pi
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 10.0.0.217
 	User james
 	IdentityFile ~/.ssh/id_pi
 Host pi-ota
-    ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName ursinia.net
 	User james
 	IdentityFile ~/.ssh/id_pi
 Host ursinia
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 10.0.0.139
 	User ursinia
 	IdentityFile ~/.ssh/id_ursinia
-Host work-dev-jorson
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
+host vm-jorson-dev
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
-	HostName 10.7.69.7
+    HostName 10.7.69.80
+	User jorson
+	IdentityFile ~/.ssh/id_work-dev-jorson
+host vm-jorson-codeql
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+    HostName 10.7.74.127
 	User jorson
 	IdentityFile ~/.ssh/id_work-dev-jorson
 Host dev_ursinia-ota
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 192.168.4.51
@@ -88,11 +72,8 @@ Host dev_ursinia-ota
 	ProxyCommand ssh -W %h:%p pi-ota
 	IdentityFile ~/.ssh/id_pi
 Host dev_ursinia
-	ControlMaster auto
-	ControlPath ~/.ssh/.control-%h-%p-%r
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 192.168.4.51
 	User james
 	# IdentityFile ~/.ssh/id_pi
-
