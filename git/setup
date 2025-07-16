@@ -24,11 +24,12 @@ mkdir -p ${DIR}
 
 rm -f ${HOME}/.gitconfig
 
+set +u
 GITCONFIG=gitconfig.default
 if [[ -n "${IS_PURE}" ]]; then
     GITCONFIG=gitconfig.work
 fi
+set -u
 ln -s -f $(pwd)/${GITCONFIG} ~/.gitconfig
 rm -f ${TEMPLATE_DIR}
 ln -s -f $(pwd)/template ${TEMPLATE_DIR}
-
