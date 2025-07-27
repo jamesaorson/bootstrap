@@ -46,7 +46,10 @@ case ${PLATFORM} in
         ;;
     Darwin*)
         alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs"
-				eval "$(/opt/homebrew/bin/brew shellenv)"
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+        if [[ -f /opt/homebrew/bin/gmake ]]; then
+            alias make="/opt/homebrew/bin/gmake"
+        fi
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
