@@ -30,7 +30,8 @@ case ${PLATFORM} in
 				fi
 		    ;;
     Darwin*)
-		    bootstrap_install neovim
+				brew install neovim --HEAD
+				brew install ccls
         ;;
     *)          echo "UNKNOWN:${unameOut}"; exit 1;;
 esac
