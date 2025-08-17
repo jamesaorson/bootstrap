@@ -70,5 +70,15 @@
   "terminal.integrated.defaultProfile.linux": "zsh",
   "go.toolsManagement.autoUpdate": true,
   "git.alwaysSignOff": true,
-  "docker.extension.enableComposeLanguageServer": false
+  "docker.extension.enableComposeLanguageServer": false,
+  "terminal.integrated.fontFamily": "monospace",
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  }
 }

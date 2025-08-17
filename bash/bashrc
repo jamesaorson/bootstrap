@@ -73,3 +73,4 @@ eval "$(starship init bash)"
 eval "$(ssh-agent -s)" >> /dev/null
 
 # Show shell command's first token as red if the command does not exist in PATH, while I type
+. "$HOME/.cargo/env"
