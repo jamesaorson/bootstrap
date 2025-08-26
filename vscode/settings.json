@@ -2,7 +2,7 @@
   "files.autoSave": "onFocusChange",
   "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.renderWhitespace": "all",
-  "workbench.iconTheme": "material-icon-theme",
+  "workbench.iconTheme": "vscode-icons",
   "yaml.schemas": {
     "file:///home/jamesaorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
@@ -11,13 +11,14 @@
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
     "markdown": true,
     "scminput": false,
-    "python": true,
+    "python": false,
     "Log": false,
-    "jsonc": true
+    "jsonc": true,
+    "go": true
   },
   "git.ignoreMissingGitWarning": true,
   "cSpell.userWords": [
@@ -27,7 +28,7 @@
     "eastus",
     "snet",
     "vnet"
-],
+  ],
   "FSharp.suggestGitignore": false,
   "git.openRepositoryInParentFolders": "always",
   "workbench.preferredHighContrastColorTheme": "GitHub Dark Default",
@@ -80,5 +81,8 @@
   },
   "[cpp]": {
     "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   }
 }

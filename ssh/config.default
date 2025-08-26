@@ -15,6 +15,11 @@ Host github.com
 	ServerAliveInterval=5
 	User git
 	IdentityFile ~/.ssh/id_github_jamesaorson
+Host github.gatech.edu
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User git
+	IdentityFile ~/.ssh/id_gatech
 Host gitlab.com
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
@@ -27,12 +32,6 @@ Host plex
 	HostName 192.168.5.255
 	User butler
 	IdentityFile ~/.ssh/id_plex
-Host school
-	ServerAliveCountMax=30
-	ServerAliveInterval=5
-	HostName login-ice.pace.gatech.edu
-	User jorson6
-	IdentityFile ~/.ssh/id_school
 Host pi
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
