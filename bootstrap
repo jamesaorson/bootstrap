@@ -10,7 +10,6 @@ install_deps() {
         apt-transport-https
         build-essential
         make
-        software-properties-common
     )
     sudo apt-get update
     sudo ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
