@@ -12,9 +12,6 @@ if [[ -s "${HOME}/.zprezto/init.zsh" ]]; then
   source "${HOME}/.zprezto/init.zsh"
 fi
 
-# Java classpath
-export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
-
 # PATH
 export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${HOME}/.local/brew/bin:${PATH}"
@@ -23,6 +20,8 @@ export PATH="${PATH}:/Applications/Emacs.app/Contents/MacOS/bin"
 export PATH="${HOME}/.local/go/bin:${PATH}"
 export PATH="${HOME}/go/bin:${PATH}"
 export PATH="${PATH}:${HOME}/.bun/bin"
+export PATH="${PATH}:${HOME}/go/bin"
+export PATH="${PATH}:${HOME}/idea/bin"
 
 # Guile
 export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"
@@ -70,7 +69,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Starship
-eval "$(starship init zsh)"
+if command -v starship >> /dev/null; then
+    eval "$(starship init zsh)"
+fi
 
 eval "$(ssh-agent -s)" >> /dev/null
 

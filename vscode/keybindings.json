@@ -21,9 +21,5 @@
         "key": "ctrl+e",
         "command": "-cursorLineEnd",
         "when": "textInputFocus"
-    },
-    {
-        "key": "ctrl+x",
-        "command": "editor.action.selectToBracket"
     }
 ]

@@ -13,12 +13,17 @@
   "github.copilot.enable": {
     "*": false,
     "plaintext": false,
-    "markdown": true,
+    "markdown": false,
     "scminput": false,
     "python": false,
     "Log": false,
     "jsonc": true,
+<<<<<<< Updated upstream
     "go": true
+=======
+    "go": true,
+    "cpp": true
+>>>>>>> Stashed changes
   },
   "git.ignoreMissingGitWarning": true,
   "cSpell.userWords": [
@@ -84,5 +89,21 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
+<<<<<<< Updated upstream
+=======
+  },
+  "[java]": {
+    "editor.defaultFormatter": "redhat.java"
+  },
+  "[c]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.minimap.enabled": false,
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+>>>>>>> Stashed changes
   }
 }
