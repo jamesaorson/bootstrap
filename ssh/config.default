@@ -1,15 +1,9 @@
-# Hosts
+# Git
 Host git.sr.ht
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User git
 	IdentityFile ~/.ssh/id_sourcehut
-Host saucetree
-	Hostname 209.38.173.226
-	ServerAliveCountMax=30
-	ServerAliveInterval=5
-	User root
-	IdentityFile ~/.ssh/saucetree
 Host github.com
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
@@ -26,12 +20,12 @@ Host gitlab.com
 	User git
 	IdentityFile ~/.ssh/id_gitlab
 # Aliases
-Host plex
+Host autobutler-home
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
-	HostName 192.168.5.255
+	HostName 192.168.5.252
 	User butler
-	IdentityFile ~/.ssh/id_plex
+	IdentityFile ~/.ssh/id_autobutler
 Host pi
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
@@ -44,16 +38,16 @@ Host pi-ota
 	HostName ursinia.net
 	User james
 	IdentityFile ~/.ssh/id_pi
+Host plex
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 192.168.5.255
+	User butler
+	IdentityFile ~/.ssh/id_plex
 Host ursinia
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 192.168.4.51
 	User james
 	IdentityFile ~/.ssh/id_ursinia
-Host work-dev-jorson
-	ServerAliveCountMax=30
-	ServerAliveInterval=5
-	HostName 10.7.69.7
-	User jorson
-	IdentityFile ~/.ssh/id_work-dev-jorson
 
