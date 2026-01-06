@@ -95,5 +95,6 @@
   "editor.minimap.enabled": false,
   "[sql]": {
     "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
-  }
+  },
+  "terminal.integrated.suggest.enabled": false
 }
