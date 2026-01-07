@@ -117,3 +117,23 @@ zoomer() {
 }
 
 export GPG_TTY=$(tty)
+
+
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+if /usr/libexec/java_home -v 21 >> /dev/null; then
+	export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
+fi
+
+# Work
+export CDPATH="~/github.com/pure-pure1:${CDPATH}"
+[[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
+
+aws-sso() {
+	if [[ -z "${AWS_PROFILE}" ]]; then
+		echo "Set AWS_PROFILE first..."
+		return
+	fi
+	aws sso login
+	aws configure export-credentials | python3 ~/.idc/aws-idc/scripts/write_credentials.py > ~/.aws/credentials
+}
