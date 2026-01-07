@@ -91,5 +91,6 @@
     "zainchen"
   ],
   "git.alwaysSignOff": true,
-  "git.enableCommitSigning": true
+  "git.enableCommitSigning": true,
+  "terminal.integrated.suggest.enabled": false
 }
