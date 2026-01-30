@@ -13,8 +13,9 @@ Host saucetree
 Host github.com
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
-	User git
-    IdentityFile ~/.ssh/id_github
+	User org-107236519
+	IdentityFile ~/.ssh/id_ed25519_vault
+	#IdentityFile ~/.ssh/id_github_jamesaorson
 # Aliases
 Host github-work
 	Hostname github.com
