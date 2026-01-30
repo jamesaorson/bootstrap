@@ -34,6 +34,7 @@ export GUILE_SYSTEM_EXTENSIONS_PATH="${HOME}/.local/brew/lib/guile/3.0/extension
 # Homebrew
 export HOMEBREW_NO_AUTO_UPDATE=
 export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:${PATH}"
 
 # Emacs
 export LSP_USE_PLISTS=true
@@ -129,7 +130,7 @@ if /usr/libexec/java_home -v 21 >> /dev/null; then
 fi
 
 # Work
-export CDPATH="~/github.com/pure-pure1:${CDPATH}"
+export CDPATH="${HOME}/github.com/:${CDPATH}"
 [[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
 
 aws-sso() {
