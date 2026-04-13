@@ -1,20 +1,142 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
-if [ -z "$BRANCHES_TO_SKIP" ]; then
-  BRANCHES_TO_SKIP=(main master trunk)
-fi
+set -o pipefail
 
-BRANCH_NAME=$(git symbolic-ref --short HEAD)
+generate_prefix() {
+  # Default branches to skip (can be overridden by environment)
+  if [ -z "${BRANCHES_TO_SKIP+x}" ]; then
+    BRANCHES_TO_SKIP=(main master trunk)
+  fi
 
-while echo "${BRANCH_NAME}" | grep -qE '^[[:alpha:]]+/'; do
-	BRANCH_NAME=$(echo ${BRANCH_NAME} | cut -d "/" -f 2-)
-done
-TICKET_NAME=$(echo ${BRANCH_NAME} | cut -d "_" -f 1)
+  set -u
 
-BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
-ALREADY_IN_MSG=$(grep -c "^\[${TICKET_NAME}\]" $1)
+  COMMIT_MSG_FILE="$1"
 
-# If it isn't excluded or already in commit message, prepend the ticket name to the given message
-if [ -n "$BRANCH_NAME" ] && ! [[ "$BRANCH_EXCLUDED" -eq 1 ]] && ! [[ "$ALREADY_IN_MSG" -eq 1 ]]; then
-    sed -i.bak -e "1s/^/[${TICKET_NAME}] /" "$1"
+  # Nothing to do if we can't determine the branch name
+  if [ -z "${BRANCH_NAME}" ]; then
+    return 0
+  fi
+
+  # Extract `type` (first path segment) and the rest after the slash
+  TYPE="${BRANCH_NAME%%/*}"
+  REST="${BRANCH_NAME#*/}"
+  if [ "$REST" = "${BRANCH_NAME}" ]; then
+    REST=""
+  fi
+
+  # Skip configured branches
+  BRANCH_EXCLUDED=0
+  for b in "${BRANCHES_TO_SKIP[@]}"; do
+    if [ "${BRANCH_NAME}" = "$b" ] || [ "${TYPE}" = "$b" ]; then
+      BRANCH_EXCLUDED=1
+      break
+    fi
+  done
+
+  if [ "${BRANCH_EXCLUDED}" -gt 0 ]; then
+    return 0
+  fi
+
+
+  # Determine issue number and whether the branch is an "issue-only" branch
+  # - For branches like `feat/195-...` we treat `TYPE` as commit type and `ISSUE` as scope
+  # - For branches like `195-...` or `195_...` (no slash) we produce `195: ...`
+  ISSUE=""
+  ISSUE_ONLY=0
+  if [ -n "${REST}" ]; then
+    if [[ "${REST}" =~ ^([0-9]+) ]]; then
+      ISSUE="${BASH_REMATCH[1]}"
+    fi
+  else
+    # No slash in branch; check for leading digits followed by dash/underscore or end
+    # Use a bash-compatible regex (capture optional separator) instead of non-capturing group
+    if [[ "$TYPE" =~ ^([0-9]+)([-_].*)?$ ]]; then
+      ISSUE="${BASH_REMATCH[1]}"
+      ISSUE_ONLY=1
+    fi
+  fi
+
+  # Build the conventional-commit prefix
+  if [ "$ISSUE_ONLY" -eq 1 ]; then
+    PREFIX="${ISSUE}: "
+  else
+    # Only generate a type-based prefix when branch has a slash (i.e., TYPE/REST)
+    if [ -n "${REST}" ]; then
+      if [ -n "$ISSUE" ]; then
+        PREFIX="${TYPE}(${ISSUE}): "
+      else
+        PREFIX="${TYPE}: "
+      fi
+    else
+      # Non-specific single-segment branch (e.g., "asdasd") -> no prefix
+      PREFIX=""
+    fi
+  fi
+
+  # If no prefix to add, return empty
+  if [ -z "${PREFIX}" ]; then
+    echo ""
+    return 0
+  fi
+
+  # Don't prepend if the commit message already starts with the intended prefix
+  if [ "$ISSUE_ONLY" -eq 1 ]; then
+    if grep -qE "^[0-9]+: " "${COMMIT_MSG_FILE}" 2>/dev/null; then
+      echo ""
+      return 0
+    fi
+  else
+    if grep -q "^${TYPE}: " "${COMMIT_MSG_FILE}" 2>/dev/null || grep -qE "^${TYPE}\\([0-9]+\\): " "${COMMIT_MSG_FILE}" 2>/dev/null; then
+      echo ""
+      return 0
+    fi
+  fi
+
+  echo "${PREFIX}"
+}
+
+run-tests() {
+  local test_cases=(
+    # format: branch|expected-prefix
+    "feat/195-add-login|feat(195): "
+    "chore/195-add-login|chore(195): "
+    "feat/add-login|feat: "
+    "asd/195-add-login|asd(195): "
+    "195-add-login|195: "
+    "asdasd|"
+  )
+
+  local failures=0
+  for t in "${test_cases[@]}"; do
+    IFS='|' read -r branch expected <<< "$t"
+    # Ensure BRANCH_NAME is set for the function under test
+    BRANCH_NAME="${branch}"
+
+    # Use a real temporary file (avoid /dev/fd process substitution)
+    local temp_msg=$(mktemp) || { echo "mktemp failed"; exit 2; }
+    printf "%s\n" "test" > "${temp_msg}"
+
+    # Call the function under test with the temp file path
+    local prefix="$(generate_prefix "${temp_msg}")"
+    # Read result and compare
+    if [ "${prefix}" != "${expected}" ]; then
+      echo "  FAILED TEST CASE: got '${prefix}', expected '${expected}'"
+      failures=$((failures + 1))
+    fi
+
+    rm -f "${temp_msg}" "${temp_msg}.bak" || true
+  done
+
+  if [ "${failures}" -gt 0 ]; then
+    echo "${failures} test(s) failed"
+    exit 1
+  fi
+}
+run-tests
+
+COMMIT_MSG_FILE="$1"
+BRANCH_NAME=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
+PREFIX="$(generate_prefix "${COMMIT_MSG_FILE}")"
+if [ -n "${PREFIX}" ]; then
+  sed -i.bak -e "1s/^/${PREFIX}/" "${COMMIT_MSG_FILE}"
 fi
