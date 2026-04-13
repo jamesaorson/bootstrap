@@ -23,9 +23,14 @@ Host gitlab.com
 Host autobutler-home
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
-	HostName 192.168.5.252
+	HostName 192.168.7.161
 	User butler
 	IdentityFile ~/.ssh/id_autobutler
+Host openclaw
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName 192.168.5.253
+	User butler
 Host pi
 	ServerAliveCountMax=30
 	ServerAliveInterval=5

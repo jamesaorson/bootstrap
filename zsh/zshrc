@@ -22,6 +22,9 @@ export PATH="${HOME}/go/bin:${PATH}"
 export PATH="${PATH}:${HOME}/.bun/bin"
 export PATH="${PATH}:${HOME}/go/bin"
 export PATH="${PATH}:${HOME}/idea/bin"
+export PATH="${PATH}:${HOME}/flutter/bin"
+export PATH="/opt/homebrew/opt/ruby/bin:${PATH}"
+export PATH="/opt/homebrew/lib/ruby/gems/4.0.0/bin:${PATH}"
 
 # Guile
 export GUILE_LOAD_PATH="${HOME}/.local/brew/share/guile/site/3.0"

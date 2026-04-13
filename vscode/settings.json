@@ -11,7 +11,7 @@
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "github.copilot.enable": {
-    "*": false,
+    "*": true,
     "plaintext": false,
     "markdown": false,
     "scminput": false,
@@ -26,6 +26,7 @@
     "agentpool",
     "azuread",
     "azurerm",
+    "dotimes",
     "eastus",
     "snet",
     "vnet"
@@ -97,5 +98,22 @@
     "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
   },
   "terminal.integrated.suggest.enabled": false,
-  "terminal.integrated.stickyScroll.enabled": false
+  "terminal.integrated.stickyScroll.enabled": false,
+  "vsicons.dontShowNewVersionMessage": true,
+  "python.analysis.typeCheckingMode": "standard",
+  "chat.viewSessions.orientation": "stacked",
+  "git.replaceTagsWhenPull": true,
+  "dart.flutterSdkPath": "/Users/jamesaorson/flutter",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "githubPullRequests.createOnPublishBranch": "never",
+  "chat.tools.urls.autoApprove": {
+    "https://pub.dev": true
+  },
+  "[clojure]": {
+    "editor.defaultFormatter": "betterthantomorrow.calva"
+  },
+  "calva.paredit.defaultKeyMap": "original",
+  "chat.instructionsFilesLocations": {
+    "~/.agents/rules": true
+  }
 }

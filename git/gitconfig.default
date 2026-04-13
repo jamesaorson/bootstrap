@@ -1,9 +1,9 @@
 [user]  
 	name = James Orson
 	email = jamesaorson@gmail.com
-    signingkey = F8820F7ABC552E1BA59FE191FCEBE739951B0823
+	signingkey = EEB41592BCB8C99D3A580223EF352A35FF3D0B33
 [commit]
-	gpgsign = false
+	gpgsign = true
 [alias]
 	co = checkout
 	cp = cherry-pick
@@ -38,3 +38,5 @@
 	postBuffer = 52428800
 [lfs "https://git.sr.ht/~jamesaorson/all.git/info/lfs"]
 	locksverify = false
+[gpg]
+	program = /opt/homebrew/bin/gpg
