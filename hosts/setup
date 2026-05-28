@@ -20,5 +20,6 @@ fi
 curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts | sudo tee -a /etc/hosts >> /dev/null
 for domain in coomeet.com hot.com; do
 	echo "0.0.0.0 ${domain}" | sudo tee -a /etc/hosts >> /dev/null
+	echo "0.0.0.0 www.${domain}" | sudo tee -a /etc/hosts >> /dev/null
 done
 
