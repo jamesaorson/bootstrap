@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -euox pipefail
+set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
@@ -10,6 +10,11 @@ if ! command -v curl >> /dev/null; then
     # NOTE: Directly call, bypassing setup to avoid accidental recursion
     # NOTE: curl is bundled with MacOS, so this only affects linux installs, so we want to avoid the recursion
     ../curl/setup curl
+fi
+
+if grep -q "StevenBlack/hosts" /etc/hosts; then
+    echo "hosts already contains StevenBlack/hosts, skipping"
+    exit 0
 fi
 
 curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts | sudo tee -a /etc/hosts > /dev/null
