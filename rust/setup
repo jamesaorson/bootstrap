@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-cd $(dirname ${BASH_SOURCE[0]})
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 if ! command -v curl >> /dev/null; then
     # NOTE: Directly call, bypassing setup to avoid accidental recursion
