@@ -17,4 +17,8 @@ if grep -q "StevenBlack/hosts" /etc/hosts; then
     exit 0
 fi
 
-curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts | sudo tee -a /etc/hosts > /dev/null
+curl -fsSL https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts | sudo tee -a /etc/hosts >> /dev/null
+for domain in coomeet.com hot.com; do
+	echo "0.0.0.0 ${domain}" | sudo tee -a /etc/hosts >> /dev/null
+done
+
