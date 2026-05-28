@@ -60,6 +60,7 @@ alias woman="man"
 alias dwr="dotnet watch run"
 alias dwt="dotnet watch test"
 alias sbcl="rlwrap -c sbcl"
+alias cat-watch="watch -n 1 cat"
 if command -v nvim >> /dev/null; then
 	alias vim=$(which nvim)
 	export GIT_EDITOR=$(which nvim)
@@ -78,8 +79,6 @@ if command -v starship >> /dev/null; then
 fi
 
 eval "$(ssh-agent -s)" >> /dev/null
-
-alias ursinia-deploy='cd ./git.sr.ht/jamesaorson/ursinia && git pull && ./deploy.bash'
 
 # NVM
 
@@ -122,15 +121,17 @@ zoomer() {
 
 export GPG_TTY=$(tty)
 
-
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 if /usr/libexec/java_home -v 21 >> /dev/null; then
 	export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
 fi
 
+CDPATH="${CDPATH}:${HOME}/github.com/"
+
 # Work
-export CDPATH="${HOME}/github.com/:${CDPATH}"
+CDPATH="${CDPATH}:${HOME}/github.com/pure-experimental"
+CDPATH="${CDPATH}:${HOME}/github.com/pure-pure1"
 [[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
 
 aws-sso() {
@@ -141,3 +142,24 @@ aws-sso() {
 	aws sso login
 	aws configure export-credentials | python3 ~/.idc/aws-idc/scripts/write_credentials.py > ~/.aws/credentials
 }
+
+export AWS_PROFILE=purestorage-cloudservices-staging-Developer
+
+if [ -d "${HOME}/.secret" ]; then
+	if [ -f "${HOME}/.secret/codex-api-key" ]; then
+		export CODEX_API_KEY="$(cat "${HOME}/.secret/codex-api-key")"
+	fi
+	if [ -f "${HOME}/.secret/jira-api-token" ]; then
+		export JIRA_API_TOKEN="$(cat "${HOME}/.secret/jira-api-token")"
+	fi
+	if [ -f "${HOME}/.secret/sonar-token" ]; then
+		export SONAR_TOKEN="$(cat "${HOME}/.secret/sonar-token")"
+	fi
+	if [ -f "${HOME}/.secret/figma-token" ]; then
+		export FIGMA_TOKEN="$(cat "${HOME}/.secret/figma-token")"
+	fi
+fi
+
+
+# Added by sonarqube-cli installer
+export PATH="$HOME/.local/share/sonarqube-cli/bin:$PATH"

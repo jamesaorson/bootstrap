@@ -3,7 +3,7 @@
   "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.renderWhitespace": "all",
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "GitHub Dark High Contrast",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "yaml.schemas": {
     "file:///Users/jorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
@@ -92,5 +92,83 @@
   ],
   "git.alwaysSignOff": true,
   "git.enableCommitSigning": true,
-  "terminal.integrated.suggest.enabled": false
+  "terminal.integrated.suggest.enabled": false,
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+  },
+  "docker.extension.enableComposeLanguageServer": false,
+  "sonarlint.connectedMode.connections.sonarqube": [
+    {
+      "serverUrl": "https://sonarqube.dx-tooling-prd.purestorage.com",
+      "connectionId": "Sonarqube DX"
+    }
+  ],
+  "claudeCode.disableLoginPrompt": true,
+  "claude-code.enableAuthLogin": true,
+  "claudeCode.environmentVariables": [
+    {
+      "name": "CLAUDE_CODE_USE_FOUNDRY",
+      "value": "1"
+    },
+    {
+      "name": "ANTHROPIC_FOUNDRY_RESOURCE",
+      "value": "everpure-ai-triage"
+    },
+    {
+      "name": "ANTHROPIC_DEFAULT_OPUS_MODEL",
+      "value": "claude-opus-4-7"
+    },
+    {
+      "name": "ANTHROPIC_DEFAULT_SONNET_MODEL",
+      "value": "claude-sonnet-4-6"
+    },
+    {
+      "name": "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+      "value": "claude-haiku-4-5"
+    },
+    {
+      "name": "AZURE_TOKEN_CREDENTIALS",
+      "value": "dev"
+    }
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "args": [
+        "-l"
+      ],
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "/opt/homebrew/bin/zsh",
+      "args": [
+        "-l"
+      ]
+    },
+    "fish": {
+      "path": "fish",
+      "args": [
+        "-l"
+      ]
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.agentHostProfile.osx": {
+    "path": "/opt/homebrew/bin/zsh",
+    "icon": ""
+  },
+  "vs-kubernetes": {
+    "vscode-kubernetes.minikube-path-mac": "/Users/jorson/.vs-kubernetes/tools/minikube/darwin-arm64/minikube"
+  }
 }
