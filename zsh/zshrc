@@ -36,6 +36,11 @@ export HOMEBREW_NO_AUTO_UPDATE=
 export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:${PATH}"
 
+CDPATH="${HOME}/github.com/jamesaorson:${CDPATH}"
+CDPATH="${HOME}/github.com/exokomodo:${CDPATH}"
+CDPATH="${HOME}/github.com/autobutler-org:${CDPATH}"
+CDPATH="${HOME}/github.com:${CDPATH}"
+
 # Emacs
 export LSP_USE_PLISTS=true
     

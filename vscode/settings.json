@@ -101,13 +101,15 @@
   "terminal.integrated.stickyScroll.enabled": false,
   "vsicons.dontShowNewVersionMessage": true,
   "python.analysis.typeCheckingMode": "standard",
-  "chat.viewSessions.orientation": "stacked",
   "git.replaceTagsWhenPull": true,
   "dart.flutterSdkPath": "/Users/jamesaorson/flutter",
   "diffEditor.ignoreTrimWhitespace": false,
   "githubPullRequests.createOnPublishBranch": "never",
   "chat.tools.urls.autoApprove": {
-    "https://pub.dev": true
+    "https://code.visualstudio.com": true,
+    "https://github.com/microsoft/vscode/wiki/*": true,
+    "https://pub.dev": true,
+    "https://api.flutter.dev": true
   },
   "[clojure]": {
     "editor.defaultFormatter": "betterthantomorrow.calva"
@@ -115,5 +117,6 @@
   "calva.paredit.defaultKeyMap": "original",
   "chat.instructionsFilesLocations": {
     "~/.agents/rules": true
-  }
+  },
+  "chat.viewSessions.orientation": "stacked"
 }

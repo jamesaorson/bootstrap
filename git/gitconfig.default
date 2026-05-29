@@ -40,3 +40,5 @@
 	locksverify = false
 [gpg]
 	program = /opt/homebrew/bin/gpg
+[safe]
+	directory = /Users/jamesaorson/github.com/armbian/build
