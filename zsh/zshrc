@@ -154,8 +154,8 @@ if [ -d "${HOME}/.secret" ]; then
 	if [ -f "${HOME}/.secret/codex-api-key" ]; then
 		export CODEX_API_KEY="$(cat "${HOME}/.secret/codex-api-key")"
 	fi
-	if [ -f "${HOME}/.secret/jira-api-token" ]; then
-		export JIRA_API_TOKEN="$(cat "${HOME}/.secret/jira-api-token")"
+	if [ -f "${HOME}/.secret/jira-api-key" ]; then
+		export JIRA_API_KEY="$(cat "${HOME}/.secret/jira-api-key")"
 	fi
 	if [ -f "${HOME}/.secret/sonar-token" ]; then
 		export SONAR_TOKEN="$(cat "${HOME}/.secret/sonar-token")"

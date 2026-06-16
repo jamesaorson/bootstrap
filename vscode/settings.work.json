@@ -3,7 +3,7 @@
   "editor.fontFamily": "FiraCode Nerd Font Mono",
   "editor.renderWhitespace": "all",
   "workbench.iconTheme": "material-icon-theme",
-  "workbench.colorTheme": "Catppuccin Mocha",
+  "workbench.colorTheme": "Catppuccin Frappé",
   "yaml.schemas": {
     "file:///Users/jorson/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i"
   },
@@ -107,14 +107,6 @@
   "claude-code.enableAuthLogin": true,
   "claudeCode.environmentVariables": [
     {
-      "name": "CLAUDE_CODE_USE_FOUNDRY",
-      "value": "1"
-    },
-    {
-      "name": "ANTHROPIC_FOUNDRY_RESOURCE",
-      "value": "everpure-ai-triage"
-    },
-    {
       "name": "ANTHROPIC_DEFAULT_OPUS_MODEL",
       "value": "claude-opus-4-7"
     },
@@ -125,10 +117,6 @@
     {
       "name": "ANTHROPIC_DEFAULT_HAIKU_MODEL",
       "value": "claude-haiku-4-5"
-    },
-    {
-      "name": "AZURE_TOKEN_CREDENTIALS",
-      "value": "dev"
     }
   ],
   "[typescript]": {
