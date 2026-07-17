@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 # Java classpath
 export CLASSPATH=".:/usr/local/lib/antlr-4.13.1-complete.jar:${CLASSPATH}"
