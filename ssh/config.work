@@ -5,7 +5,7 @@ Host git.sr.ht
 	User git
 	IdentityFile ~/.ssh/id_sourcehut
 Host saucetree
-    Hostname 209.38.173.226
+  Hostname 209.38.173.226
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User root
@@ -14,8 +14,8 @@ Host github.com
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	User org-107236519
-	IdentityFile ~/.ssh/id_ed25519_vault
-	#IdentityFile ~/.ssh/id_github_jamesaorson
+	#IdentityFile ~/.ssh/id_ed25519_vault
+	IdentityFile ~/.ssh/id_github_jamesaorson
 # Aliases
 Host github-work
 	Hostname github.com

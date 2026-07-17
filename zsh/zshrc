@@ -36,9 +36,9 @@ export HOMEBREW_NO_AUTO_UPDATE=
 export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:${PATH}"
 
-CDPATH="${HOME}/github.com/jamesaorson:${CDPATH}"
-CDPATH="${HOME}/github.com/exokomodo:${CDPATH}"
-CDPATH="${HOME}/github.com/autobutler-org:${CDPATH}"
+for org in $(ls -1 ${HOME}/github.com); do
+	CDPATH="${HOME}/github.com/${org}:${CDPATH}"
+done
 CDPATH="${HOME}/github.com:${CDPATH}"
 
 # Emacs
@@ -163,8 +163,24 @@ if [ -d "${HOME}/.secret" ]; then
 	if [ -f "${HOME}/.secret/figma-token" ]; then
 		export FIGMA_TOKEN="$(cat "${HOME}/.secret/figma-token")"
 	fi
+	if [ -f "${HOME}/.secret/mongo-username" ]; then
+		export MONGO_USERNAME="$(cat "${HOME}/.secret/mongo-username")"
+	fi
+	if [ -f "${HOME}/.secret/mongo-password" ]; then
+		export MONGO_PASSWORD="$(cat "${HOME}/.secret/mongo-password")"
+	fi
+	if [ -f "${HOME}/.secret/confluence-api-key" ]; then
+		export CONFLUENCE_API_KEY="$(cat "${HOME}/.secret/confluence-api-key")"
+	fi
 fi
 
 
 # Added by sonarqube-cli installer
 export PATH="$HOME/.local/share/sonarqube-cli/bin:$PATH"
+
+# bun completions
+[ -s "/Users/jorson/.bun/_bun" ] && source "/Users/jorson/.bun/_bun"
+
+# Disable husky hooks globally
+export HUSKY=0
+
