@@ -36,10 +36,16 @@ export HOMEBREW_NO_AUTO_UPDATE=
 export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 export PATH="/opt/homebrew/opt/grep/libexec/gnubin:${PATH}"
 
-for org in $(ls -1 ${HOME}/github.com); do
-	CDPATH="${HOME}/github.com/${org}:${CDPATH}"
-done
-CDPATH="${HOME}/github.com:${CDPATH}"
+update_cdpath() {
+  local CDPATH_ROOT="$1"
+  for dir in $(ls -1 -d ${CDPATH_ROOT}*/); do
+    CDPATH="/${dir}:${CDPATH}"
+  done
+  CDPATH="${CDPATH_ROOT}:${CDPATH}"
+}
+
+update_cdpath "${HOME}/gitlab.com/"
+update_cdpath "${HOME}/github.com/"
 
 # Emacs
 export LSP_USE_PLISTS=true
