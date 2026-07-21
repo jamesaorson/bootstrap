@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+. ../functions.sh
+
+DIR=${HOME}/.claude
+mkdir -p ${DIR}
+
+CLAUDE_MD=CLAUDE.default.md
+SETTINGS=settings.default.json
+if [[ $(hostname) == *jorson* ]]; then
+    CLAUDE_MD=CLAUDE.work.md
+    SETTINGS=settings.work.json
+fi
+
+ln -sf $(pwd)/${CLAUDE_MD} ${DIR}/CLAUDE.md
+ln -sf $(pwd)/${SETTINGS} ${DIR}/settings.json
+ln -sf $(pwd)/RTK.md ${DIR}/RTK.md
+
+if command -v rtk >/dev/null 2>&1; then
+    rtk --version
+else
+    echo "rtk not found. Install it, then re-run this setup."
+    echo "See RTK.md for details."
+fi
