@@ -7,7 +7,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 . ../functions.sh
 
 DIR=${HOME}/.claude
-mkdir -p ${DIR}
+mkdir -p ${DIR}/bin
 
 CLAUDE_MD=CLAUDE.default.md
 SETTINGS=settings.default.json
@@ -16,9 +16,24 @@ if [[ $(hostname) == *jorson* ]]; then
     SETTINGS=settings.work.json
 fi
 
+# Host-specific (personal vs work).
 ln -sf $(pwd)/${CLAUDE_MD} ${DIR}/CLAUDE.md
 ln -sf $(pwd)/${SETTINGS} ${DIR}/settings.json
+
+# Shared across hosts.
 ln -sf $(pwd)/RTK.md ${DIR}/RTK.md
+ln -sf $(pwd)/tropes.md ${DIR}/tropes.md
+ln -sf $(pwd)/statusline-command.sh ${DIR}/statusline-command.sh
+ln -sf $(pwd)/cost-refresh.sh ${DIR}/bin/cost-refresh.sh
+
+# ccusage powers the month-to-date cost in the statusline.
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+if command -v npm >/dev/null 2>&1; then
+    npm install -g ccusage
+else
+    echo "npm not found. Run ../npm/setup first, then re-run to install ccusage."
+fi
 
 if command -v rtk >/dev/null 2>&1; then
     rtk --version

@@ -1,18 +1,15 @@
 {
   "env": {
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-7",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-8",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
     "SHELL": "/opt/homebrew/bin/zsh"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
-      "Bash(*)",
-      "Read(//Users/jorson/github.com/pure-pure1/pure1-subscription/subscription-client/build/generated/sources/annotationProcessor/java/main/com/purestorage/subscription/model/**)",
-      "Read(//Users/jorson/github.com/pure-pure1/pure1-subscription/subscription-client/build/src/common-main/java/com/purestorage/subscription/model/type/**)",
-      "Read(//Users/jorson/github.com/pure-pure1/pure1-subscription/subscription-client/build/generated/sources/annotationProcessor/java/main/com/purestorage/subscription/client/**)"
+      "Bash(*)"
     ],
-    "defaultMode": "bypassPermissions",
+    "defaultMode": "auto",
     "additionalDirectories": [
       "/tmp"
     ]
