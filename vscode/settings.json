@@ -19,7 +19,9 @@
     "Log": false,
     "jsonc": true,
     "go": true,
-    "cpp": true
+    "cpp": true,
+    "c": false,
+    "yaml": false
   },
   "git.ignoreMissingGitWarning": true,
   "cSpell.userWords": [
