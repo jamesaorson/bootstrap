@@ -144,6 +144,12 @@ CDPATH="${CDPATH}:${HOME}/github.com/"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-experimental"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-pure1"
 [[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
+if command -v vault >/dev/null; then
+	export VAULT_ADDR="https://vault.purestorage.com:443"
+	# reuse cached ~/.vault-token if still valid, else log in once (browser)
+	vault token lookup >/dev/null 2>&1 || vault login -method=oidc >/dev/null
+	export VAULT_TOKEN=$(cat ~/.vault-token)
+fi
 
 aws-sso() {
 	if [[ -z "${AWS_PROFILE}" ]]; then
@@ -189,4 +195,5 @@ export PATH="$HOME/.local/share/sonarqube-cli/bin:$PATH"
 
 # Disable husky hooks globally
 export HUSKY=0
+
 

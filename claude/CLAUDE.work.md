@@ -41,6 +41,7 @@ The user maintains a personal tracking site at github.com/pure-experimental/jors
 - `templates/journal/index.md` — daily journal, newest date first, `## YYYY-MM-DD` headers with bullets
 - `templates/todo/` — personal todo page
 - Uses `bd` (beads) for issue tracking, not TodoWrite
+- Never suggest `bd dolt push` — I do not use remote bead servers.
 
 In every session, consider whether anything worth logging happened (notable work, decisions, follow-ups). Only log things future-you would want a pointer to — not every trivial exchange.
 

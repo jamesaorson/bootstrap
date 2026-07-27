@@ -7,8 +7,6 @@ eval "$(echo "$input" | jq -r '
   @sh "cur_in=\(.context_window.current_usage.input_tokens // 0)",
   @sh "cache_read=\(.context_window.current_usage.cache_read_input_tokens // 0)",
   @sh "cache_create=\(.context_window.current_usage.cache_creation_input_tokens // 0)",
-  @sh "total_in=\(.context_window.total_input_tokens // 0)",
-  @sh "total_out=\(.context_window.total_output_tokens // 0)",
   @sh "ctx_size=\(.context_window.context_window_size // 200000)",
   @sh "used_pct=\(.context_window.used_percentage // 0)",
   @sh "model_name=\(.model.display_name // "unknown")",
@@ -36,9 +34,6 @@ else:              print(n)
 
 ctx_in_fmt=$(fmt_tokens "$ctx_in")
 ctx_size_fmt=$(fmt_tokens "$ctx_size")
-cache_fmt=$(fmt_tokens "$cache_read")
-total_in_fmt=$(fmt_tokens "$total_in")
-total_out_fmt=$(fmt_tokens "$total_out")
 
 cost_fmt=$(python3 -c "
 c = $cost_usd
@@ -100,8 +95,6 @@ if [ -n "$cwd" ]; then
 fi
 [ -n "$git_branch" ] && printf "${CYAN}⎇ %s${RESET}%b" "$git_branch" "$SEP"
 printf "${MAGENTA}🤖 %s${RESET}%b" "$model_name" "$SEP"
-printf "${BLUE}📦 Cached: %s${RESET}%b" "$cache_fmt" "$SEP"
-printf "${CYAN}📥 In: %s${RESET}  ${GREEN}📤 Out: %s${RESET}%b" "$total_in_fmt" "$total_out_fmt" "$SEP"
 printf "${CTX_COLOR}📊 Ctx: %s/%s (%s%%)${RESET}%b" "$ctx_in_fmt" "$ctx_size_fmt" "$ctx_pct" "$SEP"
 printf "${COST_COLOR}💰 %s${RESET}%b" "$cost_fmt" "$SEP"
 if [ -n "$month_cost" ]; then
