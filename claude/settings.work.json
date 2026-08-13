@@ -1,7 +1,7 @@
 {
   "env": {
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5",
     "SHELL": "/opt/homebrew/bin/zsh"
   },
   "includeCoAuthoredBy": false,
@@ -14,18 +14,14 @@
       "/tmp"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "cat ~/.claude/tropes.md"
-          },
-          {
-            "type": "command",
-            "command": "cat AGENTS.md"
+            "command": "git -C ~/.claude/team-standards pull -q 2>/dev/null || git clone -q --depth 1 org-127482596@github.com:pure-experimental/dx-submerce-team-standards.git ~/.claude/team-standards; sh ~/.claude/team-standards/session-start.bash"
           }
         ]
       }
@@ -79,10 +75,11 @@
     "command": "bash ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "figma@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {

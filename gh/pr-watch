@@ -1,0 +1,350 @@
+#!/usr/bin/env bash
+#
+# pr-watch - report CI status of your open draft PRs, and un-draft the green ones.
+#
+# Default run is a DRY RUN: it never mutates a PR unless you pass --ready.
+
+set -euo pipefail
+
+LIMIT=100
+INTERVAL=120
+READY=0
+WATCH=0
+ORG=""
+QUERY=""
+
+usage() {
+	cat <<'EOF'
+pr-watch - CI status of your open draft PRs, and un-draft the green ones.
+
+USAGE
+  pr-watch [options]        Dry run: show every open draft PR and its CI state.
+  pr-watch doctor           Check that gh, gh auth, and jq are usable.
+
+OPTIONS
+  --ready            Un-draft every PR whose checks are all green. Without this
+                     flag nothing is mutated. To reverse one:
+                       gh pr ready NUM --repo OWNER/REPO --undo
+  --org ORG          Only look at PRs in ORG.
+  --search 'QUERY'   Extra raw gh-search qualifiers, e.g. --search 'repo:foo/bar'.
+  --watch [SECS]     Re-poll until no PR is still pending (default 120s between
+                     polls). After the first table, only changes are printed.
+  -h, --help         This text.
+
+STATUS COLUMN
+  GREEN      every check passed (skipped and neutral count as passed)
+  PENDING    at least one check still running, none failed
+  FAILED     at least one check failed, errored, timed out, or was cancelled
+  NO-CHECKS  no checks reported; pr-watch will never un-draft these
+
+NOTES
+  Failed PRs print the failing check names and the command to read their logs.
+  pr-watch never reruns a job for you - repeatedly calling `gh run rerun`
+  cancels in-flight runs via the concurrency group and makes things worse.
+
+EXAMPLES
+  pr-watch
+  pr-watch --org pure-pure1
+  pr-watch --watch 60
+  pr-watch --org pure-pure1 --ready
+EOF
+}
+
+die() {
+	printf 'pr-watch: %s\n' "$1" >&2
+	exit 1
+}
+
+doctor() {
+	ok=0
+
+	if command -v gh >/dev/null 2>&1; then
+		printf 'ok    gh installed (%s)\n' "$(gh --version | head -1)"
+	else
+		printf 'FAIL  gh not found. Install it:  brew install gh\n'
+		ok=1
+	fi
+
+	if command -v jq >/dev/null 2>&1; then
+		printf 'ok    jq installed (%s)\n' "$(jq --version)"
+	else
+		printf 'FAIL  jq not found. Install it:  brew install jq\n'
+		ok=1
+	fi
+
+	if command -v gh >/dev/null 2>&1; then
+		if gh auth status >/dev/null 2>&1; then
+			printf 'ok    gh authenticated as %s\n' "$(gh api user --jq .login 2>/dev/null || echo '?')"
+		else
+			printf 'FAIL  gh is not authenticated. Log in:  gh auth login\n'
+			ok=1
+		fi
+	fi
+
+	if [ "$ok" -eq 0 ]; then
+		printf '\nAll good. Run "pr-watch" for a dry run.\n'
+	else
+		printf '\nFix the FAIL lines above, then re-run "pr-watch doctor".\n'
+	fi
+	return "$ok"
+}
+
+# Classify one statusCheckRollup entry as PASS / FAIL / PENDING.
+# CheckRun carries status+conclusion; StatusContext carries state. Both occur
+# on a single PR, so both shapes have to be handled.
+JQ_CLS='
+def cls:
+  if .__typename == "CheckRun" then
+    if .status != "COMPLETED" then "PENDING"
+    elif .conclusion == "SUCCESS" or .conclusion == "SKIPPED" or .conclusion == "NEUTRAL" then "PASS"
+    else "FAIL" end
+  else
+    if .state == "SUCCESS" then "PASS"
+    elif .state == "PENDING" or .state == "EXPECTED" then "PENDING"
+    else "FAIL" end
+  end;
+'
+
+# shellcheck disable=SC2016  # $c is a jq binding; it must not be shell-expanded.
+JQ_COUNTS="$JQ_CLS"'
+[.statusCheckRollup[]? | cls] as $c
+| [ ($c | length)
+  , ($c | map(select(. == "PASS"))    | length)
+  , ($c | map(select(. == "FAIL"))    | length)
+  , ($c | map(select(. == "PENDING")) | length)
+  ] | @tsv
+'
+
+JQ_FAILING="$JQ_CLS"'
+.statusCheckRollup[]?
+| select(cls == "FAIL")
+| [(.name // .context // "?"), (.detailsUrl // .targetUrl // "")]
+| @tsv
+'
+
+# Find every open draft PR authored by the current user.
+# Emits: repo<TAB>number<TAB>title
+search_prs() {
+	set -- --author "@me" --state open --draft --limit "$LIMIT" \
+		--json number,title,repository \
+		--jq '.[] | [.repository.nameWithOwner, (.number|tostring), .title] | @tsv'
+	if [ -n "$ORG" ]; then
+		set -- "$@" --owner "$ORG"
+	fi
+	if [ -n "$QUERY" ]; then
+		gh search prs "$QUERY" "$@"
+	else
+		gh search prs "$@"
+	fi
+}
+
+# Print the failing checks for one PR, plus how to read their logs.
+report_failures() {
+	repo="$1"
+	num="$2"
+	gh pr view "$num" --repo "$repo" --json statusCheckRollup --jq "$JQ_FAILING" |
+		while IFS=$'\t' read -r name url; do
+			printf '           x %s\n' "$name"
+			run_id="$(printf '%s' "$url" | sed -n 's#.*/actions/runs/\([0-9][0-9]*\).*#\1#p')"
+			if [ -n "$run_id" ]; then
+				printf '             gh run view %s --repo %s --log-failed\n' "$run_id" "$repo"
+			elif [ -n "$url" ]; then
+				printf '             %s\n' "$url"
+			fi
+		done
+}
+
+# Poll every draft PR once.
+# Writes "repo#num<TAB>STATUS" lines to stdout; the caller renders them.
+poll() {
+	prs="$1"
+	while IFS=$'\t' read -r repo num title; do
+		[ -n "$repo" ] || continue
+		counts="$(gh pr view "$num" --repo "$repo" --json statusCheckRollup --jq "$JQ_COUNTS" 2>/dev/null || true)"
+		if [ -z "$counts" ]; then
+			# PR vanished, or the API hiccuped. Not fatal - report and move on.
+			printf '%s#%s\tUNKNOWN\t0\t0\t%s\n' "$repo" "$num" "$title"
+			continue
+		fi
+		total="$(printf '%s' "$counts" | cut -f1)"
+		fail="$(printf '%s' "$counts" | cut -f3)"
+		pending="$(printf '%s' "$counts" | cut -f4)"
+		pass="$(printf '%s' "$counts" | cut -f2)"
+
+		if [ "$total" -eq 0 ]; then
+			status="NO-CHECKS"
+		elif [ "$fail" -gt 0 ]; then
+			status="FAILED"
+		elif [ "$pending" -gt 0 ]; then
+			status="PENDING"
+		else
+			status="GREEN"
+		fi
+		printf '%s\t%s\t%s\t%s\t%s\n' "$repo#$num" "$status" "$pass" "$total" "$title"
+	done <<EOF
+$prs
+EOF
+}
+
+# ponytail: fixed column widths and a 58-char title cut, rather than measuring
+# the terminal. Switch to "tput cols" if these ever wrap badly for you.
+render_row() {
+	printf '%-9s %-7s %-44s %s\n' "$2" "$3/$4" "$1" "$(printf '%.58s' "$5")"
+}
+
+main() {
+	prs="$(search_prs)"
+
+	if [ -z "$prs" ]; then
+		if [ -n "$ORG" ]; then
+			printf 'No open draft PRs authored by you in %s.\n' "$ORG"
+		else
+			printf 'No open draft PRs authored by you.\n'
+		fi
+		printf 'Drop --org/--search to widen the query, or check "pr-watch doctor".\n'
+		return 0
+	fi
+
+	prev=""
+	cycle=0
+	while :; do
+		cycle=$((cycle + 1))
+		rows="$(poll "$prs")"
+
+		green=0
+		pending=0
+		failed=0
+		other=0
+		greenlist=""
+
+		if [ "$cycle" -eq 1 ]; then
+			printf '%-9s %-7s %-44s %s\n' "STATUS" "CHECKS" "PR" "TITLE"
+		fi
+
+		while IFS=$'\t' read -r key status pass total title; do
+			[ -n "$key" ] || continue
+			case "$status" in
+			GREEN)
+				green=$((green + 1))
+				greenlist="$greenlist$key
+"
+				;;
+			PENDING) pending=$((pending + 1)) ;;
+			FAILED) failed=$((failed + 1)) ;;
+			*) other=$((other + 1)) ;;
+			esac
+
+			if [ "$cycle" -eq 1 ]; then
+				render_row "$key" "$status" "$pass" "$total" "$title"
+				if [ "$status" = "FAILED" ]; then
+					repo="${key%#*}"
+					num="${key##*#}"
+					report_failures "$repo" "$num"
+				fi
+			else
+				# ponytail: linear scan of the previous cycle's lines instead of an
+				# associative array, so this still runs on the bash 3.2 at /bin/bash.
+				# O(n^2), irrelevant at PR counts under a few hundred.
+				was="$(printf '%s\n' "$prev" | awk -F'\t' -v k="$key" '$1 == k { print $2 }')"
+				if [ "$was" != "$status" ]; then
+					printf '%-9s %-7s %-44s %s\n' "$status" "$pass/$total" "$key" "was ${was:-?}"
+					if [ "$status" = "FAILED" ]; then
+						repo="${key%#*}"
+						num="${key##*#}"
+						report_failures "$repo" "$num"
+					fi
+				fi
+			fi
+		done <<EOF
+$rows
+EOF
+
+		total_prs=$((green + pending + failed + other))
+		printf '\nTotals: %s draft, %s green, %s pending, %s failed' \
+			"$total_prs" "$green" "$pending" "$failed"
+		if [ "$other" -gt 0 ]; then
+			printf ', %s no checks' "$other"
+		fi
+		printf '\n'
+
+		if [ "$READY" -eq 1 ] && [ "$green" -gt 0 ]; then
+			printf '\n'
+			printf '%s' "$greenlist" | while IFS= read -r key; do
+				[ -n "$key" ] || continue
+				repo="${key%#*}"
+				num="${key##*#}"
+				if gh pr ready "$num" --repo "$repo" >/dev/null 2>&1; then
+					printf 'ready   %s\n' "$key"
+				else
+					printf 'FAILED  %s - retry: gh pr ready %s --repo %s\n' "$key" "$num" "$repo"
+				fi
+			done
+			# Un-drafted PRs drop out of the --draft search, so re-query.
+			prs="$(search_prs)"
+		elif [ "$green" -gt 0 ]; then
+			printf 'Dry run. Re-run with --ready to un-draft the %s green one(s).\n' "$green"
+		fi
+
+		if [ "$WATCH" -eq 0 ]; then
+			return 0
+		fi
+		if [ "$pending" -eq 0 ]; then
+			printf '\nNothing pending. Done.\n'
+			return 0
+		fi
+		if [ -z "$prs" ]; then
+			printf '\nNo draft PRs left. Done.\n'
+			return 0
+		fi
+
+		prev="$rows"
+		printf '\n-- %s still pending, re-polling in %ss (Ctrl-C to stop) --\n' "$pending" "$INTERVAL"
+		sleep "$INTERVAL"
+	done
+}
+
+trap 'printf "\nStopped.\n"; exit 130' INT
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-h | --help)
+		usage
+		exit 0
+		;;
+	doctor)
+		doctor
+		exit $?
+		;;
+	--ready)
+		READY=1
+		shift
+		;;
+	--org)
+		[ $# -ge 2 ] || die "--org needs an org name, e.g. --org pure-pure1"
+		ORG="$2"
+		shift 2
+		;;
+	--search)
+		[ $# -ge 2 ] || die "--search needs a query, e.g. --search 'repo:foo/bar'"
+		QUERY="$2"
+		shift 2
+		;;
+	--watch)
+		WATCH=1
+		shift
+		if [ $# -ge 1 ] && printf '%s' "$1" | grep -qE '^[0-9]+$'; then
+			INTERVAL="$1"
+			shift
+		fi
+		;;
+	*)
+		die "unknown argument '$1'. Run 'pr-watch --help' for usage."
+		;;
+	esac
+done
+
+command -v gh >/dev/null 2>&1 || die "gh not found. Install it:  brew install gh"
+command -v jq >/dev/null 2>&1 || die "jq not found. Install it:  brew install jq"
+gh auth status >/dev/null 2>&1 || die "gh is not authenticated. Run:  gh auth login"
+
+main

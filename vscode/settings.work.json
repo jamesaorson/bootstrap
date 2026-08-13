@@ -174,5 +174,7 @@
   ],
   "gitlens.advanced.messages": {
     "suppressIntegrationDisconnectedTooManyFailedRequestsWarning": true
-  }
+  },
+  "sonarlint.automaticAnalysis": true,
+  "sonarlint.focusOnNewCode": false
 }

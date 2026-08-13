@@ -1,3 +1,6 @@
+@RTK.md
+@tropes.md
+
 ## Working Style
 
 Prefer subagents for most substantive work. Keep the main thread for conversation, context-gathering, and planning with the user; delegate the actual execution (research, edits, multi-step tasks) to a subagent so the main thread stays available to steer.
@@ -5,6 +8,76 @@ Prefer subagents for most substantive work. Keep the main thread for conversatio
 - Fork (`subagent_type: "fork"`) when the work benefits from current context and its tool output isn't worth keeping.
 - Fresh agent (Explore/general-purpose/Plan/etc.) when the task is self-contained and you can brief it cleanly.
 - Solo in the main thread only for trivial one-shots or conversational turns.
+
+## Verify Status From Source
+
+Before reporting the status of a PR, ticket, spec, CUJ, or running process, check the live source:
+
+- PRs: `gh pr view <n> --json state,mergedAt,mergeCommit,statusCheckRollup`
+- Merges: `git log --oneline origin/main | head`, or `git merge-base --is-ancestor <sha> origin/main`
+- Jira: fetch the issue live via the mcp-atlassian tools
+- Processes/servers: query the health endpoint or PID file, not memory of an earlier check
+
+Never infer merge or done status from a bead title, a board summary, a spec's own claim, a changelog, or a previous session's notes. Those are caches and they drift the moment upstream merges. If an automated board says "done", spot-check at least one underlying item before repeating the claim. A parent item (epic, CUJ) is only done when every child is individually verified done — count and list the children rather than trusting a rollup.
+
+If something cannot be verified, say `UNKNOWN (unverified)`. Do not guess.
+
+## Before Pushing
+
+Run the project's build, test, and format commands locally before pushing a branch or opening a PR. Confirm the real module/task name first (`./gradlew projects`, `settings.gradle`, `package.json` scripts) — do not carry a module name over from a sibling repo.
+
+This applies to delegated work. Every agent brief must include:
+
+- the exact verified build/test command for that specific repo
+- "run it locally and paste the passing output in your report before pushing"
+- "if it fails and you cannot fix it, report BLOCKED — do not push"
+
+Do not use CI to discover formatting or path errors. When CI does go red, read the logs (`gh run view --log-failed`) and fix the cause; repeated `gh run rerun` self-inflicts concurrency cancellations.
+
+## Editing Rules
+
+Change only what the request covers.
+
+- No blanket string replaces or sed sweeps across files. Edit call sites individually.
+- No grep-driven import removal. Prove the symbol is unreferenced in that one file first.
+- Never overwrite an existing config, template, or hook without diffing against it first.
+- Before committing a deletion, check whether any removed line encodes configuration, credentials, per-environment grants, role mappings, or feature flags. If so, stop and ask. A deletion that looks like a simplification is often a silent removal of something load-bearing.
+- Re-run the relevant tests and linters after each refactor step to catch self-inflicted regressions before they land.
+
+### Guarded refactors
+
+For any refactor larger than a single file, work against a ratchet:
+
+1. Capture a baseline before touching anything — full test pass count and the exact linter/SonarLint finding list. Run long suites in the background rather than risking the Bash timeout.
+2. Write characterization tests pinning current behavior at every call site to be touched. Uncovered code gets a test before it gets refactored.
+3. One logical change per commit.
+4. After each commit, re-run tests and linters. If the pass count dropped or a new finding appeared that was not in the baseline, revert that commit and try a different approach. Never leave a self-inflicted regression in place to fix later.
+
+## Communication Style
+
+Lead with the problem, then the fix. Two or three sentences on what is actually broken and why it matters before any code or diff.
+
+Drafted prose for Slack, Jira, or PR descriptions stays terse and factual. No filler, no manufactured enthusiasm. Before asking another team a question, check their existing docs — do not send questions their documentation already answers.
+
+## Jira Formatting
+
+Jira issue descriptions and comments use Atlassian wiki markup, not Markdown:
+
+```
+h2. Heading
+*bold*  _italic_  {{monospace}}
+{code:java}...{code}
+||Header||Header||
+* bullet
+```
+
+Markdown renders as literal text in Jira.
+
+## Shell Environment
+
+- Use non-interactive flags on destructive commands (`rm -f`, `git clean -fd`). Interactive aliases like `rm -i` hang a non-interactive session.
+- Quote variables — unquoted expansion gets word-split by zsh and commands apply partially.
+- Run long test suites in the background with output to a log file rather than risking the 10-minute Bash timeout.
 
 ## Git Conventions
 
@@ -27,8 +100,6 @@ When building CLI tools, make them self-guiding.
 - Error text tells the user what to do next, not just what went wrong.
 
 A CLI that fails without pointing at the fix is a bug, not a feature of the user's environment.
-
-@RTK.md
 
 ## Writing Conventions
 
