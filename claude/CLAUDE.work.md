@@ -1,6 +1,14 @@
 @RTK.md
 @tropes.md
 
+## Company Name
+
+The company is **Everpure**. It was formerly Pure Storage; that name is retired.
+
+Use "Everpure" in all written output — docs, PR descriptions, Jira, commit messages, journal entries, code comments. Do not rename identifiers that still literally contain the old name: the `purestorage.com` domain, `@purestorage.com` email addresses, GitHub orgs (`pure-pure1`, `pure-experimental`, `pure-shared`), package scopes (`@pure/*`), Artifactory paths (`pstg-*`), and product names such as Pure1 and Pure1 Manage all stand as they are. Quoting existing text verbatim is also fine.
+
+In short: the company is Everpure, but the strings are still whatever they are. Never sweep-replace on this.
+
 ## Working Style
 
 Prefer subagents for most substantive work. Keep the main thread for conversation, context-gathering, and planning with the user; delegate the actual execution (research, edits, multi-step tasks) to a subagent so the main thread stays available to steer.
