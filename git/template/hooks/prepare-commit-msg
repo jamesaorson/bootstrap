@@ -79,6 +79,17 @@ generate_prefix() {
     return 0
   fi
 
+  # Don't prepend to a message that already carries a bracketed ticket key, e.g.
+  # "[CLOUD-239472] ..." or "[TRIVIAL] ...". Repos on that convention require the
+  # bare key to lead the subject, so a conventional-commit type in front of it
+  # breaks their PR checks. This fires regardless of branch shape, because branch
+  # naming and subject convention are set by different owners -- a `feat/...`
+  # branch in a `[CLOUD-...]` repo is normal, not a mistake.
+  if grep -qE "^\[[A-Z][A-Z0-9]*(-[0-9]+)?\][[:space:]]" "${COMMIT_MSG_FILE}" 2>/dev/null; then
+    echo ""
+    return 0
+  fi
+
   # Don't prepend if the commit message already starts with the intended prefix
   if [ "$ISSUE_ONLY" -eq 1 ]; then
     if grep -qE "^[0-9]+: " "${COMMIT_MSG_FILE}" 2>/dev/null; then
@@ -97,30 +108,41 @@ generate_prefix() {
 
 run-tests() {
   local test_cases=(
-    # format: branch|expected-prefix
-    "feat/195-add-login|feat(195): "
-    "chore/195-add-login|chore(195): "
-    "feat/add-login|feat: "
-    "asd/195-add-login|asd(195): "
-    "195-add-login|195: "
-    "asdasd|"
+    # format: branch|commit-message|expected-prefix
+    "feat/195-add-login|test|feat(195): "
+    "chore/195-add-login|test|chore(195): "
+    "feat/add-login|test|feat: "
+    "asd/195-add-login|test|asd(195): "
+    "195-add-login|test|195: "
+    "asdasd|test|"
+    # already-prefixed messages are left alone
+    "feat/add-login|feat: already prefixed|"
+    "195-add-login|195: already prefixed|"
+    # bracketed ticket keys win over the branch-derived prefix
+    "feat/phantom-tokens-cuj-001-spec-001|[CLOUD-239472] Hoist the header name|"
+    "feat/195-add-login|[CLOUD-239472] Hoist the header name|"
+    "user/jorson/CLOUD-1|[XAAS-42] Do the thing|"
+    "195-add-login|[TRIVIAL] Tidy up|"
+    # ...but only for uppercase bracketed keys, not any bracketed text
+    "feat/add-login|[wip] lowercase is not a ticket key|feat: "
+    "feat/add-login|[Mixed-1] not a ticket key either|feat: "
   )
 
   local failures=0
   for t in "${test_cases[@]}"; do
-    IFS='|' read -r branch expected <<< "$t"
+    IFS='|' read -r branch message expected <<< "$t"
     # Ensure BRANCH_NAME is set for the function under test
     BRANCH_NAME="${branch}"
 
     # Use a real temporary file (avoid /dev/fd process substitution)
     local temp_msg=$(mktemp) || { echo "mktemp failed"; exit 2; }
-    printf "%s\n" "test" > "${temp_msg}"
+    printf "%s\n" "${message}" > "${temp_msg}"
 
     # Call the function under test with the temp file path
     local prefix="$(generate_prefix "${temp_msg}")"
     # Read result and compare
     if [ "${prefix}" != "${expected}" ]; then
-      echo "  FAILED TEST CASE: got '${prefix}', expected '${expected}'"
+      echo "  FAILED TEST CASE: branch '${branch}', message '${message}': got '${prefix}', expected '${expected}'"
       failures=$((failures + 1))
     fi
 
