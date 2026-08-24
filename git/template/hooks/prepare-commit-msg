@@ -3,9 +3,15 @@
 set -o pipefail
 
 generate_prefix() {
-  # Default branches to skip (can be overridden by environment)
+  # Default branches to skip (can be overridden by environment).
+  #
+  # `user` and `users` are here because `user/<name>/<slug>` is a personal-branch
+  # convention, not a typed-branch one -- the first segment names a namespace, not a
+  # commit type, so deriving `user: ` from it is always wrong. Several teams name
+  # branches that way (dx-submerce mandates `user/<username>/<TICKET-ID>`), and both
+  # spellings are in use.
   if [ -z "${BRANCHES_TO_SKIP+x}" ]; then
-    BRANCHES_TO_SKIP=(main master trunk)
+    BRANCHES_TO_SKIP=(main master trunk user users)
   fi
 
   set -u
@@ -126,6 +132,13 @@ run-tests() {
     # ...but only for uppercase bracketed keys, not any bracketed text
     "feat/add-login|[wip] lowercase is not a ticket key|feat: "
     "feat/add-login|[Mixed-1] not a ticket key either|feat: "
+    # personal-branch namespaces never yield a type prefix, with or without a ticket key
+    "user/jorson/some-slug|a plain subject with no ticket|"
+    "users/jorson/some-slug|a plain subject with no ticket|"
+    "user/jorson/CLOUD-238543-repair|Prefill the timezone|"
+    "user/jorson/CLOUD-238543-repair|[CLOUD-238543] Prefill the timezone|"
+    # a repo that genuinely uses a `user` commit type is not what this convention means
+    "userland/195-add-login|test|userland(195): "
   )
 
   local failures=0
