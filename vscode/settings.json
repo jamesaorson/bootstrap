@@ -21,7 +21,8 @@
     "go": true,
     "cpp": true,
     "c": false,
-    "yaml": false
+    "yaml": false,
+    "typescript": false
   },
   "git.ignoreMissingGitWarning": true,
   "cSpell.userWords": [
@@ -120,5 +121,10 @@
   "chat.instructionsFilesLocations": {
     "~/.agents/rules": true
   },
-  "chat.viewSessions.orientation": "stacked"
+  "chat.viewSessions.orientation": "stacked",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "azureTerraform.survey": {
+    "surveyPromptDate": "2026-09-07T01:06:59.223Z",
+    "surveyPromptIgnoredCount": 0
+  }
 }
