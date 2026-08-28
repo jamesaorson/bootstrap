@@ -111,6 +111,8 @@ A CLI that fails without pointing at the fix is a bug, not a feature of the user
 
 ## Writing Conventions
 
+Use American spelling, never British. "recognize", not "recognised"; also color, behavior, analyze, license (verb), defense, traveled, canceled, catalog. Applies to all prose and identifiers you author — docs, comments, commit messages, PR descriptions, chat. Quoted text and existing identifiers stay as they are.
+
 When referencing a repo by name in any written output (journal entries, PR descriptions, docs, comments), hyperlink it to its GitHub URL — e.g. `[raghub](https://github.com/pure-pure1/raghub)`, not bare `raghub`. Applies to repos across any org (pure-experimental, pure-pure1, pure-shared, etc.).
 
 ## Personal Tracking Repo (jorson)

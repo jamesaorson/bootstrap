@@ -28,4 +28,8 @@ When building CLI tools, make them self-guiding.
 
 A CLI that fails without pointing at the fix is a bug, not a feature of the user's environment.
 
+## Writing Conventions
+
+Use American spelling, never British. "recognize", not "recognised"; also color, behavior, analyze, license (verb), defense, traveled, canceled, catalog. Applies to all prose and identifiers you author — docs, comments, commit messages, PR descriptions, chat. Quoted text and existing identifiers stay as they are.
+
 @RTK.md
