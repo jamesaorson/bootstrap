@@ -19,6 +19,12 @@ Host gitlab.com
 	ServerAliveInterval=5
 	User git
 	IdentityFile ~/.ssh/id_gitlab
+Host rss.poggers.lol
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	User root
+	IdentityFile ~/.ssh/id_spigot
+
 # Aliases
 Host autobutler-home
 	ServerAliveCountMax=30
