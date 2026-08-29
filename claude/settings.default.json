@@ -6,7 +6,7 @@
       "/tmp"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "hooks": {
     "SessionStart": [
       {
@@ -71,5 +71,8 @@
       "routine build/test/lint (`make build`, `make check`, `make test`, `make generate`) under this repo's working directory"
     ]
   },
-  "gitAttribution": false
+  "gitAttribution": false,
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
+  }
 }

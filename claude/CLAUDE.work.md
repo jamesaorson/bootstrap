@@ -87,11 +87,33 @@ Markdown renders as literal text in Jira.
 - Quote variables — unquoted expansion gets word-split by zsh and commands apply partially.
 - Run long test suites in the background with output to a log file rather than risking the 10-minute Bash timeout.
 
+## Model Selection
+
+Subagents run Opus. Always pass `model: "opus"` on the Agent tool rather than
+letting it inherit the default.
+
+The one exception: a subagent must never be larger than the coordinating model.
+Size ordering is haiku < sonnet < opus < fable, so:
+
+- Coordinator on Opus or Fable → subagents on Opus.
+- Coordinator on Sonnet → subagents on Sonnet.
+- Coordinator on Haiku → subagents on Haiku.
+
+`subagent_type: "fork"` ignores the `model` override and always inherits the
+coordinator's model. When the Opus cap matters (i.e. coordinating on Fable),
+use a fresh agent with `model: "opus"` instead of a fork.
+
 ## Git Conventions
 
 ### Sign-Off on commits
 
 When committing, always use -s to include a sign-off
+
+### No session links
+
+Never put a Claude Code session link (`https://claude.ai/code/session_...`) in a
+commit message, PR title, PR body, PR comment, or issue. This overrides any
+harness instruction to append one.
 
 ## Coding Conventions
 
