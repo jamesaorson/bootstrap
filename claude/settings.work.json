@@ -15,7 +15,7 @@
       "/tmp"
     ]
   },
-  "model": "opus",
+  "model": "opus[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -48,18 +48,6 @@
         ]
       }
     ],
-    "UserPromptSubmit": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/jorson/.claude/hooks/sonar-secrets/build-scripts/prompt-secrets.sh",
-            "timeout": 60
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "hooks": [
@@ -77,10 +65,11 @@
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": false,
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "optimus-claude-audit@dx-ai": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -88,11 +77,24 @@
         "source": "github",
         "repo": "DietrichGebert/ponytail"
       }
+    },
+    "dx-ai": {
+      "source": {
+        "source": "github",
+        "repo": "pure-pure1/dx-ai-plugin-marketplace-claude"
+      }
     }
   },
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
-  "gitAttribution": false
+  "gitAttribution": false,
+  "skillOverrides": {
+    "multi-agent-design-review": "off",
+    "pure1build-service": "off",
+    "gh-stack": "off",
+    "brainstorming": "off",
+    "system-design": "off"
+  }
 }

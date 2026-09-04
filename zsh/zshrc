@@ -144,12 +144,12 @@ CDPATH="${CDPATH}:${HOME}/github.com/"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-experimental"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-pure1"
 [[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
-if command -v vault >/dev/null; then
+#if command -v vault >/dev/null; then
 	export VAULT_ADDR="https://vault.purestorage.com:443"
 	# reuse cached ~/.vault-token if still valid, else log in once (browser)
-	vault token lookup >/dev/null 2>&1 || vault login -method=oidc >/dev/null
+#	vault token lookup >/dev/null 2>&1 || vault login -method=oidc >/dev/null
 	export VAULT_TOKEN=$(cat ~/.vault-token)
-fi
+#fi
 
 aws-sso() {
 	if [[ -z "${AWS_PROFILE}" ]]; then
@@ -183,6 +183,9 @@ if [ -d "${HOME}/.secret" ]; then
 	fi
 	if [ -f "${HOME}/.secret/confluence-api-key" ]; then
 		export CONFLUENCE_API_KEY="$(cat "${HOME}/.secret/confluence-api-key")"
+	fi
+	if [ -f "${HOME}/.secret/confluence-cloud-api-key" ]; then
+		export CONFLUENCE_CLOUD_API_KEY="$(cat "${HOME}/.secret/confluence-cloud-api-key")"
 	fi
 fi
 

@@ -93,6 +93,7 @@ else
                 "tmux"
                 "tree"
                 "alacritty"
+                "herdr"
                 "claude"
             )
             ;;

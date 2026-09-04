@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+. ../functions.sh
+
+INFO() {
+	info_common 'HERDR' $@
+}
+
+INFO "Setting up config"
+DIR=${HOME}/.config/herdr
+CONFIG=${DIR}/config.toml
+mkdir -p ${DIR}
+rm -f ${CONFIG}
+ln -s -f $(pwd)/config.toml ${CONFIG}
+INFO "Finished setting up config"
+
+INFO "Installing herdr"
+PLATFORM="$(uname -s)"
+case ${PLATFORM} in
+    Linux*)
+        # ponytail: no apt package, so the upstream installer it is
+        if ! command -v herdr; then
+            curl -fsSL https://herdr.dev/install.sh | sh
+        fi
+        ;;
+    Darwin*)
+        FIRST_INSTALL=0
+        if ! brew list herdr > /dev/null 2>&1; then
+            FIRST_INSTALL=1
+        fi
+        bootstrap_install herdr
+        if [[ ${FIRST_INSTALL} == "1" ]]; then
+            brew services start herdr
+        fi
+        ;;
+    *)          echo "UNKNOWN:${PLATFORM}"; exit 1;;
+esac
+INFO "Finished installing herdr"
+
+herdr --version
