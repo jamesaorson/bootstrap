@@ -39,6 +39,6 @@
 [lfs "https://git.sr.ht/~jamesaorson/all.git/info/lfs"]
 	locksverify = false
 [gpg]
-	program = /opt/homebrew/bin/gpg
+	program = gpg
 [safe]
 	directory = /Users/jamesaorson/github.com/armbian/build
