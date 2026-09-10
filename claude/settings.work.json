@@ -15,7 +15,14 @@
       "/tmp"
     ]
   },
-  "model": "opus[1m]",
+  "model": "opus",
+  "skillOverrides": {
+    "multi-agent-design-review": "off",
+    "pure1build-service": "off",
+    "gh-stack": "off",
+    "brainstorming": "off",
+    "system-design": "off"
+  },
   "hooks": {
     "SessionStart": [
       {
@@ -89,12 +96,5 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
-  "gitAttribution": false,
-  "skillOverrides": {
-    "multi-agent-design-review": "off",
-    "pure1build-service": "off",
-    "gh-stack": "off",
-    "brainstorming": "off",
-    "system-design": "off"
-  }
+  "gitAttribution": false
 }

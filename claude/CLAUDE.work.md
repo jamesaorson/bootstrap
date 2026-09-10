@@ -67,6 +67,10 @@ Lead with the problem, then the fix. Two or three sentences on what is actually 
 
 Drafted prose for Slack, Jira, or PR descriptions stays terse and factual. No filler, no manufactured enthusiasm. Before asking another team a question, check their existing docs — do not send questions their documentation already answers.
 
+Never put test pass/fail counts in a PR description, PR title, PR comment, or commit message. No "1434 tests, 57 failed", no "24/24 passing", no baseline comparison by number. The counts are machine- and environment-specific, they go stale the moment anyone else runs the suite, and CI is the authority on them anyway. Say what was run and what it means in words instead — "known-failing integration tests that also fail on main, missing the Vault-injected TEx secrets", "new tests were checked to fail without the change". This applies to the local build too, not only CI.
+
+Reporting counts to me in chat is fine and often useful — the rule is about what lands in a PR or commit.
+
 ## Jira Formatting
 
 Jira issue descriptions and comments use Atlassian wiki markup, not Markdown:
@@ -86,6 +90,15 @@ Markdown renders as literal text in Jira.
 - Use non-interactive flags on destructive commands (`rm -f`, `git clean -fd`). Interactive aliases like `rm -i` hang a non-interactive session.
 - Quote variables — unquoted expansion gets word-split by zsh and commands apply partially.
 - Run long test suites in the background with output to a log file rather than risking the 10-minute Bash timeout.
+
+## Kubernetes Clusters Are Read-Only
+
+I am never allowed to delete, edit, patch, scale, restart, or otherwise mutate anything in company Kubernetes clusters (stage or prod), and neither are you.
+
+- `kubectl` is for reading only: `get`, `describe`, `logs`, `events`, `top`, `rollout status`. Never `delete`, `edit`, `patch`, `apply`, `scale`, `rollout restart`, `create job`, `exec`, or `port-forward` against a company cluster.
+- Never suggest that I run a mutating `kubectl` command either, not as a fix, not as a cleanup, not as a "one-off". If a fix needs a cluster change, it goes through the deploy pipeline (helm chart, ArgoCD, pure1build), and the answer is a PR.
+- If a live object is wrong and the pipeline cannot fix it (drift, stale resource, prune disabled), say so and stop. Escalating to the platform team is my call, not a command for me to type.
+- The same applies to the AWS account behind the clusters: read-only API calls only.
 
 ## Model Selection
 

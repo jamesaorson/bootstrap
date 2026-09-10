@@ -160,7 +160,8 @@
   "vs-kubernetes": {
     "vscode-kubernetes.minikube-path-mac": "/Users/jorson/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
     "vscode-kubernetes.helm-path-mac": "/Users/jorson/.vs-kubernetes/tools/helm/darwin-arm64/helm",
-    "vscode-kubernetes.kubectl-path-mac": "/Users/jorson/.vs-kubernetes/tools/kubectl/kubectl"
+    "vscode-kubernetes.kubectl-path-mac": "/Users/jorson/.vs-kubernetes/tools/kubectl/kubectl",
+    "vs-kubernetes.minikube-show-information-expiration": "2027-03-08T17:48:00.625Z"
   },
   "todo-tree.ripgrep.ripgrep": "/opt/homebrew/bin/rg",
   "chat.viewSessions.orientation": "stacked",
@@ -176,5 +177,103 @@
     "suppressIntegrationDisconnectedTooManyFailedRequestsWarning": true
   },
   "sonarlint.automaticAnalysis": true,
-  "sonarlint.focusOnNewCode": false
+  "sonarlint.focusOnNewCode": false,
+  "dbcode.connections": [
+    {
+      "connectionId": "6LY16cUdp21CwVe8lClAO",
+      "name": "paas-sla-compliance_stg",
+      "driver": "postgres",
+      "connectionType": "host",
+      "host": "paas-sla-compliance.ckg3eittwxvs.us-west-2.rds.amazonaws.com",
+      "port": 5432,
+      "ssl": true,
+      "sslTrustCertificate": false,
+      "authMethod": "password",
+      "username": "postgres",
+      "password": "",
+      "savePassword": "secretStorage",
+      "database": "paas_sla_compliance",
+      "readOnly": false,
+      "postConnectionSqlType": "inline",
+      "connectionTimeout": 30,
+      "idleTimeout": 300,
+      "maxConnections": 10,
+      "pinnedConnectionTimeout": "0",
+      "introspection": {
+        "progressive": false
+      }
+    },
+    {
+      "connectionId": "CaHFnvo9NhMJ4e9NMY7f4",
+      "name": "paas-sla-compliance_prd",
+      "driver": "postgres",
+      "connectionType": "host",
+      "host": "paas-sla-compliance.cxkm5ynjctyy.us-west-2.rds.amazonaws.com",
+      "port": 5432,
+      "ssl": true,
+      "sslTrustCertificate": false,
+      "authMethod": "password",
+      "username": "postgres",
+      "password": "",
+      "savePassword": "secretStorage",
+      "database": "paas_sla_compliance",
+      "readOnly": false,
+      "postConnectionSqlType": "inline",
+      "connectionTimeout": 30,
+      "idleTimeout": 300,
+      "maxConnections": 10,
+      "pinnedConnectionTimeout": "0",
+      "introspection": {
+        "progressive": false
+      }
+    },
+    {
+      "connectionId": "Nl-PtZSdkN9YD-T_4WNgV",
+      "name": "paas-sla-service_prd",
+      "driver": "postgres",
+      "connectionType": "host",
+      "host": "paassla.cxkm5ynjctyy.us-west-2.rds.amazonaws.com",
+      "port": 5432,
+      "ssl": true,
+      "sslTrustCertificate": false,
+      "authMethod": "password",
+      "username": "masterUser",
+      "password": "",
+      "savePassword": "secretStorage",
+      "database": "paassla_prod",
+      "readOnly": false,
+      "postConnectionSqlType": "inline",
+      "connectionTimeout": 30,
+      "idleTimeout": 300,
+      "maxConnections": 10,
+      "pinnedConnectionTimeout": "0",
+      "introspection": {
+        "progressive": false
+      }
+    },
+    {
+      "connectionId": "wxxmQjCRsGzbLtN6bp_dd",
+      "name": "paas-sla-service_stg",
+      "driver": "postgres",
+      "connectionType": "host",
+      "host": "paassla.ckg3eittwxvs.us-west-2.rds.amazonaws.com",
+      "port": 5432,
+      "ssl": true,
+      "sslTrustCertificate": false,
+      "authMethod": "password",
+      "username": "masterUser",
+      "password": "",
+      "savePassword": "secretStorage",
+      "database": "paassla_stg",
+      "readOnly": false,
+      "postConnectionSqlType": "inline",
+      "connectionTimeout": 30,
+      "idleTimeout": 300,
+      "maxConnections": 10,
+      "pinnedConnectionTimeout": "0",
+      "introspection": {
+        "progressive": false
+      }
+    }
+  ]
 }
