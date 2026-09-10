@@ -1,0 +1,19 @@
+{
+  "defaultProvider": "litellm",
+  "defaultModel": "Kimi-K3-lab-claude-compatible[1m]",
+  "litellm": {
+    "providers": {
+      "litellm": {
+        "baseUrl": "https://gpulab.purestorage.com"
+      }
+    }
+  },
+  "enabledModels": [
+    "litellm/*"
+  ],
+  "packages": [
+    "npm:pi-provider-litellm"
+  ],
+  "lastChangelogVersion": "0.85.1",
+  "theme": "readable-dark"
+}

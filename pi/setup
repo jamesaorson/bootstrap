@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+. ../functions.sh
+
+DIR=${HOME}/.pi/agent
+mkdir -p ${DIR}/themes
+
+# Host-specific (personal vs work).
+SETTINGS=settings.default.json
+if [[ $(hostname) == *jorson* ]]; then
+    SETTINGS=settings.work.json
+fi
+
+# Symlink the settings file into the pi agent config dir.
+# auth.json, sessions/, npm/, models-store.json, etc. live in ${DIR}
+# and are intentionally left alone (auth/machine state, not config).
+ln -sf $(pwd)/${SETTINGS} ${DIR}/settings.json
+
+# Custom themes. Symlink each theme file individually so we never clobber
+# a pre-existing ${DIR}/themes directory that isn't ours.
+for theme in $(pwd)/themes/*.json; do
+    ln -sf ${theme} ${DIR}/themes/$(basename ${theme})
+done

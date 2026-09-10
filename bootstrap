@@ -74,6 +74,7 @@ else
                 "gh"
                 "npm"
                 "claude"
+                "pi"
             )
             ;;
         Darwin*)
@@ -95,6 +96,7 @@ else
                 "alacritty"
                 "herdr"
                 "claude"
+                "pi"
             )
             ;;
         *)
