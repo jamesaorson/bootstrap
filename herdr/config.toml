@@ -1,3 +1,4 @@
+onboarding = false
 # Nothing else in here uses ctrl+space, and vim/tmux do not run inside herdr,
 # so the prefix is free.
 #[keys]

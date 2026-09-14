@@ -1,0 +1,11 @@
+{
+  "providers": {
+    "litellm": {
+      "modelOverrides": {
+        "Kimi-K3-lab-claude-compatible[1m]": {
+          "contextWindow": 1000000
+        }
+      }
+    }
+  }
+}

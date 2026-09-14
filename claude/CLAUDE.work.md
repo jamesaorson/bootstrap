@@ -17,6 +17,39 @@ Prefer subagents for most substantive work. Keep the main thread for conversatio
 - Fresh agent (Explore/general-purpose/Plan/etc.) when the task is self-contained and you can brief it cleanly.
 - Solo in the main thread only for trivial one-shots or conversational turns.
 
+## Herdr Subagents
+
+When running inside pi inside Herdr, a "subagent" is a new Herdr tab in the current workspace running another agent instance. Before any `herdr` command, check `test "${HERDR_ENV:-}" = 1` — if it fails, say you are not inside Herdr and stop. Full reference: `herdr --skill`, or `herdr tab` / `herdr agent` / `herdr pane` with no subcommand.
+
+To spawn a subagent in a new tab of the current pane's workspace:
+
+```bash
+herdr tab create --workspace "$HERDR_WORKSPACE_ID" --cwd "$PWD" --label "<task>" --no-focus
+```
+
+Read the new tab's root pane ID from `.result.root_pane.pane_id` in the JSON response, then start the agent in it:
+
+```bash
+herdr agent start <name> --kind pi --pane <pane-id>
+```
+
+Names must match `[a-z][a-z0-9_-]{0,31}` and be unique among live agents. Then prompt it and wait for a settled state:
+
+```bash
+herdr agent prompt <name> "<self-contained brief>" --wait --timeout 120000
+herdr agent read <name> --source recent-unwrapped --lines 120
+```
+
+Rules:
+
+- Always `--no-focus` on creation — never steal the user's focus.
+- The brief must be fully self-contained; the subagent does not see this conversation. Include the exact verified build/test command and "report BLOCKED rather than pushing on failure" per the Before Pushing section.
+- Target by unique agent name or explicit pane ID — never the UI-focused pane, which may belong to the user. Use `--current` when a pane command should target the calling pane.
+- If a wait returns `blocked` or times out, inspect with `herdr agent get <name>` / `herdr agent read <name>` before sending more input; do not blindly resubmit.
+- If the agent's UI is blocked on an approval or question, surface it to me instead of answering it yourself.
+- If `agent read` cannot recover the full response (alternate screen), ask the subagent to write its response as Markdown to a temp file and read the file.
+- Close only tabs you created (`herdr tab close <id>`); never close the user's tabs or run `herdr server stop`.
+
 ## Verify Status From Source
 
 Before reporting the status of a PR, ticket, spec, CUJ, or running process, check the live source:
