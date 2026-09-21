@@ -9,6 +9,7 @@
 	cp = cherry-pick
 	cob = checkout -b
 	com = commit -s --allow-empty -m
+	comadd = !git add . && git commit -s --allow-empty -m
 	st = status
 	pish = push
 	pushup = !git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`

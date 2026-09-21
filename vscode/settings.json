@@ -124,7 +124,7 @@
   "chat.viewSessions.orientation": "stacked",
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "azureTerraform.survey": {
-    "surveyPromptDate": "2026-09-07T01:06:59.223Z",
-    "surveyPromptIgnoredCount": 0
+    "surveyPromptDate": "2026-09-18T18:59:29.653Z",
+    "surveyPromptIgnoredCount": 1
   }
 }

@@ -1,4 +1,7 @@
 {
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "defaultMode": "auto",
@@ -71,8 +74,5 @@
       "routine build/test/lint (`make build`, `make check`, `make test`, `make generate`) under this repo's working directory"
     ]
   },
-  "gitAttribution": false,
-  "env": {
-    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
-  }
+  "gitAttribution": false
 }
