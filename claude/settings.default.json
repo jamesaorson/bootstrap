@@ -3,8 +3,8 @@
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
 	"attribution": {
-		"commit": false,
-    "pr": false,
+		"commit": "",
+    "pr": "",
     "sessionUrl": false
 	},
   "permissions": {
