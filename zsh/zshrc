@@ -165,9 +165,6 @@ if [ -d "${HOME}/.secret" ]; then
 	if [ -f "${HOME}/.secret/codex-api-key" ]; then
 		export CODEX_API_KEY="$(cat "${HOME}/.secret/codex-api-key")"
 	fi
-	if [ -f "${HOME}/.secret/jira-api-key" ]; then
-		export JIRA_API_KEY="$(cat "${HOME}/.secret/jira-api-key")"
-	fi
 	if [ -f "${HOME}/.secret/sonar-token" ]; then
 		export SONAR_TOKEN="$(cat "${HOME}/.secret/sonar-token")"
 	fi
@@ -180,11 +177,8 @@ if [ -d "${HOME}/.secret" ]; then
 	if [ -f "${HOME}/.secret/mongo-password" ]; then
 		export MONGO_PASSWORD="$(cat "${HOME}/.secret/mongo-password")"
 	fi
-	if [ -f "${HOME}/.secret/confluence-api-key" ]; then
-		export CONFLUENCE_API_KEY="$(cat "${HOME}/.secret/confluence-api-key")"
-	fi
-	if [ -f "${HOME}/.secret/confluence-cloud-api-key" ]; then
-		export CONFLUENCE_CLOUD_API_KEY="$(cat "${HOME}/.secret/confluence-cloud-api-key")"
+	if [ -f "${HOME}/.secret/atlassian-cloud-api-key" ]; then
+		export ATLASSIAN_CLOUD_API_KEY="$(cat "${HOME}/.secret/atlassian-cloud-api-key")"
 	fi
 fi
 

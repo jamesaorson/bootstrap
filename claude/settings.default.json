@@ -2,7 +2,11 @@
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
-  "includeCoAuthoredBy": false,
+	"attribution": {
+		"commit": false,
+    "pr": false,
+    "sessionUrl": false
+	},
   "permissions": {
     "defaultMode": "auto",
     "additionalDirectories": [
