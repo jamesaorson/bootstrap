@@ -1,7 +1,5 @@
 {
   "env": {
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-5",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-5",
     "SHELL": "/opt/homebrew/bin/zsh",
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },

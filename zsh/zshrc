@@ -198,4 +198,22 @@ export PATH="$HOME/.local/share/sonarqube-cli/bin:$PATH"
 # Disable husky hooks globally
 export HUSKY=0
 
-
+rds-connect() {
+	if [ -z "${RDS_HOST}" ]; then
+		echo "RDS_HOST needs to be set"
+		exit 1
+	fi
+	if [ -z "${RDS_DB}" ]; then
+		echo "RDS_DB needs to be set"
+		exit 1
+	fi
+  if [ -z "${RDS_PASSWORD}" ]; then
+		echo "RDS_PASSWORD needs to be set"
+		exit 1
+	fi
+	if [ -z "${RDS_USERNAME}" ]; then
+		echo "RDS_USERNAME needs to be set"
+		exit 1
+	fi
+	psql "host=${RDS_HOST} port=5432 dbname=${RDS_DB} user=${RDS_USERNAME} sslmode=verify-full sslrootcert=./global-bundle.pem password=${RDS_PASSWORD}"
+}
