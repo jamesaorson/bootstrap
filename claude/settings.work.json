@@ -3,11 +3,11 @@
     "SHELL": "/opt/homebrew/bin/zsh",
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
-	"attribution": {
-		"commit": "",
-		"pr": "",
+  "attribution": {
+    "commit": "",
+    "pr": "",
     "sessionUrl": false
-	},
+  },
   "permissions": {
     "allow": [
       "Bash(*)"
