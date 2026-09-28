@@ -2,11 +2,11 @@
   "env": {
     "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
-	"attribution": {
-		"commit": "",
+  "attribution": {
+    "commit": "",
     "pr": "",
     "sessionUrl": false
-	},
+  },
   "permissions": {
     "defaultMode": "auto",
     "additionalDirectories": [
@@ -43,6 +43,11 @@
     }
   },
   "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "effortLevel": "medium"
+    }
+  },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
