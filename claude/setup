@@ -25,6 +25,7 @@ ln -sf $(pwd)/RTK.md ${DIR}/RTK.md
 ln -sf $(pwd)/tropes.md ${DIR}/tropes.md
 ln -sf $(pwd)/statusline-command.sh ${DIR}/statusline-command.sh
 ln -sf $(pwd)/cost-refresh.sh ${DIR}/bin/cost-refresh.sh
+ln -sf $(pwd)/no-ai-attribution.sh ${DIR}/bin/no-ai-attribution.sh
 
 # ccusage powers the month-to-date cost in the statusline.
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"

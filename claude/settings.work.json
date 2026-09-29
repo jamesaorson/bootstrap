@@ -55,6 +55,15 @@
             "command": "rtk hook claude"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/bin/no-ai-attribution.sh"
+          }
+        ]
       }
     ],
     "Stop": [
