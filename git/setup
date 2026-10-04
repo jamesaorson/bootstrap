@@ -33,3 +33,10 @@ set -u
 ln -s -f $(pwd)/${GITCONFIG} ~/.gitconfig
 rm -f ${TEMPLATE_DIR}
 ln -s -f $(pwd)/template ${TEMPLATE_DIR}
+
+GNUPG_DIR=${HOME}/.gnupg
+mkdir -p -m 700 ${GNUPG_DIR}
+ln -s -f $(pwd)/gpg-agent.conf ${GNUPG_DIR}/gpg-agent.conf
+if command -v gpgconf >> /dev/null; then
+    gpgconf --reload gpg-agent
+fi

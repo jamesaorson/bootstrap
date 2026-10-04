@@ -1,8 +1,13 @@
 onboarding = false
-# Nothing else in here uses ctrl+space, and vim/tmux do not run inside herdr,
-# so the prefix is free.
-#[keys]
-#prefix = "ctrl+space"
+
+# Mirrors tmux/tmux.conf: same prefix, same split keys. vim/tmux do not run
+# inside herdr, so sharing ctrl+space is safe. Pane focus (prefix+h/j/k/l),
+# tabs (prefix+c/n/p/1..9), close (prefix+x) and zoom (prefix+z) already match
+# tmux by default.
+[keys]
+prefix = "ctrl+space"
+split_vertical = "prefix+'"
+split_horizontal = 'prefix+"'
 
 [ui]
 mouse_capture = true

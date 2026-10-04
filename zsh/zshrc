@@ -130,7 +130,21 @@ zoomer() {
     alias no_yap="-q"
 }
 
+# Commits are gpg signed. Ask for the passphrase once per day at shell start,
+# in a plain terminal, so it never prompts mid-commit or inside a TUI. The
+# agent keeps it cached for a day (git/gpg-agent.conf).
 export GPG_TTY=$(tty)
+gpg-unlock() {
+  local -r key=$(git config --global user.signingkey 2>/dev/null)
+  print -n | gpg ${key:+-u} ${key} --clearsign > /dev/null
+}
+gpg-locked() {
+  gpg-connect-agent 'keyinfo --list' /bye 2>/dev/null |
+    awk '$2 == "KEYINFO" && $8 == "P" { p = 1; if ($7 == 1) c = 1 } END { exit !(p && !c) }'
+}
+if [[ -o interactive && -t 0 ]] && command -v gpg-connect-agent >> /dev/null && gpg-locked; then
+  gpg-unlock || echo "gpg: key is still locked, run gpg-unlock before committing"
+fi
 
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
