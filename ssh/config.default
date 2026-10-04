@@ -32,6 +32,16 @@ Host autobutler-home
 	HostName 192.168.7.161
 	User butler
 	IdentityFile ~/.ssh/id_autobutler
+Host shed
+	ServerAliveCountMax=30
+	ServerAliveInterval=5
+	HostName shed.poggers.lol
+	User jamesaorson
+	LocalForward 8000 localhost:8000
+	LocalForward 8080 localhost:8080
+	ControlMaster auto
+	ControlPath ~/.ssh/cm-%C
+	ControlPersist 10m
 Host openclaw
 	ServerAliveCountMax=30
 	ServerAliveInterval=5

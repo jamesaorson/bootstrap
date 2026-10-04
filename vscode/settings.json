@@ -121,7 +121,6 @@
   "chat.instructionsFilesLocations": {
     "~/.agents/rules": true
   },
-  "chat.viewSessions.orientation": "stacked",
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "azureTerraform.survey": {
     "surveyPromptDate": "2026-09-18T18:59:29.653Z",
