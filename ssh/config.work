@@ -34,5 +34,11 @@ host jorson-dev
 	ServerAliveInterval=5
 	HostName 10.16.0.232
 	User jorson
+	ControlMaster auto
+	ControlPath ~/.ssh/control-%C
+	ControlPersist 10m
+	ForwardAgent yes
+	LocalForward 127.0.0.1:8250 127.0.0.1:8250
+	ExitOnForwardFailure yes
 	# IdentityFile ~/.ssh/id_work-jorson-dev
 

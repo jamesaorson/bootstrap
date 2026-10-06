@@ -155,6 +155,9 @@ CDPATH="${CDPATH}:${HOME}/github.com/"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-experimental"
 CDPATH="${CDPATH}:${HOME}/github.com/pure-pure1"
 [[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
+alias cluster7-xaas-prd='aws_login_and_configure_and_switch xaas-prod-ReadOnly cluster7-xaas-prd'
+alias cluster7-xaas-stg='aws_login_and_configure_and_switch xaas-staging-PowerUser cluster7-xaas-stg'
+alias cluster7-xaas-dev='aws_login_and_configure_and_switch xaas-dev-Admin cluster7-xaas-dev'
 #if command -v vault >/dev/null; then
 	export VAULT_ADDR="https://vault.purestorage.com:443"
 	# reuse cached ~/.vault-token if still valid, else log in once (browser)
@@ -192,7 +195,8 @@ if [ -d "${HOME}/.secret" ]; then
 		export MONGO_PASSWORD="$(cat "${HOME}/.secret/mongo-password")"
 	fi
 	if [ -f "${HOME}/.secret/atlassian-cloud-api-key" ]; then
-		export ATLASSIAN_CLOUD_API_KEY="$(cat "${HOME}/.secret/atlassian-cloud-api-key")"
+		export JIRA_TOKEN_FILE="${HOME}/.secret/atlassian-cloud-api-key"
+  	export ATLASSIAN_CLOUD_API_KEY="$(cat "${JIRA_TOKEN_FILE}")"
 	fi
 fi
 
