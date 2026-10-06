@@ -69,10 +69,6 @@
     "Stop": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "looking-glass hook stop"
-          }
         ]
       }
     ]
