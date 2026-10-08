@@ -29,7 +29,7 @@ Host github-jamesaorson
 	ServerAliveInterval=5
 	User git
 	IdentityFile ~/.ssh/id_github_jamesaorson
-host jorson-dev
+host jorson
 	ServerAliveCountMax=30
 	ServerAliveInterval=5
 	HostName 10.16.0.232
@@ -40,5 +40,5 @@ host jorson-dev
 	ForwardAgent yes
 	LocalForward 127.0.0.1:8250 127.0.0.1:8250
 	ExitOnForwardFailure yes
-	# IdentityFile ~/.ssh/id_work-jorson-dev
+	IdentityFile ~/.ssh/id_ed25519_vault
 
