@@ -15,9 +15,7 @@ WARN() {
 }
 
 INFO "Setting up config"
-DIR=${HOME}/.config/tmux
-CONFIG=${DIR}/tmux.conf
-mkdir -p ${DIR}
+CONFIG=${HOME}/.tmux.conf
 rm -f ${CONFIG}
 ln -s -f $(pwd)/tmux.conf ${CONFIG}
 INFO "Finished setting up config"

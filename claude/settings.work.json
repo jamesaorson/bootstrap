@@ -68,8 +68,7 @@
     ],
     "Stop": [
       {
-        "hooks": [
-        ]
+        "hooks": []
       }
     ]
   },
@@ -83,7 +82,7 @@
     "ponytail@ponytail": true,
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
-    "optimus-claude-audit@dx-ai": true
+    "optimus-tokenomics-audit@dx-ai": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
