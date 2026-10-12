@@ -11,7 +11,7 @@ mkdir -p ${DIR}/themes
 
 # Host-specific (personal vs work).
 SETTINGS=settings.default.json
-if [[ $(hostname) == *jorson* ]]; then
+if is_work_host; then
     SETTINGS=settings.work.json
 fi
 

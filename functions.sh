@@ -67,3 +67,8 @@ info_common() {
 	log_common INFO $@
     return
 }
+
+# Work hosts have "jorson" in the hostname (e.g. dev-jorson0, work Mac).
+is_work_host() {
+    [[ $(hostname) == *jorson* ]]
+}

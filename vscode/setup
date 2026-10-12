@@ -20,7 +20,7 @@ esac
 mkdir -p ${DIR}
 SETTINGS=settings.json
 KEYBINDINGS=keybindings.json
-if [[ $(hostname) == *jorson* ]]; then
+if is_work_host; then
     SETTINGS=settings.work.json
 fi
 ln -s -f $(pwd)/${SETTINGS} "${DIR}/settings.json"

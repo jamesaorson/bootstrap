@@ -11,7 +11,7 @@ ssh -V
 DIR=${HOME}/.ssh
 mkdir -p ${DIR}
 SSH_CONFIG=config.default
-if [[ $(hostname) == *jorson* ]]; then
+if is_work_host; then
     SSH_CONFIG=config.work
 fi
 rm -f ${DIR}/config

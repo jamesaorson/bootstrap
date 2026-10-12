@@ -11,7 +11,7 @@ mkdir -p ${DIR}/bin
 
 CLAUDE_MD=CLAUDE.default.md
 SETTINGS=settings.default.json
-if [[ $(hostname) == *jorson* ]]; then
+if is_work_host; then
     CLAUDE_MD=CLAUDE.work.md
     SETTINGS=settings.work.json
 fi
