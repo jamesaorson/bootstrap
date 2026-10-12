@@ -275,5 +275,6 @@
         "progressive": false
       }
     }
-  ]
+  ],
+  "C_Cpp.intelliSenseEngine": "disabled"
 }
