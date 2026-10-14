@@ -26,16 +26,6 @@
     "system-design": "off"
   },
   "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "git -C ~/.claude/hyperscale-build-kb pull -q --ff-only 2>/dev/null || git clone -q --depth 1 org-160221848@github.com:pure-hyperscale/hyperscale-build-agent-knowledge-base.git ~/.claude/hyperscale-build-kb; bash ~/.claude/hyperscale-build-kb/session-start.bash"
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Read",
