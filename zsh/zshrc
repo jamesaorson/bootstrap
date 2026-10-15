@@ -229,4 +229,6 @@ rds-connect() {
 	fi
 	psql "host=${RDS_HOST} port=5432 dbname=${RDS_DB} user=${RDS_USERNAME} sslmode=verify-full sslrootcert=./global-bundle.pem password=${RDS_PASSWORD}"
 }
-export PATH="$(brew --prefix python@3.14)/libexec/bin:$PATH"
+if command -v brew >> /dev/null; then
+	export PATH="$(brew --prefix python@3.14)/libexec/bin:$PATH"
+fi

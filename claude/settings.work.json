@@ -9,9 +9,7 @@
     "sessionUrl": false
   },
   "permissions": {
-    "allow": [
-      "Bash(*)"
-    ],
+    "allow": [],
     "defaultMode": "auto",
     "additionalDirectories": [
       "/tmp"
@@ -106,5 +104,39 @@
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
   "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(bd dolt push:*) — project CLAUDE.md and user CLAUDE.md both state remote bead servers/push are not used by this user; flag for confirmation rather than auto-run",
+      "Bash(rm -rf:*) in /Users/jorson/github.com/pure-experimental/jorson — frequent rm usage (95× in shell history) but destructive recursive variants warrant a pause"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: Everpure (formerly Pure Storage; company name retired, legacy strings like purestorage.com, @purestorage.com, pure-pure1/pure-experimental/pure-shared orgs, @pure/* scopes, and pstg-* Artifactory paths remain unchanged)",
+      "**Cloud provider(s)**: AWS (seen in shell history: aws, vault)",
+      "**Repository visibility**: pure-experimental/jorson — not queryable via gh (marker: not queryable here); treat as possibly public per default guidance since visibility could not be confirmed",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Vault (seen in shell history: vault, 25×); .gitignore also excludes .env, .envrc, .streamlit/secrets.toml, .beads-credential-key",
+      "**Default / protected branches**: main (default branch); protected-branch/ruleset status not queryable here — do not assume unprotected",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: pure-experimental/jorson and its origin remote (github.com:pure-experimental/jorson) only — no additional orgs configured for this project's trust scope",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: .env, .envrc, .streamlit/secrets.toml, .beads-credential-key (gitignored in this repo) — any file or store holding credentials or similarly sensitive material; share only with cleared audiences",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries prod or production as a whole word or segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries prod or production as a whole word or name segment; company Kubernetes clusters (stage and prod) are read-only per CLAUDE.md — no delete/edit/patch/apply/scale/rollout restart/create job/exec/port-forward",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development, including personal tracking/journal work in this repo (pure-experimental/jorson)",
+      "**Trusted repo**: pure-experimental/jorson, the working directory's repo, and its origin remote — visibility unverified, so treat pushes here as potentially public",
+      "**Org-specific CLIs**: bd (beads issue tracker), rtk, herdr (Herdr subagent tooling), tex-id-client",
+      "routine under /Users/jorson/github.com/pure-experimental/jorson/ and /Users/jorson/.claude/jorson/ prefixes"
+    ]
+  },
   "gitAttribution": false
 }
