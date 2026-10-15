@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+. ../functions.sh
+
+INFO() {
+	info_common 'STARSHIP' $@
+}
+
+INFO "Setting up config"
+CONFIG=${HOME}/.config/starship.toml
+mkdir -p ${HOME}/.config
+rm -f ${CONFIG}
+ln -s -f $(pwd)/config.toml ${CONFIG}
+INFO "Finished setting up config"
