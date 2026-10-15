@@ -73,7 +73,8 @@
     "pyright-lsp@claude-plugins-official": true,
     "typescript-lsp@claude-plugins-official": true,
     "optimus-tokenomics-audit@dx-ai": true,
-    "hyperscale-build-kb@hyperscale-build": true
+    "hyperscale-build-kb@hyperscale-build": true,
+    "autobutler@autobutler-org": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -92,6 +93,12 @@
       "source": {
         "source": "github",
         "repo": "pure-hyperscale/hyperscale-build-agent-knowledge-base"
+      }
+    },
+    "autobutler-org": {
+      "source": {
+        "source": "github",
+        "repo": "autobutler-org/agent-plugins"
       }
     }
   },
