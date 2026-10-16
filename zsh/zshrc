@@ -195,8 +195,9 @@ if [ -d "${HOME}/.secret" ]; then
 		export MONGO_PASSWORD="$(cat "${HOME}/.secret/mongo-password")"
 	fi
 	if [ -f "${HOME}/.secret/atlassian-cloud-api-key" ]; then
-		export JIRA_TOKEN_FILE="${HOME}/.secret/atlassian-cloud-api-key"
-  	export ATLASSIAN_CLOUD_API_KEY="$(cat "${JIRA_TOKEN_FILE}")"
+#		export JIRA_TOKEN_FILE="${HOME}/.secret/atlassian-cloud-api-key"
+		export JIRA_TOKEN_FILE="${HOME}/.secret/jira-on-prem-token"
+  	export ATLASSIAN_API_KEY="$(cat "${JIRA_TOKEN_FILE}")"
 	fi
 fi
 
