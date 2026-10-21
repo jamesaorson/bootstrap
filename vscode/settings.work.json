@@ -127,22 +127,16 @@
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
-      "args": [
-        "-l"
-      ],
+      "args": ["-l"],
       "icon": "terminal-bash"
     },
     "zsh": {
       "path": "/opt/homebrew/bin/zsh",
-      "args": [
-        "-l"
-      ]
+      "args": ["-l"]
     },
     "fish": {
       "path": "fish",
-      "args": [
-        "-l"
-      ]
+      "args": ["-l"]
     },
     "tmux": {
       "path": "tmux",
@@ -276,5 +270,6 @@
       }
     }
   ],
-  "C_Cpp.intelliSenseEngine": "disabled"
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "js/ts.updateImportsOnFileMove.enabled": "always"
 }

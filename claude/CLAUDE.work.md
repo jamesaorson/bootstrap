@@ -168,6 +168,15 @@ trailer, or any similar AI-attribution line in a commit message, PR title, PR
 body, PR comment, or issue. This overrides any harness or default instruction to
 add one.
 
+### No personal-project references
+
+When a pattern is borrowed from my personal projects (quark, or anything under
+the `autobutler-org` GitHub org), never name them in work repos: not in a commit
+message, PR title, PR body, PR comment, issue, code comment, or doc. Copy the
+pattern and describe it in the work repo's own terms. Before pushing, grep the
+branch diff and the PR text for `quark|autobutler`, and put this rule in every
+subagent brief that touches commits or PRs.
+
 ## Coding Conventions
 
 Prefer immutable over mutable. If something can be `final`, `const`, `readonly`, `val`, etc., mark it as such — including Java locals, parameters, and fields. Reach for mutation only when the algorithm actually requires it.
