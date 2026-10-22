@@ -1,9 +1,9 @@
 [user]  
 	name = James Orson
 	email = jamesaorson@gmail.com
-#	signingkey = EEB41592BCB8C99D3A580223EF352A35FF3D0B33
+	signingkey = EEB41592BCB8C99D3A580223EF352A35FF3D0B33
 [commit]
-#	gpgsign = true
+	gpgsign = true
 [alias]
 	co = checkout
 	cp = cherry-pick
