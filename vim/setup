@@ -7,11 +7,16 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 # Vim setup
 ln -s -f $(pwd)/.vimrc ${HOME}/.vimrc
 
+# Omarchy already ships nvim. Leave its install and config alone.
+if [[ "$(bootstrap_platform)" == omarchy ]]; then
+    exit 0
+fi
+
 # Neovim setup
 
 PLATFORM="$(uname -a)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
 		    if [[ ${PLATFORM} == "Linux pi"* ]]; then
 				  sudo apt install ninja-build gettext cmake unzip curl
 				  mkdir -p ${HOME}/.local/src
@@ -29,11 +34,11 @@ case ${PLATFORM} in
 				  bootstrap_install neovim
 				fi
 		    ;;
-    Darwin*)
+    darwin)
 				brew install neovim --HEAD
 				brew install ccls
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)          echo "UNKNOWN:$(bootstrap_platform)"; exit 1;;
 esac
 
 nvim -V1 -v

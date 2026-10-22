@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+orphans=$(pacman -Qtdq || true)
+if [[ -z "${orphans}" ]]; then
+    exit 0
+fi
+sudo pacman -Rns ${orphans}

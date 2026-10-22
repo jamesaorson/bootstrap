@@ -6,9 +6,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
         if sudo -v; then
             type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
             curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
@@ -17,9 +16,12 @@ case ${PLATFORM} in
             sudo apt-get update -qy
         fi
         ;;
-    Darwin*)
+    omarchy|darwin)
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
 bootstrap_install gh

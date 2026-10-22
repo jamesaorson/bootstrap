@@ -6,15 +6,20 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
 		bootstrap_install guix
         ;;
-    Darwin*)
+    omarchy)
+        omarchy pkg aur add guix
+        ;;
+    darwin)
         echo "UNSUPPORTED"
 		exit 1
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 

@@ -6,17 +6,20 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-. ${HOME}/.cargo/env
-
 CWD=$(pwd)
 CONFIG_DIR=${HOME}/.config/alacritty
 mkdir -p ${CONFIG_DIR}
 SRC=${CONFIG_DIR}/src
 BIN_DIR=${HOME}/.local/bin
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    omarchy)
+        bootstrap_install alacritty
+        alacritty --version
+        ;;
+    linux)
+        # shellcheck disable=SC1091
+        . "${HOME}/.cargo/env"
         if sudo -v; then
             bootstrap_install \
                 cmake \
@@ -49,13 +52,15 @@ case ${PLATFORM} in
         cp ${CWD}/${FILE} ${DESKTOP_FILE}
         ${BIN_DIR}/alacritty --version
         ;;
-    Darwin*)
+    darwin)
         bootstrap_install alacritty
         alacritty --version
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
 rm -f ${CONFIG_DIR}/alacritty.toml
 ln -s -f $(pwd)/alacritty.toml ${CONFIG_DIR}/alacritty.toml
-

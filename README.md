@@ -14,7 +14,18 @@ You can also pick and choose modules by listing the directories to install and t
 
 ```shell
 ./bootstrap apt bat #NOTE: Installs apt scripts and cat-alternative, bat
+./bootstrap omarchy git vim
 ```
+
+## Platforms
+
+`bootstrap` detects the OS and installs with that platform's package manager.
+
+- Debian and Ubuntu use apt
+- Omarchy uses `omarchy pkg` for official packages and `omarchy pkg aur` when a module is AUR-only
+- macOS uses Homebrew
+
+Omarchy is detected from `/etc/os-release` (`ID=omarchy`). With no arguments, Omarchy installs the same modules as macOS, with the `omarchy` helpers in place of `brew`. Debian and Ubuntu keep the shorter apt module list.
 
 ## Docker Container
 

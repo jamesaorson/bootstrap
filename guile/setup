@@ -6,15 +6,17 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
 		bootstrap_install guile-3.0
         ;;
-    Darwin*)
+    omarchy|darwin)
 		bootstrap_install guile
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
 ln -s -f $(pwd)/.guile ${HOME}/.guile

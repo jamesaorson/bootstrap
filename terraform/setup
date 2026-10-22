@@ -6,14 +6,22 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-export PATH="${HOME}/.local/brew/bin:${PATH}"
+case "$(bootstrap_platform)" in
+    omarchy)
+        bootstrap_install terraform
+        ;;
+    *)
+        export PATH="${HOME}/.local/brew/bin:${PATH}"
 
-if ! command -v brew; then
-    echo "Setting up brew"
-    ../brew/setup
-    echo "brew set up"
-fi
+        if ! command -v brew; then
+            echo "Setting up brew"
+            ../brew/setup
+            echo "brew set up"
+        fi
 
-brew install --HEAD terraform
+        brew install --HEAD terraform
+        ;;
+esac
+
 terraform --version
 

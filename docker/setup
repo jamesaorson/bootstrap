@@ -6,9 +6,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
         if sudo -v; then
             # Add Docker's official GPG key:
             sudo apt-get update
@@ -25,10 +24,16 @@ case ${PLATFORM} in
             bootstrap_install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
         fi
         ;;
-    Darwin*)
+    omarchy)
+        bootstrap_install docker docker-compose docker-buildx
+        ;;
+    darwin)
         brew install docker
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
 docker --version

@@ -6,23 +6,70 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+# Microsoft VS Code on Wayland needs gnome-libsecret or saved secrets never come back.
+ensure_omarchy_argv() {
+    local argv="$1"
+    mkdir -p "$(dirname "${argv}")"
+    python3 - "${argv}" << 'PY'
+import json, os, re, sys
+path = sys.argv[1]
+data = {}
+if os.path.exists(path):
+    text = open(path).read()
+    stripped = re.sub(r"//.*?$", "", text, flags=re.M)
+    stripped = re.sub(r",(\s*[}\]])", r"\1", stripped)
+    try:
+        parsed = json.loads(stripped)
+    except json.JSONDecodeError:
+        parsed = {}
+    if isinstance(parsed, dict):
+        data = parsed
+data["password-store"] = "gnome-libsecret"
+with open(path, "w") as fh:
+    fh.write("// Secret storage for Omarchy. Restart the editor after changing this file.\n")
+    json.dump(data, fh, indent=2)
+    fh.write("\n")
+PY
+}
+
+case "$(bootstrap_platform)" in
+    omarchy)
+        # Official Microsoft build. It conflicts with Arch's `code` package (Code - OSS).
+        # `pacman -Q code` also matches this package because it provides `code`.
+        if [[ "$(pacman -Qq code 2>/dev/null || true)" == "code" ]]; then
+            sudo pacman -R --noconfirm code
+        fi
+        omarchy pkg add visual-studio-code-bin
+        DIR=${HOME}/.config/Code/User
+        ensure_omarchy_argv "${HOME}/.vscode/argv.json"
+        # Theme sync rewrites workbench.colorTheme in place, which would edit the shared settings file.
+        mkdir -p "${HOME}/.local/state/omarchy/toggles"
+        touch "${HOME}/.local/state/omarchy/toggles/skip-vscode-theme-changes"
+        oss_user="${HOME}/.config/Code - OSS/User"
+        if [[ -L "${oss_user}/settings.json" ]]; then
+            rm -f "${oss_user}/settings.json"
+        fi
+        if [[ -L "${oss_user}/keybindings.json" ]]; then
+            rm -f "${oss_user}/keybindings.json"
+        fi
+        ;;
+    linux)
         DIR=${HOME}/.config/Code/User
         ;;
-    Darwin*)
+    darwin)
         DIR="${HOME}/Library/Application Support/Code/User"
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
-mkdir -p ${DIR}
+mkdir -p "${DIR}"
 SETTINGS=settings.json
 KEYBINDINGS=keybindings.json
 if is_work_host; then
     SETTINGS=settings.work.json
 fi
-ln -s -f $(pwd)/${SETTINGS} "${DIR}/settings.json"
-ln -s -f $(pwd)/${KEYBINDINGS} "${DIR}/keybindings.json"
-
+ln -s -f "$(pwd)/${SETTINGS}" "${DIR}/settings.json"
+ln -s -f "$(pwd)/${KEYBINDINGS}" "${DIR}/keybindings.json"

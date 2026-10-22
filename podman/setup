@@ -6,9 +6,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
         if sudo -v; then
             bootstrap_install \
                 buildah \
@@ -18,9 +17,18 @@ case ${PLATFORM} in
                 uidmap
         fi
         ;;
-    Darwin*)
+    omarchy)
+        bootstrap_install \
+            buildah \
+            fuse-overlayfs \
+            slirp4netns
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    darwin)
+        ;;
+    *)
+        echo "UNKNOWN:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 
 bootstrap_install podman

@@ -4,17 +4,16 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux|omarchy)
         ;;
-    Darwin*)
+    darwin)
         if ! [[ -f /Applications/kitty.app/Contents/MacOS/kitty ]]; then
             curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
         fi
         ;;
     *)
-        echo "UNSUPPORTED PLATFORM: ${PLATFORM}"
+        echo "UNSUPPORTED PLATFORM: $(bootstrap_platform)"
         exit 1
         ;;
 esac

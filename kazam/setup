@@ -6,12 +6,18 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux)
         bootstrap_install kazam
         kazam --version
         ;;
-    *)          echo "UNSUPPORTED:${unameOut}"; exit 1;;
+    omarchy)
+        omarchy pkg aur add kazam
+        kazam --version
+        ;;
+    *)
+        echo "UNSUPPORTED:$(bootstrap_platform)"
+        exit 1
+        ;;
 esac
 

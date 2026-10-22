@@ -12,17 +12,16 @@ if ! command -v curl >> /dev/null; then
     ../curl/setup curl
 fi
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux|omarchy)
         if sudo -v; then
             bootstrap_install zsh
         fi
         ;;
-    Darwin*)
+    darwin)
             bootstrap_install zsh
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)          echo "UNKNOWN:$(bootstrap_platform)"; exit 1;;
 esac
 
 zsh --version

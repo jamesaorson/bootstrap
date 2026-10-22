@@ -6,15 +6,14 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM="$(uname -s)"
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux|omarchy)
         ;;
-    Darwin*)
-	echo "Unsupported platform ${PLATFORM}"
+    darwin)
+	echo "Unsupported platform darwin"
 	exit 1
         ;;
-    *)          echo "UNKNOWN:${unameOut}"; exit 1;;
+    *)          echo "UNKNOWN:$(bootstrap_platform)"; exit 1;;
 esac
 
 bootstrap_install gdb

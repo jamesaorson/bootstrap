@@ -6,9 +6,8 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 
 . ../functions.sh
 
-PLATFORM=$(uname -s)
-case ${PLATFORM} in
-    Linux*)
+case "$(bootstrap_platform)" in
+    linux|omarchy)
         bootstrap_install git
         ;;
     *)

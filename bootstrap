@@ -4,52 +4,57 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
-install_deps() {
-    SHOULD_RESOLVE=0
-    local DEPS=(
-        apt-transport-https
-        build-essential
-        make
-    )
-    sudo apt-get update
-    sudo ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-    for dep in ${DEPS[@]}; do
-        echo "Checking for dep ${dep}..."
-        if ! dpkg --get-selections | grep "^$dep\s"; then
-            SHOULD_RESOLVE=1
-            echo "Did not find dep ${dep}"
-        else
-            echo "Found dep ${dep}"
-        fi
-    done
-    if [[ ${SHOULD_RESOLVE} == "1" ]]; then
-        if ! sudo -v; then
-            echo "sudo required to resolve deps"
-            exit 1
-        fi
-        if command -v fuser >> /dev/null; then
-            local RETRIES=3
-            local BACKOFF=1
-            while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
-                sleep ${BACKOFF}
-            done
-        fi
-        sudo apt-get \
-            -o DPkg::Lock::Timeout=120 \
-            -qy \
-            install \
-            ${DEPS[@]}
-     fi
-}
-
-
 . ./functions.sh
+
+install_deps() {
+    case "$(bootstrap_platform)" in
+        omarchy)
+            omarchy pkg add base-devel
+            ;;
+        linux)
+            SHOULD_RESOLVE=0
+            local DEPS=(
+                apt-transport-https
+                build-essential
+                make
+            )
+            sudo apt-get update
+            sudo ln -fs /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+            for dep in ${DEPS[@]}; do
+                echo "Checking for dep ${dep}..."
+                if ! dpkg --get-selections | grep "^$dep\s"; then
+                    SHOULD_RESOLVE=1
+                    echo "Did not find dep ${dep}"
+                else
+                    echo "Found dep ${dep}"
+                fi
+            done
+            if [[ ${SHOULD_RESOLVE} == "1" ]]; then
+                if ! sudo -v; then
+                    echo "sudo required to resolve deps"
+                    exit 1
+                fi
+                if command -v fuser >> /dev/null; then
+                    local RETRIES=3
+                    local BACKOFF=1
+                    while sudo fuser /var/{lib/{dpkg,apt/lists},cache/apt/archives}/lock >/dev/null 2>&1; do
+                        sleep ${BACKOFF}
+                    done
+                fi
+                sudo apt-get \
+                    -o DPkg::Lock::Timeout=120 \
+                    -qy \
+                    install \
+                    ${DEPS[@]}
+             fi
+            ;;
+    esac
+}
 
 if [ $# -gt 0 ]; then
     SERVICES=$@
-    PLATFORM="$(uname -s)"
-    case ${PLATFORM} in
-        Linux*)
+    case "$(bootstrap_platform)" in
+        linux|omarchy)
             if sudo -v; then
                 install_deps
             fi
@@ -58,9 +63,34 @@ if [ $# -gt 0 ]; then
             ;;
     esac
 else
-    PLATFORM="$(uname -s)"
-    case ${PLATFORM} in
-        Linux*)
+    case "$(bootstrap_platform)" in
+        omarchy)
+            if sudo -v; then
+                install_deps
+            fi
+            SERVICES=(
+                "omarchy"
+                "curl"
+                "hosts"
+                "git"
+                "zsh"
+                "starship"
+                "npm"
+                "vim"
+                "ssh"
+                "gh"
+                "cl"
+                "rust"
+                "bat"
+                "tmux"
+                "tree"
+                "alacritty"
+                "herdr"
+                "claude"
+                "pi"
+            )
+            ;;
+        linux)
             if sudo -v; then
                 install_deps
             fi
@@ -78,7 +108,7 @@ else
                 "pi"
             )
             ;;
-        Darwin*)
+        darwin)
             SERVICES=(
                 "curl"
                 "hosts"
@@ -102,7 +132,7 @@ else
             )
             ;;
         *)
-            echo "UNKNOWN:${PLATFORM}"
+            echo "UNKNOWN:$(bootstrap_platform)"
             exit 1
             ;;
     esac
