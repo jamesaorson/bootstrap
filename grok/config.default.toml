@@ -1,0 +1,47 @@
+# Stolen from ~/.grok/config.toml on the personal host, then wired the same
+# way claude/settings.json is: status line, and Claude compat narrowed so this
+# module's rules and hooks are not applied twice on a machine that also runs
+# claude/setup. Skills and MCP stay on.
+
+[cli]
+installer = "internal"
+
+[marketplace]
+default_skills_installs_purged = true
+official_marketplace_auto_installed = true
+
+[[marketplace.sources]]
+name = "xAI Official"
+git = "https://github.com/xai-org/plugin-marketplace.git"
+
+[ui]
+max_thoughts_width = 120
+yolo = false
+compact_mode = false
+permission_mode = "always-approve"
+
+[ui.status_line]
+type = "command"
+command = "bash ~/.grok/statusline-command.sh"
+refresh_interval = 300
+
+[privacy]
+privacy_banner_acked = "2026-10-21T22:36:06Z"
+
+[compat.claude]
+agents = false
+rules = false
+hooks = false
+
+# Catalog default is 256k. 500k is the other window these models offer.
+[model."grok-4.7"]
+context_window = 500000
+
+[model."grok-4.7-build-fast"]
+context_window = 500000
+
+[model."grok-4.6"]
+context_window = 500000
+
+[model."grok-4.5"]
+context_window = 500000

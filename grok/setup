@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+. ../functions.sh
+
+DIR=${HOME}/.grok
+mkdir -p ${DIR}/bin ${DIR}/rules ${DIR}/hooks ${DIR}/cache
+
+CONFIG=config.default.toml
+RULES=GROK.default.md
+HOOKS=hooks.default.json
+if is_work_host; then
+    CONFIG=config.work.toml
+    RULES=GROK.work.md
+    HOOKS=hooks.work.json
+fi
+
+# Host-specific (personal vs work).
+# auth.json, sessions/, memory, trusted folders, and the CLI install stay put.
+ln -sf $(pwd)/${CONFIG} ${DIR}/config.toml
+ln -sf $(pwd)/${RULES} ${DIR}/rules/GROK.md
+ln -sf $(pwd)/${HOOKS} ${DIR}/hooks/bootstrap.json
+
+# Shared across hosts. Each rules file loads on its own; Grok has no @import.
+ln -sf $(pwd)/RTK.md ${DIR}/rules/RTK.md
+ln -sf $(pwd)/tropes.md ${DIR}/rules/tropes.md
+ln -sf $(pwd)/statusline-command.sh ${DIR}/statusline-command.sh
+ln -sf $(pwd)/cost-refresh.sh ${DIR}/bin/cost-refresh.sh
+ln -sf $(pwd)/no-ai-attribution.sh ${DIR}/bin/no-ai-attribution.sh
+
+# ccusage powers the month-to-date cost in the statusline.
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+if command -v npm >/dev/null 2>&1; then
+    npm install -g ccusage
+else
+    echo "npm not found. Run ../npm/setup first, then re-run to install ccusage."
+fi
+
+if command -v grok >/dev/null 2>&1; then
+    grok --version
+else
+    echo "grok not found. Install it, then re-run this setup."
+    echo "curl -fsSL https://x.ai/cli/install.sh | bash"
+fi
+
+if command -v rtk >/dev/null 2>&1; then
+    rtk --version
+else
+    echo "rtk not found. Install it, then re-run this setup."
+    echo "See RTK.md for details."
+fi

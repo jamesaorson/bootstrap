@@ -87,6 +87,7 @@ else
                 "alacritty"
                 "herdr"
                 "claude"
+                "grok"
                 "pi"
             )
             ;;
@@ -105,6 +106,7 @@ else
                 "gh"
                 "npm"
                 "claude"
+                "grok"
                 "pi"
             )
             ;;
@@ -128,6 +130,7 @@ else
                 "alacritty"
                 "herdr"
                 "claude"
+                "grok"
                 "pi"
             )
             ;;
