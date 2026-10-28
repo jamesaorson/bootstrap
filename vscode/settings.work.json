@@ -20,12 +20,56 @@
   "git.ignoreMissingGitWarning": true,
   "cSpell.userWords": [
     "agentpool",
+    "alwayslink",
+    "analysistest",
     "azuread",
     "azurerm",
+    "codegen",
+    "corelinux",
+    "depset",
+    "dpkg",
     "eastus",
     "eldership",
+    "elif",
+    "endswith",
+    "execpath",
+    "execroot",
+    "failpoints",
+    "filegroup",
+    "globl",
+    "hdrs",
+    "hftl",
+    "hyperscale",
+    "libfeature",
+    "libhyperscale",
+    "liboo",
+    "liboodle",
+    "libperiander",
+    "netconfig",
+    "oodle",
+    "periander",
+    "pgroups",
+    "premake",
+    "progbits",
+    "protoc",
+    "psblk",
+    "psblkc",
+    "psblkctl",
+    "psdrv",
+    "rpmbuild",
+    "runfiles",
+    "runtests",
+    "SCMREV",
+    "SCMREVISION",
+    "skylib",
     "snet",
-    "vnet"
+    "srcs",
+    "startswith",
+    "SUBPACKAGES",
+    "testonly",
+    "tmpl",
+    "vnet",
+    "xorl"
   ],
   "sonarlint.rules": {
     "terraform:S1135": {
@@ -60,7 +104,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.associations": {
-    "*.json": "json"
+    "*.json": "json",
+    "*.S": "asm-intel-x86-generic"
   },
   "extensions.trustedPublishers": [
     "aykutsarac",
@@ -271,5 +316,6 @@
     }
   ],
   "C_Cpp.intelliSenseEngine": "disabled",
-  "js/ts.updateImportsOnFileMove.enabled": "always"
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "python.analysis.typeCheckingMode": "strict"
 }
