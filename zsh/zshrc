@@ -155,26 +155,9 @@ export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 CDPATH="${CDPATH}:${HOME}/github.com/"
 
 # Work
-CDPATH="${CDPATH}:${HOME}/github.com/pure-experimental"
-CDPATH="${CDPATH}:${HOME}/github.com/pure-pure1"
-[[ -s "$HOME/.idc/aws-idc/scripts/eks-config.sh" ]] && source "$HOME/.idc/aws-idc/scripts/eks-config.sh"
-alias cluster7-xaas-prd='aws_login_and_configure_and_switch xaas-prod-ReadOnly cluster7-xaas-prd'
-alias cluster7-xaas-stg='aws_login_and_configure_and_switch xaas-staging-PowerUser cluster7-xaas-stg'
-alias cluster7-xaas-dev='aws_login_and_configure_and_switch xaas-dev-Admin cluster7-xaas-dev'
 if command -v vault >/dev/null; then
 	export VAULT_ADDR="https://vault.purestorage.com:443"
 fi
-
-aws-sso() {
-	if [[ -z "${AWS_PROFILE}" ]]; then
-		echo "Set AWS_PROFILE first..."
-		return
-	fi
-	aws sso login
-	aws configure export-credentials | python3 ~/.idc/aws-idc/scripts/write_credentials.py > ~/.aws/credentials
-}
-
-export AWS_PROFILE=purestorage-cloudservices-staging-Developer
 
 if [ -d "${HOME}/.secret" ]; then
 	if [ -f "${HOME}/.secret/codex-api-key" ]; then
