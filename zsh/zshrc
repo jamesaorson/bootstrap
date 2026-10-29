@@ -215,6 +215,10 @@ if command -v brew >> /dev/null; then
 	export PATH="$(brew --prefix python@3.14)/libexec/bin:$PATH"
 fi
 
+if [[ -f ~/.config/schmeide/runner.env ]]; then
+	. ~/.config/schmeide/runner.env
+fi
+
 # >>> grok installer >>>
 export PATH="$HOME/.grok/bin:$PATH"
 fpath=(~/.grok/completions/zsh $fpath)
