@@ -123,8 +123,8 @@
   },
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "azureTerraform.survey": {
-    "surveyPromptDate": "2026-09-18T18:59:29.653Z",
-    "surveyPromptIgnoredCount": 1
+    "surveyPromptDate": "2026-11-29T16:15:33.764Z",
+    "surveyPromptIgnoredCount": 2
   },
   "claudeCode.preferredLocation": "panel"
 }
