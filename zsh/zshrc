@@ -173,7 +173,7 @@ get-secret() {
 if [ -d "${HOME}/.secret" ]; then
 	export CODEX_API_KEY="$(get-secret "${HOME}/.secret/codex-api-key")"
 	export SONAR_TOKEN="$(get-secret "${HOME}/.secret/sonar-token")"
-	export INCIDENT_IO_TOKEN="$(get-secret "${HOME}/.secret/incident.io-sat")"
+	export INCIDENT_IO_API_KEY="$(get-secret "${HOME}/.secret/incident.io-sat")"
 
 	export JIRA_TOKEN_FILE="${HOME}/.secret/jira-on-prem-token"
 fi
