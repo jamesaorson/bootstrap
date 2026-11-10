@@ -160,11 +160,11 @@ if command -v vault >/dev/null; then
 fi
 
 get-secret() {
-	local path=$1
+	local file=$1
 	shift
 
-	if [ -f "${path}" ]; then
-		cat "${path}"
+	if [ -f "${file}" ]; then
+		cat "${file}"
 	else
 		echo ""
 	fi
@@ -173,8 +173,9 @@ get-secret() {
 if [ -d "${HOME}/.secret" ]; then
 	export CODEX_API_KEY="$(get-secret "${HOME}/.secret/codex-api-key")"
 	export SONAR_TOKEN="$(get-secret "${HOME}/.secret/sonar-token")"
-	export JIRA_TOKEN_FILE="$(get-secret "${HOME}/.secret/jira-on-prem-token")"
 	export INCIDENT_IO_TOKEN="$(get-secret "${HOME}/.secret/incident.io-sat")"
+
+	export JIRA_TOKEN_FILE="${HOME}/.secret/jira-on-prem-token"
 fi
 
 
