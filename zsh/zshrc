@@ -159,27 +159,22 @@ if command -v vault >/dev/null; then
 	export VAULT_ADDR="https://vault.purestorage.com:443"
 fi
 
+get-secret() {
+	local path=$1
+	shift
+
+	if [ -f "${path}" ]; then
+		cat "${path}"
+	else
+		echo ""
+	fi
+}
+
 if [ -d "${HOME}/.secret" ]; then
-	if [ -f "${HOME}/.secret/codex-api-key" ]; then
-		export CODEX_API_KEY="$(cat "${HOME}/.secret/codex-api-key")"
-	fi
-	if [ -f "${HOME}/.secret/sonar-token" ]; then
-		export SONAR_TOKEN="$(cat "${HOME}/.secret/sonar-token")"
-	fi
-	if [ -f "${HOME}/.secret/figma-token" ]; then
-		export FIGMA_TOKEN="$(cat "${HOME}/.secret/figma-token")"
-	fi
-	if [ -f "${HOME}/.secret/mongo-username" ]; then
-		export MONGO_USERNAME="$(cat "${HOME}/.secret/mongo-username")"
-	fi
-	if [ -f "${HOME}/.secret/mongo-password" ]; then
-		export MONGO_PASSWORD="$(cat "${HOME}/.secret/mongo-password")"
-	fi
-	if [ -f "${HOME}/.secret/jira-on-prem-token" ]; then
-#		export JIRA_TOKEN_FILE="${HOME}/.secret/atlassian-cloud-api-key"
-		export JIRA_TOKEN_FILE="${HOME}/.secret/jira-on-prem-token"
-  	export ATLASSIAN_API_KEY="$(cat "${JIRA_TOKEN_FILE}")"
-	fi
+	export CODEX_API_KEY="$(get-secret "${HOME}/.secret/codex-api-key")"
+	export SONAR_TOKEN="$(get-secret "${HOME}/.secret/sonar-token")"
+	export JIRA_TOKEN_FILE="$(get-secret "${HOME}/.secret/jira-on-prem-token")"
+	export INCIDENT_IO_TOKEN="$(get-secret "${HOME}/.secret/incident.io-sat")"
 fi
 
 
